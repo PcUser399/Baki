@@ -67,10 +67,11 @@ function  updatePage(how){
         document.querySelectorAll('input').forEach((el)=>{el.checked = studentLvl[el.dataset.subject] == el.dataset.level ? true:false})
     }
     else if (how == 'exit'){
-        window.location.href='baki.html'
+        window.location.href='index.html'
     }
     else if (how == 'finish'){
-        window.location.href='baki.html'
+        window.location.href='index.html'
     }
     console.log(globalInfo.currentPage)
 }
+
