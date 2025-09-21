@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <style>
+            body{
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            button{
+                width: calc(12.5vw + 12.5vh);
+                height: calc(12.5vw + 12.5vh);
+                border-radius: 1500px;
+                font-size: calc(2.5vw + 2.5vh);
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick="
+                    if (window.innerWidth< 1000) {
+                    document.body.addEventListener('click', () => { 
+                    document.documentElement.requestFullscreen() 
+                    .then(() => {screen.orientation.lock('landscape');openPage(1)}) 
+                    .catch(err => console.error(err));
+            })}
+            else{
+                openPage(1);
+            }
+        ">Click here</button>
+        <script src="options.js" ></script>
+        <script>
+        </script>
+    </body>
+</html>
