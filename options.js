@@ -163,6 +163,9 @@ function openPage(nb){
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📘</text></svg>">
         <title>options</title>
         <style>
+            * {
+                -webkit-tap-highlight-color: transparent;
+                }
             body{
                 margin: 0px;
                 padding-top: 85vh;
@@ -413,6 +416,9 @@ function openPage(nb){
         <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
         <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📘</text></svg>">
         <style>
+            * {
+                -webkit-tap-highlight-color: transparent;
+                }
             img{
                 height: 8.5vh;
                 min-height: 56px;
