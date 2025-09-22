@@ -565,7 +565,7 @@ function openPage(nb){
             #b2,
             #b1{
                 position: absolute;
-                bottom: 8.5vh;
+                bottom: 4vh;
                 border: none;
                 box-shadow: 0 0 8px gray;
                 border-radius: 100px;
@@ -638,3 +638,4 @@ function openPage(nb){
     document.body.appendChild(script2);
     }
 }
+
