@@ -94,16 +94,16 @@ function  updatePage(how){
     }
     console.log(globalInfo.currentPage)
 }
-function fullScreen(nb){
+function fullScreen(){
         if(window.innerWidth<1000){
         document.documentElement.requestFullscreen() 
-        .then(() => {screen.orientation.lock("landscape");openPage(nb);
+        .then(() => {screen.orientation.lock("landscape");openPage(2);
             document.querySelector('video').play();
             document.querySelector('audio').play();
         }) // for phone
         .catch(err => console.error(err));}
         else{
-            openPage(nb); 
+            openPage(2); 
         }
 ;
 }
@@ -406,8 +406,69 @@ function openPage(nb){
 }
     else if (nb==1){
         var script2 = document.createElement("script")
-        script2.innerHTML=`isLogedIn = false ;
-            document.querySelectorAll('input').forEach((el)=>{ isLogedIn || el.setCustomValidity('please press start first')}) ;`
+        script2.innerHTML=`
+            var isLogedIn = false ;
+            document.querySelectorAll('input').forEach((el)=>{ isLogedIn || el.setCustomValidity('please press start first')}) ;
+            var bt = document.getElementById('str-bt') ;
+            var sty = document.getElementById('change') ;
+            bt.addEventListener('click',discriptionPage);
+            function openDiscriptionPage(){
+              bt.removeEventListener('click',discriptionPage);
+              bt.style.color = 'transparent';
+              bt.style.fontSize = '0.01px' ;
+              bt.style.animationPlayState = 'paused';
+              bt.style.transition = '0.8s';
+              bt.style.marginBottom = '12.5vh';
+              bt.style.height='70vh';
+              bt.style.width ='40vw';
+              bt.style.borderRadius ='45px'; 
+              bt.style.boxShadow = '0 0 8px  #FF33CC, 0 0 16px #FF33CC';
+              // bt.style.position ='fixed';
+            //   document.getElementById('blurAll').style.backdropFilter = 'blur(10px)';
+              setTimeout(()=>{
+                sty.innerHTML='#str-bt:hover{transition: 0.5s;text-shadow: 0 0 8px blueviolet , 0 0 16px blueviolet ;scale: 1.2;}';
+                bt.style.transition = '1.5s';
+                bt.style.fontSize = 'calc(1.4vw + 1.4vh)';
+                bt.style.padding = '2.75vh 2.25vw';
+                bt.style.color = 'white';
+                bt.style.alignItems ='flex-start';
+                bt.innerHTML='Welcome to Baki a Web only designed to help you through out your baccalauria jurney .Here we can help better orginize your time for better results in a studied efficient way.The Web also suppoerts many other features like a GPA calculator and All Bak official tests . In order to continu we would like to gother some information regarding your level to help you better organize<button id="b1" >exit</button><button id="b2" >continue</button>';
+                 const b1 = document.getElementById('b1') ;
+                 const b2 = document.getElementById('b2') ;},850);
+                bt.dataset.state = 'option';
+                setTimeout(()=>b1.addEventListener('click',discriptionPage),2750)
+                setTimeout(()=>b2.addEventListener('click',fullScreen),2750)
+          }
+          function closeDiscriptionPage(){
+              b1.removeEventListener('click',discriptionPage);
+              b2.removeEventListener('click',fullScreen);
+              bt.style.transition = '0.8s';
+              bt.style.fontSize = '0.01px';
+              bt.style.alignItems ='center';
+              setTimeout(()=>{
+              bt.style.padding = '0 0';
+              bt.style.marginBottom = '5vh';
+              bt.style.fontSize = 'min(70px,calc(3vw + 2.75vh),10vh)' ;
+              bt.style.alignItems ='center';
+              bt.style.animationPlayState = 'running';
+              bt.style.height='16vh';
+              bt.style.width ='30vw';
+              bt.style.borderRadius ='450px';
+              // bt.style.position ='fixed';
+            //   document.getElementById('blurAll').style.backdropFilter = 'blur(10px)';
+              bt.style.boxShadow = ' 0 0 8px rgb(74, 8, 71)'
+              bt.innerHTML='Start';
+              bt.style.color = 'white';
+              bt.dataset.state = 'normal';
+              sty.innerHTML='#str-bt:hover{transition: 0.5s;color: rgb(128, 43, 226) !important;/* animation-play-state: paused; */text-shadow: 0 0 8px blueviolet , 0 0 16px blueviolet;scale: 1.25;}';
+            },800)
+            setTimeout(()=>bt.addEventListener('click',discriptionPage),2000)
+              
+          }
+          function discriptionPage(){
+            bt.dataset.state == 'normal' ? openDiscriptionPage():closeDiscriptionPage()
+          }
+          `
         document.documentElement.innerHTML='';
         document.documentElement.innerHTML=`
     <head>
@@ -440,6 +501,7 @@ function openPage(nb){
                 width :100%;
                 margin: 0px;         
                 background: linear-gradient(90deg,rgb(20, 10, 44), rgb(11, 11, 41),rgb(20, 10, 44));
+                overflow: hidden;
             }
             header{
                 display: flex;
@@ -488,30 +550,71 @@ function openPage(nb){
                 background-color: rgb(74, 8, 71);
                 color: white;
                 font-size:min(70px,calc(3vw + 2.75vh),10vh);
-                text-align: center;
                 letter-spacing: 1px;
                 box-shadow: 0 0 8px rgb(74, 8, 71);
                 animation: glow 1s ease alternate infinite ;
                 cursor: pointer;
-                transition: 0.5s;
+                transition: 0.5s ease;
+                z-index: 5;
+                display: flex;
+                justify-content: center;
+                text-align: center;
+                align-items: center;
+                position: relative;
             }
-            #str-bt:hover{
-                transition: 0.5s;
-                color: rgb(128, 43, 226);
-                /* animation-play-state: paused; */
-                text-shadow: 0 0 8px blueviolet , 0 0 16px blueviolet;
+            #b2,
+            #b1{
+                position: absolute;
+                bottom: 8.5vh;
+                border: none;
+                box-shadow: 0 0 8px gray;
+                border-radius: 100px;
+                width: 27.5%;
+                height: 10%;
+                color: white;
+                background-color: transparent;
+                outline: none;
+                cursor: pointer;
+                font-style: 'Pacifico', cursive;
+                font-size: calc(1.5vw + 1.5vh);
+                transition: 0.25s ;
+                background-color:rgb(58, 6, 55) ;
+            }
+            #b1:hover{
                 scale: 1.25;
+                transition: 0.25s ;
             }
+            #b2:hover{
+                scale: 1.25;
+                transition: 0.25s ;
+            }
+            #b2{
+                right: 15%;
+            }
+            #b1{
+                left :15%
+            }
+            
             @keyframes glow{
                 to {box-shadow:0 0 8px  #FF33CC, 0 0 16px #FF33CC, 0 0 24px #FF33CC , 0 0 32px rgba(255, 51, 204,0.5) , 0 0 64px rgba(255, 51, 204,0.5), 0 0 128px rgba(255, 51, 204,0.75);
                     ;
                 }
             }
+            
+        </style>
+        <style id="change">
+            #str-bt:hover{
+                transition: 0.5s;
+                color: rgb(128, 43, 226) !important;
+                /* animation-play-state: paused; */
+                text-shadow: 0 0 8px blueviolet , 0 0 16px blueviolet;
+                scale: 1.25;
+            }
         </style>
     </head>
 
     <body>
-
+        <!-- <div style="width: 100vw; height: 100vh;transition: 0.8s;" id="blurAll"></div> -->
         <header>
             <div style="position: relative;">
             <input inputmode="none" autocomplete="off" id="inp1" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
@@ -525,8 +628,12 @@ function openPage(nb){
         </header>
 
 
-        <div id="str-ct"><button id="str-bt" onclick="fullScreen(2);">Start</button></div>
-
+        <div id="str-ct">
+            <div id="str-bt" data-state="normal">
+                Start
+            </div>
+        </div>
+    
     </body>`
     document.body.appendChild(script2);
     }
