@@ -468,6 +468,12 @@ function openPage(nb){
           function discriptionPage(){
             bt.dataset.state == 'normal' ? openDiscriptionPage():closeDiscriptionPage()
           }
+          if (window.innerWidth< 1000) {
+            document.body.addEventListener('click', () => { 
+            document.documentElement.requestFullscreen() 
+            .then(() => screen.orientation.lock("landscape")) 
+            .catch(err => console.error(err));
+            })};
           `
         document.documentElement.innerHTML='';
         document.documentElement.innerHTML=`
@@ -638,4 +644,5 @@ function openPage(nb){
     document.body.appendChild(script2);
     }
 }
+
 
