@@ -11,24 +11,24 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                                                                     </div>
                             <div class="sub-container">
                                 <div class="subject-level">In ${sub1} I am <div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)" name="${sub1}" data-level="bad" data-subject="${sub1}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)" name="${sub1}" data-level="good" data-subject="${sub1}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)" name="${sub1}" data-level="exelent" data-subject="${sub1}">    
+                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()" name="${sub1}" data-level="bad" data-subject="${sub1}">
+                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="good" data-subject="${sub1}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="exelent" data-subject="${sub1}">    
                                                                         </div>
                                 </div>
                                 <div class="subject-level">In ${sub2} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub2}" data-level="bad" data-subject="${sub2}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub2}" data-level="good" data-subject="${sub2}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub2}" data-level="exelent" data-subject="${sub2}">    
+                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub2}" data-level="bad" data-subject="${sub2}">
+                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="good" data-subject="${sub2}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="exelent" data-subject="${sub2}">    
                                                                         </div>
                                  </div>
                                 <div class="subject-level">In ${sub3} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub3}" data-level="bad" data-subject="${sub3}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub3}" data-level="good" data-subject="${sub3}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;console.log(studentLvl)"  name="${sub3}" data-level="exelent" data-subject="${sub3}">    
+                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub3}" data-level="bad" data-subject="${sub3}">
+                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="good" data-subject="${sub3}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="exelent" data-subject="${sub3}">    
                                                                         </div>
                                  </div>
                             </div>
@@ -55,7 +55,9 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                     document.getElementById('buttons-container').innerHTML = `        <div class="next-back-page-buttons-container">
                                                                                                 <button data-how="back" onclick="updatePage('back')"><img src="arrow-back.png"></button>
                                                                                                 <div></div>
-                                                                                            <button data-how="finish" onclick="updatePage('finish')">Finish</button>
+                                                                                            <div style="position:relative;">
+                                                                                            <input inputmode="none" autocomplete="off" id="end" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;bottom:25%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
+                                                                                            <button id="end-bt" data-how="finish" onclick="updatePage('finish')">Finish</button></div>
                                                                                         </div>`
                 }
             else{
@@ -90,7 +92,14 @@ function  updatePage(how){
         openPage(1)
     }
     else if (how == 'finish'){
-        openPage(1)
+        if (checkIfAllSelected()){
+        openPage(1)}
+        else {
+            // document.body.style.height='100vh';
+            // document.body.style.overflow='hidden';
+            document.getElementById('end').setCustomValidity('Some options weren t selected . Please enter all required data');
+            document.getElementById('end').reportValidity()
+        }
     }
     console.log(globalInfo.currentPage)
 }
@@ -107,12 +116,32 @@ function fullScreen(){
         }
 ;
 }
+function  checkIfAllSelected(){
+    for (let key in studentLvl){
+        if (!studentLvl[key]){
+            return false ;
+        }
+    }
+    for (let key in selectedObjective){
+        if(selectedObjective[key]){
+            return true ;
+        }
+    }
+    return false ;
+}
 function openPage(nb){
     if (nb==2){
         document.documentElement.innerHTML='';
         var script = document.createElement("script");
         script.innerHTML=`
-            
+            var msgNumber = -1
+            function  maryamSpecialMsg (subject,msgNumber){
+                let obj = ['haya maryam ena mi2akid inni chwaya '+subject+' mahoch bich yi8lbik. Don t say you re not good in it , you re exellent ! ','naarif inni il ritim mahoch sehil winnik te3ba ysr ama hetha maya3nich innik underestimati min rohik you are good in '+subject+' ena mit2aked innik bich titfawak fih',
+                    'Maryaam matkolich iinik haka al '+subject+' wlh la  i am sure inni lbak mayo9rob illa matkon exelent fil '+subject
+                ]
+                return obj[msgNumber];
+            } 
+
             document.body.addEventListener('keydown',event=> {if(event.key=='ArrowRight' && globalInfo.currentPage < 3 ){
                  event.preventDefault();
                  updatePage('next')
@@ -187,6 +216,10 @@ function openPage(nb){
             video{
                 height: 100%;
                 width: auto;
+            }
+            #end:hover+#end-bt{
+                scale: 1.2;
+                transition: 0.25s;
             }
             .filler{
                 position: fixed;
@@ -426,7 +459,7 @@ function openPage(nb){
               // bt.style.position ='fixed';
             //   document.getElementById('blurAll').style.backdropFilter = 'blur(10px)';
               setTimeout(()=>{
-                sty.innerHTML='#str-bt:hover{transition: 0.5s;text-shadow: 0 0 8px blueviolet , 0 0 16px blueviolet ;scale: 1.2;}';
+                sty.innerHTML='#str-bt:hover{transition: 0.5s;text-shadow: 0 0 8px blueviolet  ;scale: 1.2;}';
                 bt.style.transition = '1.5s';
                 bt.style.fontSize = 'calc(1.4vw + 1.4vh)';
                 bt.style.padding = '2.75vh 2.25vw';
@@ -468,7 +501,7 @@ function openPage(nb){
           function discriptionPage(){
             bt.dataset.state == 'normal' ? openDiscriptionPage():closeDiscriptionPage()
           }
-          if (window.innerWidth< 1000) {
+        if (window.innerWidth< 1000) {
             document.body.addEventListener('click', () => { 
             document.documentElement.requestFullscreen() 
             .then(() => screen.orientation.lock("landscape")) 
@@ -644,5 +677,3 @@ function openPage(nb){
     document.body.appendChild(script2);
     }
 }
-
-
