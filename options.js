@@ -11,22 +11,22 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                                                                     </div>
                             <div class="sub-container">
                                 <div class="subject-level">In ${sub1} I am <div class="input-container">
-                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()" name="${sub1}" data-level="bad" data-subject="${sub1}">
-                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="bad" data-subject="${sub1}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="good" data-subject="${sub1}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="exelent" data-subject="${sub1}">    
                                                                         </div>
                                 </div>
                                 <div class="subject-level">In ${sub2} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub2}" data-level="bad" data-subject="${sub2}">
-                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}"  name="${sub2}" data-level="bad" data-subject="${sub2}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="good" data-subject="${sub2}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="exelent" data-subject="${sub2}">    
                                                                         </div>
                                  </div>
                                 <div class="subject-level">In ${sub3} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub3}" data-level="bad" data-subject="${sub3}">
-                                                                                                        <input type="radio" onclick="event.target.checked = false;msgNumber++;msgNumber= msgNumber%3;event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));event.target.reportValidity()"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}"  name="${sub3}" data-level="bad" data-subject="${sub3}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="good" data-subject="${sub3}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="exelent" data-subject="${sub3}">    
                                                                         </div>
@@ -677,3 +677,4 @@ function openPage(nb){
     document.body.appendChild(script2);
     }
 }
+
