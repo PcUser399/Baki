@@ -48,11 +48,11 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                 document.querySelector('.filler').innerHTML=`
             <div class="mini-title">Tell us about you</div> 
             <div class="name-input-container">
-                <div style="position: relative;width: 100%; height: 22.5%;display: flex;justify-content: center;align-items: center;">
+                <div id="inp1-container" style="position: relative;width: 100%; height: 22.5%;display: flex;justify-content: center;align-items: center;">
                     <input class="name-info" id="first-name" placeholder=".">
                     <label for="first-name">first name</label>
                 </div>
-                <div style="position: relative;width: 100%; height: 22.5%;display: flex;justify-content: center;align-items: center;">
+                <div id="inp2-container" style="position: relative;width: 100%; height: 22.5%;display: flex;justify-content: center;align-items: center;">
                     <input class="name-info" id="last-name"  placeholder=".">
                     <label for="last-name">Last name</label>
                 </div>
@@ -229,7 +229,40 @@ function openPage(nb){
             document.documentElement.requestFullscreen() 
             .then(() => screen.orientation.lock("landscape")) 
             .catch(err => console.error(err));
-            })};`
+            })};
+            if (window.innerHeight <= 550){
+
+                document.getElementById('first-name').addEventListener('click',()=>{
+                    if (!document.getElementById('inp1-container').classList.contains('floatUp')){
+                        document.getElementById('inp1-container').classList.add('floatUp')}
+                    else{
+                    document.getElementById('inp1-container').classList.remove('floatUp') 
+                    }
+                })
+
+
+                document.getElementById('first-name').addEventListener('blur',()=>{
+                document.getElementById('inp1-container').classList.remove('floatUp')
+                })
+
+
+                document.getElementById('last-name').addEventListener('click',()=>{
+                    if (!document.getElementById('inp2-container').classList.contains('floatUpHigh')){
+                        document.getElementById('inp1-container').classList.remove('floatUp');
+                        document.getElementById('inp1-container').classList.add('floatDown');
+                        document.getElementById('inp2-container').classList.add('floatUpHigh')}
+                    else{
+                    document.getElementById('inp1-container').classList.remove('floatDown');
+                    document.getElementById('inp2-container').classList.remove('floatUpHigh') 
+                    }
+                })
+
+                document.getElementById('last-name').addEventListener('blur',()=>{
+                document.getElementById('inp2-container').classList.remove('floatUpHigh');
+                document.getElementById('inp1-container').classList.remove('floatDown');
+                })
+        }
+            `
 
         
     document.documentElement.innerHTML=`
@@ -509,6 +542,24 @@ function openPage(nb){
                 color: #808080;
                 z-index: 10;
                 transition: 0.25s;
+            }
+                #inp1-container{
+                transition: 0.25s;
+            }
+            #inp2-container{
+                transition: 0.25s;
+            }
+            .floatUp{
+                transition: 0.25s;
+                transform: translateY(-6vh);
+            }
+            .floatDown{
+                transition: 0.5s;
+                transform: translateY(6vh);
+            }
+            .floatUpHigh{
+                transition: 0.5s;
+                transform: translateY(-24vh);
             }
         </style>
     </head>
