@@ -551,6 +551,8 @@ function openPage(nb){
                 color: #808080;
                 z-index: 10;
                 transition: 1s;
+                cursor:text;
+
             }
             #inp1-container{
                 transition: 1s;
