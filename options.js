@@ -117,6 +117,7 @@ function  updatePage(how,ev){
         }
     }
     else if (how == 'back'){
+        console.log('hi')
         globalInfo.currentPage-=1;
         if(globalInfo.currentPage>-1){
         generatePage(...pagesSubjects[globalInfo.currentPage],null);
@@ -181,12 +182,10 @@ function openPage(nb){
                 return obj[msgNumber];
             } 
 
-            document.body.addEventListener('keydown',event=> {if(event.key=='ArrowRight' && globalInfo.currentPage < 3 ){
-                 event.preventDefault();
+            document.body.addEventListener('keydown',event=> {event.preventDefault();if(event.key=='ArrowRight' && globalInfo.currentPage < 3 ){
                  updatePage('next')
          
-             }else if (event.key=='ArrowLeft' && globalInfo.currentPage > 0){
-                 event.preventDefault();
+             }else if (event.key=='ArrowLeft' && globalInfo.currentPage > -1){
                  updatePage('back')
          
             }})
@@ -267,7 +266,8 @@ function openPage(nb){
                 document.getElementById('inp2-container').classList.remove('floatUpHigh');
                 document.getElementById('inp1-container').classList.remove('floatDown');
                 })
-        }
+            }
+            document.getElementById('last-name').addEventListener('keypress',(event)=>{event.key=='Enter' && updatePage('next')})
             `
 
         
