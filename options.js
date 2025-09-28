@@ -235,7 +235,7 @@ function openPage(nb){
             function initialPageEvents (){
                 if (window.innerHeight <= 550){
 
-                    document.getElementById('first-name').addEventListener('click',()=>{
+                    document.getElementById('first-name').addEventListener('focus',()=>{
                         if (!document.getElementById('inp1-container').classList.contains('floatUp')){
                             document.querySelector('.mini-title').classList.add('shrinkToHidden');
                             document.getElementById('inp1-container').classList.add('floatUp')}
@@ -252,7 +252,7 @@ function openPage(nb){
                     })
 
 
-                    document.getElementById('last-name').addEventListener('click',()=>{
+                    document.getElementById('last-name').addEventListener('focus',()=>{
                         if (!document.getElementById('inp2-container').classList.contains('floatUpHigh')){
                             document.querySelector('.mini-title').classList.add('shrinkToHidden');
                             document.getElementById('inp1-container').classList.remove('floatUp');
