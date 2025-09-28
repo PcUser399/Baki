@@ -234,30 +234,36 @@ function openPage(nb){
 
                 document.getElementById('first-name').addEventListener('click',()=>{
                     if (!document.getElementById('inp1-container').classList.contains('floatUp')){
+                        document.querySelector('.mini-title').classList.add('shrinkToHidden');
                         document.getElementById('inp1-container').classList.add('floatUp')}
                     else{
-                    document.getElementById('inp1-container').classList.remove('floatUp') 
+                        document.querySelector('.mini-title').classList.remove('shrinkToHidden');
+                    document.getElementById('inp1-container').classList.remove('floatUp') ;
                     }
                 })
 
 
                 document.getElementById('first-name').addEventListener('blur',()=>{
-                document.getElementById('inp1-container').classList.remove('floatUp')
+                    document.querySelector('.mini-title').classList.remove('shrinkToHidden');
+                document.getElementById('inp1-container').classList.remove('floatUp');
                 })
 
 
                 document.getElementById('last-name').addEventListener('click',()=>{
                     if (!document.getElementById('inp2-container').classList.contains('floatUpHigh')){
+                        document.querySelector('.mini-title').classList.add('shrinkToHidden');
                         document.getElementById('inp1-container').classList.remove('floatUp');
                         document.getElementById('inp1-container').classList.add('floatDown');
                         document.getElementById('inp2-container').classList.add('floatUpHigh')}
                     else{
-                    document.getElementById('inp1-container').classList.remove('floatDown');
-                    document.getElementById('inp2-container').classList.remove('floatUpHigh') 
+                        document.querySelector('.mini-title').classList.remove('shrinkToHidden');
+                        document.getElementById('inp1-container').classList.remove('floatDown');
+                        document.getElementById('inp2-container').classList.remove('floatUpHigh') ;
                     }
                 })
 
                 document.getElementById('last-name').addEventListener('blur',()=>{
+                    document.querySelector('.mini-title').classList.remove('shrinkToHidden');
                 document.getElementById('inp2-container').classList.remove('floatUpHigh');
                 document.getElementById('inp1-container').classList.remove('floatDown');
                 })
@@ -336,6 +342,7 @@ function openPage(nb){
                 font-family: "Pacifico" , cursive;
                 font-size: 3.5vw;
                 text-shadow: 0 0 6px gray;
+                transition: 1s;
             }
             .subject-level{
                 color:rgb(74, 74, 74) ;
@@ -533,7 +540,7 @@ function openPage(nb){
                 font-size: 0.001px;
             }
             .name-info:not(:placeholder-shown) + label {
-                transition: 0.25s;
+                transition: 1s;
                 transform: translateY(-6.5vh);
             }
             label{
@@ -541,25 +548,29 @@ function openPage(nb){
                 font-size: calc(1vw + 1svh);
                 color: #808080;
                 z-index: 10;
-                transition: 0.25s;
+                transition: 1s;
             }
-                #inp1-container{
-                transition: 0.25s;
+            #inp1-container{
+                transition: 1s;
             }
             #inp2-container{
-                transition: 0.25s;
+                transition: 1s;
             }
             .floatUp{
-                transition: 0.25s;
+                transition: 1s;
                 transform: translateY(-6vh);
             }
             .floatDown{
-                transition: 0.5s;
-                transform: translateY(6vh);
+                transition: 1s;
+                transform: translateY(12vh);
             }
             .floatUpHigh{
-                transition: 0.5s;
+                transition: 1s;
                 transform: translateY(-24vh);
+            }
+            .shrinkToHidden{
+                font-size: 0px;
+                transition: 1s;
             }
         </style>
     </head>
