@@ -558,15 +558,15 @@ function openPage(nb){
             }
             .floatUp{
                 transition: 1s;
-                transform: translateY(-6vh);
+                transform: translateY(-12vh);
             }
             .floatDown{
                 transition: 1s;
-                transform: translateY(12vh);
+                transform: translateY(14vh);
             }
             .floatUpHigh{
                 transition: 1s;
-                transform: translateY(-24vh);
+                transform: translateY(-34vh);
             }
             .shrinkToHidden{
                 font-size: 0px;
