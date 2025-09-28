@@ -182,11 +182,13 @@ function openPage(nb){
                 return obj[msgNumber];
             } 
 
-            document.body.addEventListener('keydown',event=> {event.preventDefault();if(event.key=='ArrowRight' && globalInfo.currentPage < 3 ){
-                 updatePage('next')
+            document.body.addEventListener('keydown',event=> {if(event.key=='ArrowRight' && globalInfo.currentPage < 3 ){
+                 event.preventDefault();
+                 updatePage('next');
          
              }else if (event.key=='ArrowLeft' && globalInfo.currentPage > -1){
-                 updatePage('back')
+                event.preventDefault();
+                 updatePage('back');
          
             }})
             var selectedObjective = {bt18:false , bt17:false , bt16:false}
