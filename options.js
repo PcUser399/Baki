@@ -58,6 +58,7 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                 </div>
             </div>
             `
+                initialPageEvents();
             for (let key in nameObj){
                 if (nameObj[key]){
                     document.getElementById(key+'-name').value = nameObj[key]
@@ -231,45 +232,47 @@ function openPage(nb){
             .then(() => screen.orientation.lock("landscape")) 
             .catch(err => console.error(err));
             })};
-            if (window.innerHeight <= 550){
+            function initialPageEvents (){
+                if (window.innerHeight <= 550){
 
-                document.getElementById('first-name').addEventListener('click',()=>{
-                    if (!document.getElementById('inp1-container').classList.contains('floatUp')){
-                        document.querySelector('.mini-title').classList.add('shrinkToHidden');
-                        document.getElementById('inp1-container').classList.add('floatUp')}
-                    else{
+                    document.getElementById('first-name').addEventListener('click',()=>{
+                        if (!document.getElementById('inp1-container').classList.contains('floatUp')){
+                            document.querySelector('.mini-title').classList.add('shrinkToHidden');
+                            document.getElementById('inp1-container').classList.add('floatUp')}
+                        else{
+                            document.querySelector('.mini-title').classList.remove('shrinkToHidden');
+                        document.getElementById('inp1-container').classList.remove('floatUp') ;
+                        }
+                    })
+
+
+                    document.getElementById('first-name').addEventListener('blur',()=>{
                         document.querySelector('.mini-title').classList.remove('shrinkToHidden');
-                    document.getElementById('inp1-container').classList.remove('floatUp') ;
-                    }
-                })
+                    document.getElementById('inp1-container').classList.remove('floatUp');
+                    })
 
 
-                document.getElementById('first-name').addEventListener('blur',()=>{
-                    document.querySelector('.mini-title').classList.remove('shrinkToHidden');
-                document.getElementById('inp1-container').classList.remove('floatUp');
-                })
+                    document.getElementById('last-name').addEventListener('click',()=>{
+                        if (!document.getElementById('inp2-container').classList.contains('floatUpHigh')){
+                            document.querySelector('.mini-title').classList.add('shrinkToHidden');
+                            document.getElementById('inp1-container').classList.remove('floatUp');
+                            document.getElementById('inp1-container').classList.add('floatDown');
+                            document.getElementById('inp2-container').classList.add('floatUpHigh')}
+                        else{
+                            document.querySelector('.mini-title').classList.remove('shrinkToHidden');
+                            document.getElementById('inp1-container').classList.remove('floatDown');
+                            document.getElementById('inp2-container').classList.remove('floatUpHigh') ;
+                        }
+                    })
 
-
-                document.getElementById('last-name').addEventListener('click',()=>{
-                    if (!document.getElementById('inp2-container').classList.contains('floatUpHigh')){
-                        document.querySelector('.mini-title').classList.add('shrinkToHidden');
-                        document.getElementById('inp1-container').classList.remove('floatUp');
-                        document.getElementById('inp1-container').classList.add('floatDown');
-                        document.getElementById('inp2-container').classList.add('floatUpHigh')}
-                    else{
+                    document.getElementById('last-name').addEventListener('blur',()=>{
                         document.querySelector('.mini-title').classList.remove('shrinkToHidden');
-                        document.getElementById('inp1-container').classList.remove('floatDown');
-                        document.getElementById('inp2-container').classList.remove('floatUpHigh') ;
-                    }
-                })
-
-                document.getElementById('last-name').addEventListener('blur',()=>{
-                    document.querySelector('.mini-title').classList.remove('shrinkToHidden');
-                document.getElementById('inp2-container').classList.remove('floatUpHigh');
-                document.getElementById('inp1-container').classList.remove('floatDown');
-                })
+                    document.getElementById('inp2-container').classList.remove('floatUpHigh');
+                    document.getElementById('inp1-container').classList.remove('floatDown');
+                    })
+                }
+                document.getElementById('last-name').addEventListener('keypress',(event)=>{event.key=='Enter' && updatePage('next')})
             }
-            document.getElementById('last-name').addEventListener('keypress',(event)=>{event.key=='Enter' && updatePage('next')})
             `
 
         
