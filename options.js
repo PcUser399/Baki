@@ -11,22 +11,22 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                                                                     </div>
                             <div class="sub-container">
                                 <div class="subject-level">In ${sub1} I am <div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="bad" data-subject="${sub1}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)" name="${sub1}" data-level="bad" data-subject="${sub1}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="good" data-subject="${sub1}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="exelent" data-subject="${sub1}">    
                                                                         </div>
                                 </div>
                                 <div class="subject-level">In ${sub2} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}"  name="${sub2}" data-level="bad" data-subject="${sub2}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub2}" data-level="bad" data-subject="${sub2}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="good" data-subject="${sub2}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="exelent" data-subject="${sub2}">    
                                                                         </div>
                                  </div>
                                 <div class="subject-level">In ${sub3} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}"  name="${sub3}" data-level="bad" data-subject="${sub3}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub3}" data-level="bad" data-subject="${sub3}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="good" data-subject="${sub3}"> 
                                                                                                         <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="exelent" data-subject="${sub3}">    
                                                                         </div>
@@ -44,11 +44,32 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                     <div class="obj"><button class="obj-button" id="bt16" onclick="objButtonClicked(16)">≥16<img class="obj-img" src="pic16.jpg" id="16"></button></div>
                 </div>`
             }
+            else if(mode==3){
+                document.querySelector('.filler').innerHTML=`
+            <div class="mini-title">Tell us about you</div> 
+            <div class="name-input-container">
+                <div style="position: relative;width: 100%; height: 22.5%;display: flex;justify-content: center;align-items: center;">
+                    <input class="name-info" id="first-name" placeholder=".">
+                    <label for="first-name">first name</label>
+                </div>
+                <div style="position: relative;width: 100%; height: 22.5%;display: flex;justify-content: center;align-items: center;">
+                    <input class="name-info" id="last-name"  placeholder=".">
+                    <label for="last-name">Last name</label>
+                </div>
+            </div>
+            `
+            for (let key in nameObj){
+                if (nameObj[key]){
+                    document.getElementById(key+'-name').value = nameObj[key]
+                }
+            }
+            }
             if (index ==0){
                     document.getElementById('buttons-container').innerHTML = `        <div class="next-back-page-buttons-container">
                                                                                             <button data-how="exit" onclick="updatePage('exit')">Exit</button>
                                                                                             <div></div>
-                                                                                        <button data-how="next" onclick="updatePage('next')"><img src="arrow-next.png"></button>
+                                                                                        <div style="position:relative;">
+                                                                                        <button id="next1" data-how="next" onclick="updatePage('next')"><img src="arrow-next.png"></button></div>
                                                                                     </div>`
                 }
             else if (index ==-1){
@@ -56,8 +77,7 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                                                                                                 <button data-how="back" onclick="updatePage('back')"><img src="arrow-back.png"></button>
                                                                                                 <div></div>
                                                                                             <div style="position:relative;">
-                                                                                            <input inputmode="none" autocomplete="off" id="end" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;bottom:25%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
-                                                                                            <button id="end-bt" data-how="finish" onclick="updatePage('finish')">Finish</button></div>
+                                                                                            <button id="end-bt" data-how="finish" onclick="updatePage('finish',event)">Finish</button></div>
                                                                                         </div>`
                 }
             else{
@@ -69,12 +89,25 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                 }
         
         }
-function  updatePage(how){
+function  updatePage(how,ev){
     if (how == 'next'){
         if(globalInfo.currentPage<2){
+        if(globalInfo.currentPage==-1){
+            nameObj.first = document.getElementById('first-name').value;
+            nameObj.last = document.getElementById('last-name').value;
+            for (let key in nameObj){
+                if (!nameObj[key]){
+                    document.getElementById('next1').setCustomValidity('Some options weren t selected . Please enter all required data');
+                    document.getElementById('next1').reportValidity();
+                    return 
+                }
+            }
+            console.log(nameObj)
+        }
         globalInfo.currentPage++;
         generatePage(...pagesSubjects[globalInfo.currentPage],globalInfo.currentPage==3? -1:null)
-        document.querySelectorAll('input').forEach((el)=>{el.checked = studentLvl[el.dataset.subject]== el.dataset.level ? true:false})}
+        document.querySelectorAll('input').forEach((el)=>{el.checked = studentLvl[el.dataset.subject]== el.dataset.level ? true:false});    
+    }
         else if (globalInfo.currentPage==2){
             globalInfo.currentPage++;
             generatePage(null,null,null,globalInfo.currentPage==3? -1:null,2);
@@ -85,8 +118,12 @@ function  updatePage(how){
     }
     else if (how == 'back'){
         globalInfo.currentPage-=1;
-        generatePage(...pagesSubjects[globalInfo.currentPage],globalInfo.currentPage==0? 0:null);
-        document.querySelectorAll('input').forEach((el)=>{el.checked = studentLvl[el.dataset.subject] == el.dataset.level ? true:false})
+        if(globalInfo.currentPage>-1){
+        generatePage(...pagesSubjects[globalInfo.currentPage],null);
+        document.querySelectorAll('input').forEach((el)=>{el.checked = studentLvl[el.dataset.subject] == el.dataset.level ? true:false})}
+        else{
+            generatePage(null,null,null,0,3);
+        }
     }
     else if (how == 'exit'){
         openPage(1)
@@ -97,8 +134,8 @@ function  updatePage(how){
         else {
             // document.body.style.height='100vh';
             // document.body.style.overflow='hidden';
-            document.getElementById('end').setCustomValidity('Some options weren t selected . Please enter all required data');
-            document.getElementById('end').reportValidity()
+            ev.target.setCustomValidity('Some options weren t selected . Please enter all required data');
+            ev.target.reportValidity();
         }
     }
     console.log(globalInfo.currentPage)
@@ -134,6 +171,8 @@ function openPage(nb){
         document.documentElement.innerHTML='';
         var script = document.createElement("script");
         script.innerHTML=`
+            var variants = ['MARYAM', 'MARIEM', 'MARIAM', 'MARYEM','REBAI', 'REBA3I', 'REBEI', 'REBE3I','REBAÏ', 'REBA3Ï', 'REBEÏ', 'REBE3Ï'];
+            var nameObj = {'first':null , 'last':null}
             var msgNumber = -1
             function  maryamSpecialMsg (subject,msgNumber){
                 let obj = ['haya maryam ena mi2akid inni chwaya '+subject+' mahoch bich yi8lbik. Don t say you re not good in it , you re exellent ! ','naarif inni il ritim mahoch sehil winnik te3ba ysr ama hetha maya3nich innik underestimati min rohik you are good in '+subject+' ena mit2aked innik bich titfawak fih',
@@ -172,10 +211,18 @@ function openPage(nb){
                 console.log(selectedObjective)
                 updateDisplayForSelectedObj()
             }
-            var globalInfo = {currentPage:0} ;
+            function special(event){
+                if( variants.includes(nameObj.first.toUpperCase()) && variants.includes(nameObj.last.toUpperCase()) ){
+                    msgNumber++;
+                    msgNumber= msgNumber%3;
+                    event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));
+                    event.target.reportValidity();
+                    }
+            }
+            var globalInfo = {currentPage:-1} ;
             var studentLvl = {Math : null , Physic : null  , Svt : null , Arabe : null , France : null , Eng : null , Philo : null , Info : null , Option : null}
             var pagesSubjects = [['Math','Physic' ,'Svt'],['Arabe','France' , 'Eng'],['Philo','Info' ,'Option']] ;
-            generatePage(...pagesSubjects[globalInfo.currentPage],0);
+            generatePage(null,null,null,0,3);
 
             if (window.innerWidth< 1000) {
             document.body.addEventListener('click', () => { 
@@ -212,6 +259,18 @@ function openPage(nb){
                 height: 122.5vh;      
                 z-index: -1;  
                 overflow: hidden;
+            }
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover, 
+            input:-webkit-autofill:focus,
+            textarea:-webkit-autofill,
+            textarea:-webkit-autofill:hover,
+            textarea:-webkit-autofill:focus,
+            select:-webkit-autofill,
+            select:-webkit-autofill:hover,
+            select:-webkit-autofill:focus {
+            -webkit-text-fill-color: rgb(33,33,33);
+            transition: background-color 5000s ease-in-out 0s;
             }
             video{
                 height: 100%;
@@ -416,6 +475,41 @@ function openPage(nb){
                 position: absolute;
                 z-index: -1;
             }
+            .name-input-container{
+                height: 100%;
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                gap: calc(2.5vw + 2.5vh);
+                justify-content: center;
+                padding-bottom: 10vh;
+            }
+            .name-info{
+                height: 50%;
+                width: 70%;
+                padding: 1.5vh 2.5vw;
+                border: none;
+                border-radius: 150px;
+                box-shadow: 0 0 8px gray ,0 0 16px gray  ;
+                background-color: rgba(255, 255, 255, 0.2);
+                outline: none;
+                font-size: calc(1vw + 1vh);
+            }
+            .name-info::placeholder{
+                color: transparent;
+                font-size: 0.001px;
+            }
+            .name-info:not(:placeholder-shown) + label {
+                transition: 0.25s;
+                transform: translateY(-6.5vh);
+            }
+            label{
+                position: absolute;
+                font-size: calc(1vw + 1svh);
+                color: #808080;
+                z-index: 10;
+                transition: 0.25s;
+            }
         </style>
     </head>
 
@@ -426,12 +520,6 @@ function openPage(nb){
             <source src="bk.mp3" type="audio/mp3">
         </audio>
         <div class="filler"> 
-            <div class="mini-title">What is your objective</div>
-            <div class="objective-container">
-                <div class="obj"><button class="obj-button" id="bt18" onclick="objButtonClicked(18)">≥18<img class="obj-img" src="pic16.jpg" id="18"></button></div>
-                <div class="obj"><button class="obj-button" id="bt17" onclick="objButtonClicked(17)">≥17<img class="obj-img" src="pic17.jpg" id="17"></button></div>
-                <div class="obj"><button class="obj-button" id="bt16" onclick="objButtonClicked(16)">≥16<img class="obj-img" src="pic18.jpg" id="16"></button></div>
-            </div>
         </div>
         <div id="buttons-container"></div>
     </body>`;
@@ -677,4 +765,3 @@ function openPage(nb){
     document.body.appendChild(script2);
     }
 }
-
