@@ -1030,6 +1030,10 @@ function openPage(nb){
             dailyQuotesInd++;
 
             acOp.innerText = studentName.first + ' ' + studentName.last;
+
+            if (window.innerHeight<=525){
+                ls.style.gap ="2vh";
+            }
             function OpenCloseOptions (){
                 if(clickAccess){
                     clickAccess = false ;
@@ -1231,7 +1235,7 @@ function openPage(nb){
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 2.35vh;
+                gap: 2.5vh;
             }
             .close-open-options{
                 /* padding-left: 5px; */
@@ -1386,5 +1390,3 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
-
-
