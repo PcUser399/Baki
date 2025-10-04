@@ -1295,6 +1295,15 @@ function openPage(nb){
             .bigOptionFont{
                 font-size: calc(1.15vh + 1.15vw);
             }
+            @media (max-height : 525px ){
+                .option{
+                    font-size: calc(0.8vh + 0.75vw);
+                }
+
+                .bigOptionFont{
+                    font-size: calc(1vh + 1vw);
+                 }
+            }
             .main-theme{
                 position: absolute;
                 left: calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px);
@@ -1389,4 +1398,3 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
-
