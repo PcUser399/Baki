@@ -1,3 +1,168 @@
+const dailyQuotes = [
+                    "Trust in Allah, but tie your camel. Effort is part of faith.",
+                    "Knowledge is the best companion; never stop seeking it.",
+                    "Success comes to those who persist, not those who quit.",
+                    "Start your day with Bismillah and confidence will follow.",
+                    "The best of people are those who are most beneficial to others.",
+                    "Believe in yourself, for Allah has given you unique talents.",
+                    "Patience is key; every small effort counts in the long run.",
+                    "Struggle today, shine tomorrow.",
+                    "Make dua before exams; Allah knows what’s best for you.",
+                    "Knowledge enlivens the soul and strengthens the mind.",
+                    "A small step daily leads to great achievements.",
+                    "Your effort is a form of worship if your intention is sincere.",
+                    "Never compare your journey with others; everyone has their pace.",
+                    "Success is built on consistency, not intensity.",
+                    "Allah does not burden a soul beyond what it can bear.",
+                    "Difficulties are opportunities for growth, not defeat.",
+                    "Learn from mistakes; they are the stepping stones to wisdom.",
+                    "Be confident; Allah loves those who trust Him and themselves.",
+                    "Your mind is a gift; feed it with knowledge and positivity.",
+                    "Stay focused; distractions steal precious time.",
+                    "Every day is a new chance to improve yourself.",
+                    "Set goals, take action, and leave the rest to Allah.",
+                    "The best reward comes after the hardest effort.",
+                    "Surround yourself with those who uplift you.",
+                    "Pray for guidance and clarity; it will strengthen your path.",
+                    "Do not fear failure; fear never trying.",
+                    "Even the Prophet (PBUH) valued learning and self-improvement.",
+                    "Your time is valuable; spend it wisely.",
+                    "Discipline today brings freedom tomorrow.",
+                    "Always be curious; knowledge is endless.",
+                    "Success is a journey, not a destination.",
+                    "Believe in the power of dua and hard work together.",
+                    "Consistency outweighs occasional brilliance.",
+                    "Feed your mind with positivity, not doubts.",
+                    "Every hardship is a test of patience and faith.",
+                    "Smile; a confident mind performs better.",
+                    "Reflect on your achievements, no matter how small.",
+                    "Your intention matters more than speed.",
+                    "Never underestimate the power of starting over.",
+                    "Take breaks; your brain needs rest to perform well.",
+                    "Focus on progress, not perfection.",
+                    "Help others; it strengthens your own knowledge and character.",
+                    "Be grateful; gratitude increases motivation and happiness.",
+                    "A sound mind requires a sound body; sleep and eat well.",
+                    "Don’t rush the process; growth takes time.",
+                    "Every expert was once a beginner.",
+                    "Surround yourself with books, not just devices.",
+                    "The journey of knowledge is a lifelong path.",
+                    "Believe Allah has a plan; your effort is part of it.",
+                    "Stay humble; arrogance blocks learning.",
+                    "Mistakes are lessons, not failures.",
+                    "Your potential is limitless with effort and faith.",
+                    "Keep a journal; writing clarifies thoughts and goals.",
+                    "Think positive; negativity wastes energy.",
+                    "Organize your study; clarity reduces stress.",
+                    "Ask questions; curiosity leads to mastery.",
+                    "Do small good deeds daily; they build character and confidence.",
+                    "Motivation gets you started; discipline keeps you going.",
+                    "Learn to manage time; every minute counts.",
+                    "Celebrate your progress, not just the outcome.",
+                    "Reflect on the Quran; wisdom strengthens the mind and heart.",
+                    "Focus on what you can control, not what you can’t.",
+                    "Take responsibility for your learning; no one can do it for you.",
+                    "Visualize success; your mind follows your imagination.",
+                    "Be patient with yourself; growth is gradual.",
+                    "Confidence grows with preparation and practice.",
+                    "Avoid procrastination; action creates momentum.",
+                    "Remember, Allah rewards sincere effort, not just results.",
+                    "Find joy in learning, and you’ll never feel burdened.",
+                    "Every morning is a chance to start fresh.",
+                    "Trust your abilities; Allah has blessed you uniquely.",
+                    "Challenge yourself; comfort zones don’t lead to growth.",
+                    "Be persistent; small steps daily make a huge difference.",
+                    "Knowledge with action is the most beneficial.",
+                    "Plan, act, revise, repeat — that’s the cycle of success.",
+                    "Never underestimate the value of dua and tawakkul.",
+                    "Believe in the process; the results will follow.",
+                    "Reading strengthens the mind and expands the heart.",
+                    "Keep a positive environment; it fuels motivation.",
+                    "Be kind to yourself; self-love fosters confidence.",
+                    "Difficult times test patience and increase wisdom.",
+                    "Stay humble but aim high.",
+                    "Seek knowledge even if it takes you far and wide.",
+                    "Learning is an act of worship when done with the right intention.",
+                    "Do not let fear of failure stop your growth.",
+                    "Strive for excellence, not perfection.",
+                    "Your attitude shapes your results more than your talent.",
+                    "Time lost is never regained; use it wisely.",
+                    "Be curious and ask questions; curiosity is the fuel of knowledge.",
+                    "Trust the process; Allah’s timing is perfect.",
+                    "Keep moving forward; small steps lead to big achievements.",
+                    "Discipline your mind; focus is a skill to master.",
+                    "Every challenge is an opportunity to grow stronger.",
+                    "Knowledge combined with character is true success.",
+                    "Believe in yourself; Allah created you capable.",
+                    "Motivation fades, discipline remains.",
+                    "Never stop learning; the world is full of lessons.",
+                    "Stay determined; obstacles are temporary, your effort is permanent.",
+                    "Be proactive; waiting doesn’t lead to success.",
+                    "Self-confidence comes from preparation and faith.",
+                    "Help others learn; teaching reinforces your own understanding.",
+                    "Take one step at a time; even slow progress is progress.",
+                    "Stay consistent; even small efforts accumulate over time.",
+                    "Remember, with every difficulty comes ease.",
+                    "Success is a reflection of effort, intention, and patience."
+                    ];
+let numberOfRequiredHours = { // subject then level then objective
+            Math : {
+                        bad : {bt18 : "10 hours per week." , bt17:"9 hours per week." , bt16:"8 hours per week." },
+                        normal : {bt18 : "9 hours per week." , bt17:"7.5 hours per week." , bt16:"7 hours per week." },                
+                        good : {bt18 : "8 hours per week." , bt17:"6.5 hours per week." , bt16:"6 hours per week." },
+                        exelent : {bt18 : "7 hours per week." , bt17:"6 hours per week." , bt16:"4.5 hours per week." },
+                    },
+            Physic :    {
+                        bad : {bt18 : "5.5 hours per week." , bt17:"5 hours per week." , bt16:"4 hours per week." },
+                        normal : {bt18 : "5 hours per week." , bt17:"4.5 hours per week." , bt16:"4 hours per week." },                
+                        good : {bt18 : "4.5 hours per week." , bt17:"4 hours per week." , bt16:"4 hours per week." },
+                        exelent : {bt18 : "4 hours per week." , bt17:"3 hours per week." , bt16:"3 hours per week." },
+                    },        
+            Svt : {
+                        bad : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
+                        normal : {bt18 : "6 hours before each test." , bt17:"5 hours before each test." , bt16:"4 hours before each test." },                
+                        good : {bt18 : "5.5 hours before each test." , bt17:"4 hours before each test." , bt16:"3 hours before each test." },
+                        exelent : {bt18 : "5 hours before each test." , bt17:"4 hours before each test." , bt16:"3 hours before each test." },
+                    },
+            Arabe : {
+                        bad : {bt18 : "3 hours before each test." , bt17:"2 hours before each test." , bt16:"2 hours before each test." },
+                        normal : {bt18 : "2.5 hours before each test." , bt17:"2 hours before each test." , bt16:"2 hours before each test." },                
+                        good : {bt18 : "2 hours before each test." , bt17:"1.5 hours before each test." , bt16:"1 hour before each test." },
+                        exelent : {bt18 : "2 hours before each test." , bt17:"1.5 hours before each test." , bt16:"1 hour before each test." },
+                    },
+            France : {
+                        bad : {bt18 : "2 hours per week." , bt17:"2 hours per week." , bt16:"1.5 hours per week." },
+                        normal : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },                
+                        good : {bt18 : "4 hours before each test." , bt17:"3.5 hours before each test." , bt16:"3 hours before each test." },
+                        exelent : {bt18 : "3 hours before each test." , bt17:"2.5 hours before each test." , bt16:"2 hours before each test." },
+                    },
+            Eng : {
+                        bad : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
+                        normal : {bt18 : "3 hours before each test." , bt17:"2 hours before each test." , bt16:"1 hour before each test." },                
+                        good : {bt18 : "2 hours before each test." , bt17:"1 hour before each test." , bt16:"No need to revize now , only in the revision periode." },
+                        exelent : {bt18 : "No need to revize now , only in the revision periode." , bt17:"No need to revize now , only in the revision periode." , bt16:"No need to revize now , only in the revision periode." },
+                    },
+            Philo : {
+                        bad : {bt18 : "3.5 hours per week." , bt17:"3 hours per week." , bt16:"3 hours per week." },
+                        normal : {bt18 : "3 hours per week." , bt17:"3 hours per week." , bt16:"3 hours per week." },                
+                        good : {bt18 : "3 hours per week." , bt17:"2.5 hours per week." , bt16:"2 hours per week." },
+                        exelent : {bt18 : "3 hours per week." , bt17:"2 hours per week." , bt16:"2 hours per week." },
+                    },
+            Info  : {
+                        bad : {bt18 : "3 hours per week." , bt17:"3 hours per week." , bt16:"2.5 hours per week." },
+                        normal : {bt18 : "2.5 hours per week." , bt17:"2 hours per week." , bt16:"2 hours per week." },                
+                        good : {bt18 : "2 hours per week." , bt17:"2 hours per week." , bt16:"4 hours before each test." },
+                        exelent : {bt18 : "1.5 hours per week." , bt17:"1 hour per week." , bt16:"3 hours before each test." },
+                    },
+            Option : {
+                        bad : {bt18 : "2.5 hours per week." , bt17:"2 hours per week." , bt16:"2 hours per week." },
+                        normal : {bt18 : "2 hours per week." , bt17:"1.5 hours per week." , bt16:"1.5 hours per week." },                
+                        good : {bt18 : "2 hours per week." , bt17:"1.5 hours per week." , bt16:"1.5 hours per week." },
+                        exelent : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
+                    }
+}; 
+
+
 function generatePage(sub1,sub2,sub3,index,mode=1){
     if(mode==1){
                 document.querySelector('.filler').innerHTML=`
@@ -59,9 +224,9 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
             </div>
             `
                 initialPageEvents();
-            for (let key in nameObj){
-                if (nameObj[key]){
-                    document.getElementById(key+'-name').value = nameObj[key]
+            for (let key in studentName){
+                if (studentName[key]){
+                    document.getElementById(key+'-name').value = studentName[key]
                 }
             }
             }
@@ -94,16 +259,15 @@ function  updatePage(how,ev){
     if (how == 'next'){
         if(globalInfo.currentPage<2){
         if(globalInfo.currentPage==-1){
-            nameObj.first = document.getElementById('first-name').value;
-            nameObj.last = document.getElementById('last-name').value;
-            for (let key in nameObj){
-                if (!nameObj[key]){
+            studentName.first = document.getElementById('first-name').value;
+            studentName.last = document.getElementById('last-name').value;
+            for (let key in studentName){
+                if (!studentName[key]){
                     document.getElementById('next1').setCustomValidity('Some options weren t selected . Please enter all required data');
                     document.getElementById('next1').reportValidity();
                     return 
                 }
             }
-            console.log(nameObj)
         }
         globalInfo.currentPage++;
         generatePage(...pagesSubjects[globalInfo.currentPage],globalInfo.currentPage==3? -1:null)
@@ -132,7 +296,14 @@ function  updatePage(how,ev){
     }
     else if (how == 'finish'){
         if (checkIfAllSelected()){
-        openPage(1)}
+
+            var selectedObjective ;
+            for(let key in studentObjective){
+                if (studentObjective[key]){selectedObjective = key;break}
+            }
+            openPage(3)
+
+    }
         else {
             // document.body.style.height='100vh';
             // document.body.style.overflow='hidden';
@@ -161,8 +332,8 @@ function  checkIfAllSelected(){
             return false ;
         }
     }
-    for (let key in selectedObjective){
-        if(selectedObjective[key]){
+    for (let key in studentObjective){
+        if(studentObjective[key]){
             return true ;
         }
     }
@@ -174,7 +345,7 @@ function openPage(nb){
         var script = document.createElement("script");
         script.innerHTML=`
             var variants = ['MARYAM', 'MARIEM', 'MARIAM', 'MARYEM','REBAI', 'REBA3I', 'REBEI', 'REBE3I','REBAÏ', 'REBA3Ï', 'REBEÏ', 'REBE3Ï'];
-            var nameObj = {'first':null , 'last':null}
+            var studentName = {'first':null , 'last':null}
             var msgNumber = -1
             function  maryamSpecialMsg (subject,msgNumber){
                 let obj = ['haya maryam ena mi2akid inni chwaya '+subject+' mahoch bich yi8lbik. Don t say you re not good in it , you re exellent ! ','naarif inni il ritim mahoch sehil winnik te3ba ysr ama hetha maya3nich innik underestimati min rohik you are good in '+subject+' ena mit2aked innik bich titfawak fih',
@@ -192,29 +363,29 @@ function openPage(nb){
                  updatePage('back');
          
             }})
-            var selectedObjective = {bt18:false , bt17:false , bt16:false}
+            var studentObjective = {bt18:false , bt17:false , bt16:false}
             function setAllImgSizeInPxInCurrentWindowSize(){
                 document.getElementById('18').style.height = (document.querySelector('.obj').offsetHeight)*2.3 + 'px';
                 document.getElementById('17').style.height = (document.querySelector('.obj').offsetHeight)*1.5 + 'px';
                 document.getElementById('16').style.height = (document.querySelector('.obj').offsetHeight)*2.3 + 'px';
             }
             function updateDisplayForSelectedObj(){
-                for(let key in selectedObjective){
+                for(let key in studentObjective){
                     
-                    document.getElementById(key).style.width = selectedObjective[key]? '83.5%':'75%' ;
-                    document.getElementById(key).style.height = selectedObjective[key]? '90%':'60%' ;
-                    document.getElementById(key).style.fontSize = selectedObjective[key]? 'calc(3vw + 1.8vh)':'calc(2.5vw + 1.5vh)' ;
+                    document.getElementById(key).style.width = studentObjective[key]? '83.5%':'75%' ;
+                    document.getElementById(key).style.height = studentObjective[key]? '90%':'60%' ;
+                    document.getElementById(key).style.fontSize = studentObjective[key]? 'calc(3vw + 1.8vh)':'calc(2.5vw + 1.5vh)' ;
                 }
             }
             function objButtonClicked(id){
                 reset = [16,17,18]
                 document.getElementById("bt"+id).style.scale || (document.getElementById("bt"+id).style.scale = 1)
-                ! selectedObjective['bt'+id] ? ( selectedObjective['bt'+id] = true , selectedObjective['bt'+(((id-16+1)%3)+16)] = false , selectedObjective['bt'+(((id-16+2)%3)+16)] = false ):( selectedObjective['bt'+id] = false)
-                console.log(selectedObjective)
+                ! studentObjective['bt'+id] ? ( studentObjective['bt'+id] = true , studentObjective['bt'+(((id-16+1)%3)+16)] = false , studentObjective['bt'+(((id-16+2)%3)+16)] = false ):( studentObjective['bt'+id] = false)
+                console.log(studentObjective)
                 updateDisplayForSelectedObj()
             }
             function special(event){
-                if( variants.includes(nameObj.first.toUpperCase()) && variants.includes(nameObj.last.toUpperCase()) ){
+                if( variants.includes(studentName.first.toUpperCase()) && variants.includes(studentName.last.toUpperCase()) ){
                     msgNumber++;
                     msgNumber= msgNumber%3;
                     event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));
@@ -344,7 +515,7 @@ function openPage(nb){
                 text-align: center;
                 width: 100%;
                 height: fit-content;
-                font-family: "Pacifico" , cursive;
+                font-family: "Pacifico"  , cursive;
                 font-size: 3.5vw;
                 text-shadow: 0 0 6px gray;
                 transition: 1s;
@@ -832,5 +1003,385 @@ function openPage(nb){
     
     </body>`
     document.body.appendChild(script2);
+    }
+    else if(nb == 3){
+        var script3 = document.createElement("script");
+        script3.innerHTML=`
+            var dailyQuotesInd = Number(localStorage.getItem('dq')) || 0 ;
+            var day = new Date().getDay() ;
+            localStorage.getItem('newDay') || localStorage.setItem('newDay',day) ;
+            if (day !=  localStorage.getItem('newDay')){
+                dailyQuotesInd++;
+                localStorage.setItem('dq',dailyQuotesInd)
+            }
+            var txt = document.querySelector(".loading-text") ;
+            var an = document.querySelector(".loading-animation") ;
+            var textAnimation = ["Planning Study Schedule.","Planning Study Schedule..","Planning Study Schedule..."];
+            var currentTxt = 1 ;
+            var txtAnInt ;
+            var ls = document.querySelector(".left-section");
+            var btOp = document.querySelector('.close-open-options');
+            var clickAccess = true;
+            var acOp = document.getElementById("accountOptions");
+            var jss = document.getElementById('js-styles');
+            var mt = document.querySelector(".main-theme");
+            var dc = document.getElementById("daily-quote");
+            dc.innerHTML = '&nbsp&nbsp'+dailyQuotes[dailyQuotesInd];
+            dailyQuotesInd++;
+
+            acOp.innerText = studentName.first + ' ' + studentName.last;
+            function OpenCloseOptions (){
+                if(clickAccess){
+                    clickAccess = false ;
+                    console.log(clickAccess)
+                    if (btOp.innerText.includes('<')){
+                        jss.innerHTML=''
+                        document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="0";})
+                        document.querySelectorAll('.option').forEach((el)=>{el.style.color ="transparent";el.style.textShadow ="none"});
+                        document.getElementById("follow-options").style.opacity = "0";
+                        setTimeout(()=>{
+                            
+                            ls.style.animation = "closeOptions 1s ease forwards";
+                            btOp.style.left='0px';
+                            mt.style.left = 'calc(calc(calc(2.25vh + 2.25vw) + 0vw) + 10px)'
+                        },150)
+                        
+                        
+                        setTimeout(()=>{btOp.innerHTML= ">&nbsp&nbsp";clickAccess = true;ls.classList.add('hide');},1200);
+                    }
+                    else {
+                        setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
+                        ls.classList.remove('hide')               
+                        ls.style.animation = "openOptions 1s ease forwards";
+                        btOp.style.left='20vw';
+                        mt.style.left = 'calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px)'
+
+                        setTimeout(()=>{
+                            btOp.innerHTML= "<&nbsp&nbsp";
+                            clickAccess = true;   
+                            jss.innerHTML='#profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                        },1050);
+                    }
+                }
+            }
+
+            txtAnInt = setInterval(()=>{txt.innerText = textAnimation[currentTxt];currentTxt++;currentTxt%=3;},2000/3);
+            setTimeout(()=>{clearInterval(txtAnInt);
+                an.style.animationPlayState = "paused";
+                an.style.animation = "PlanningFinished ease 4s";
+                an.style.border = "5px solid transparent";
+                txt.innerText = "" ;
+                an.style.backgroundColor = "rgb(2, 125, 104)" ;
+                txt.style.color = "rgb(15, 234, 227)";
+                txt.style.textShadow = "0 0 6px rgb(19, 177, 172)"
+                txt.innerText="✓ Fhinised";
+                txt.style.zIndex = "2";
+                txt.style.fontSize = "calc(2.2vh + 2.2vw)";
+                an.style.animation = "spreadOut 1.5s ease forwards";
+                txt.style.animation = "spreadOut 1.5s ease forwards";
+                setTimeout(()=>{
+                    an.classList.add('hide');
+                    txt.classList.add('hide');
+                },2000)
+
+                setTimeout(()=>{
+                    ls.classList.remove('hide');
+                    btOp.classList.remove('hide');
+                    setTimeout(()=>{
+                        setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
+                        document.body.style.overflow = "visible";
+                        ls.style.animation = "openOptions 1s ease forwards";
+                        btOp.style.left='20vw';
+                        setTimeout(()=>{btOp.innerHTML= "<&nbsp&nbsp";
+                        clickAccess = true;
+                        jss.innerHTML='#profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                        btOp.addEventListener("click",()=>{OpenCloseOptions()}); 
+                        mt.classList.remove('hide');
+                        setTimeout(()=>mt.style.opacity ='1',100)
+                    },1050);
+                    },550)
+                },2050)
+            },3900);
+          `
+        document.documentElement.innerHTML= `
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>baki</title>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📘</text></svg>">
+        <style>
+            * {
+                -webkit-tap-highlight-color: transparent;
+                }
+            img:not(.profile-icon){
+                height: 8.5vh;
+                min-height: 56px;
+                width: auto;
+                cursor: pointer;
+                transition: 0.25s;
+                filter: drop-shadow(0 0 8px rgba(255, 51, 204,1));
+            }
+            #inp1:hover+img,
+            img:not(.profile-icon):hover{
+                scale: 1.1;
+                transition: 0.25s;
+                filter: drop-shadow(0 0 8px rgba(255, 51, 204))  drop-shadow(0 0 12px rgba(255, 51, 204));
+            }
+            body::-webkit-scrollbar {
+             display: none; /* Chrome, Safari */
+            }
+
+            body{
+                padding-top: max(calc(8.5vh + 16px), 72px);
+                color: rgb(230, 115, 191);
+                height: 100vh;
+                width :100vw;
+                margin: 0px;         
+                background: linear-gradient(90deg,rgb(20, 10, 44), rgb(11, 11, 41),rgb(20, 10, 44));
+                position: relative;
+                overflow: hidden;
+            }
+            header{
+                display: flex;
+                justify-content: space-between;
+                padding: 7px 5vw;
+                background-color: rgb(23, 0, 46);
+                box-shadow: 0px 2px 5px rgba(224, 14, 179, 0.45);
+                position: fixed;
+                top: 0px;
+                right: 0px;
+                left: 0px;
+                z-index: 10;
+            }
+            #left-side{
+                text-align: center;
+                display: flex;
+                align-items: center;
+                font-size: 30px;
+                font-family:'Pacifico', cursive;
+                padding-bottom: 3px;
+                text-shadow:  0 0 8px #FF33CC, 0 0 16px #FF33CC;
+                transition: 0.25s;
+                cursor: pointer;
+            }
+            #inp2:hover+#left-side,
+            #left-side:active,
+            #left-side:hover{
+                scale: 1.2;
+                transition: 0.25s;
+                text-shadow:  0 0 8px #FF33CC, 0 0 16px #FF33CC, 0 0 24px #FF33CC;
+            }
+            .loading-container{
+                width: 100vw;
+                height: calc(100vh - max(calc(8.5vh + 16px), 72px));
+                display: flex;
+                justify-content: center;
+                align-items:center ;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+            .loading-animation{
+                width: calc(17.5vw + 17.5vh) ;
+                height:calc(17.5vw + 17.5vh) ;
+                border: 5px solid rgba(61, 4, 91,0.05);
+                box-shadow: 0 0 2px rgb(20, 10, 44);
+                border-top: 5px solid rgb(2, 125, 104);
+                border-radius: 50%;
+                animation: spin ease 2s infinite ;
+                transition: 0.5s;
+                cursor: pointer;
+
+            }
+            .loading-text{
+                position: absolute;
+                font-size: calc(1.4vh + 1.4vw);
+                transition: 0.5s;
+                cursor: pointer;
+            }
+            @keyframes spin{
+                to{rotate: 360deg;
+                }
+            
+            }
+            @keyframes spreadOut{
+                from{scale: 0.01;}
+                to{scale :1;
+                }
+            
+            }
+            @keyframes openOptions{
+                from{width: 0px;}
+                to{width: 20vw;}
+            }
+            @keyframes closeOptions{
+                from{width: 20vw;}
+                to{width: 0px;}
+            }
+            .left-section{
+                width: 0vw; 
+                background: linear-gradient(90deg, #100020 0%, #19024b  100%);
+                box-shadow: 0px 5px 8px rgba(224, 14, 179, 1) ;
+                /* border-right: : */
+                position: fixed;
+                top : calc(max(calc(8.5vh + 16px), 72px) + 5px) ;
+                bottom: 0px;
+                left: 0px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2.5vh;
+            }
+            .close-open-options{
+                /* padding-left: 5px; */
+                position: fixed;
+                width: calc(2.25vh + 2.25vw);
+                height: calc(2.75vh + 2.75vw);
+                display: flex;
+                align-items:center ;
+                justify-content: center;
+                background: linear-gradient(90deg, #19024b 0%, #280475  100%);
+                border-top-right-radius: 65%;
+                border-bottom-right-radius: 65%;
+                border-top: 2px solid rgba(224, 14, 179, 0.35) ;
+                border-bottom:2px solid rgba(224, 14, 179, 0.35) ;
+                border-right: 2px solid rgba(224, 14, 179, 0.35) ;
+                top: 50%;
+                left: 0px;
+                font-size: calc(1.25vh + 1.25vw);
+                cursor: pointer;
+                transition: 1s;
+            
+            }
+            #profile-container{
+                margin-top: 5vh;
+                transition: 0.5s;
+                color: transparent;
+                text-shadow: none ;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                width: 17vw;
+                height: 10vh;
+                border-radius: 50%;
+
+            }
+            .option{
+                display: inline-block;
+                display: -webkit-box;  
+   	            -webkit-line-clamp: 1; 
+   		        -webkit-box-orient: vertical;
+   		        overflow: hidden;  
+                transition: 0.5s;
+                cursor: pointer;
+                font-size: calc(0.85vh + 0.85vw);
+                padding: 0 calc(0.35vh + 0.35vw);
+            }
+
+            .profile-icon{
+                height: calc(1.5vh + 1.5vw);
+                width: calc(1.5vh + 1.5vw);
+                margin-right: 5px;
+                border-radius: 50%;
+                transition: 0.5s;
+                opacity: 0;
+                cursor: pointer;
+            }
+            .bigOptionFont{
+                font-size: calc(1.15vh + 1.15vw);
+            }
+            .main-theme{
+                position: absolute;
+                left: calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px);
+                top : calc(max(calc(8.5vh + 16px), 72px) + 5px);
+                width: 100%;
+                z-index: -5;
+                height: 150vh;/*to be changed*/
+                transition:  1s;
+                padding-top: calc(0.75vw + 0.75vh);
+                padding-left: calc(0.5vw + 0.5vh);
+                opacity: 0;
+            }
+            .daily-quote{
+                font-size: calc(2.25vh + 2.25vw);
+                font-family:'Pacifico', cursive;
+                text-shadow: 0px 5px 8px rgba(224, 14, 179, 1);
+                max-width: 60%;
+                min-width: 20vw;
+
+            }
+            #daily-quote{
+                font-size: calc(1.25vh + 1.25vw);
+                color: white;
+                padding-top: calc(1vh + 1vw);
+            }
+            .block1{
+                padding-bottom: calc(1vh + 1vw);
+                border-bottom:  2px solid aqua  ;
+                width: 71vw;
+            }
+            .hide{
+                display: none;
+            }
+        </style>
+        <style id="js-styles">
+
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <div style="position: relative;">
+            <input inputmode="none" autocomplete="off" id="inp1" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
+            <img src="light baki logo.png" class="requiresLogIn">
+            </div>
+            <div></div>
+            <div id="left-side" style="position: relative;">
+                <input inputmode="none" autocomplete="off" id="inp2" style="z-index: 5;position: absolute;border: none ;height: 100%;width: 100%;; background-color:transparent ;outline: none;color: transparent; cursor: pointer;" onclick="event.target.reportValidity()">
+                <a class="requiresLogIn" title="click here for bac national exams" onclick="window.location.hre=''">Exams</a>
+            </div>
+        </header>
+        <div class="loading-container">
+            <div class="loading-text">Planning Study Schedule.</div>
+            <div class="loading-animation"></div>
+            <div class="left-section hide">
+                <div id="profile-container" title="Profile">
+                  <img class="profile-icon" src="default avatar icon.png">
+                  <div class="option bigOptionFont" id="accountOptions"></div>
+                </div>
+                <div id="profile-container">
+                <img class="profile-icon" src="opt2-icon.jpg">
+                  <div class="option" >Track my study hours</div>
+                </div>
+                <div id="profile-container">
+                  <div id="follow-options" style="font-size: calc(1.5vh + 1.5vw);color: black;cursor: pointer;opacity: 0;transition: 0.5s;">🎓</div>
+                  <div class="option" > Finished Bac Exams</div>
+                </div>
+                
+                <div id="profile-container">
+                <img class="profile-icon" style="border-radius: 0%;" src="calcIcon.png">
+                  <div class="option bigOptionFont" >GPA calculator</div>
+                </div>
+
+                <div id="profile-container">
+                <img class="profile-icon" style="border-radius: 0%;" src="objIcon.png">
+                  <div class="option bigOptionFont" >Set Objectives</div>
+                </div>
+                
+            </div>
+            <div class="close-open-options hide"> >&nbsp&nbsp </div>
+        </div>
+        <div class="main-theme hide">
+            <div style="display: flex;align-items: center;" class="block1">
+                <div class="daily-quote">Daily Quote :</div>
+                <div id="daily-quote"></div>
+            </div>
+
+        </div>
+        
+    </body>
+        `
+        document.body.appendChild(script3);
     }
 }
