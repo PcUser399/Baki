@@ -1007,7 +1007,11 @@ function openPage(nb){
     else if(nb == 3){
         var script3 = document.createElement("script");
         script3.innerHTML=`
-            setTimeout(() => window.scrollTo(0,0), 75);
+            if (window.innerHeight<=525){
+                ls.style.gap ="0.25vh";
+                setTimeout(() => window.scrollTo(0,0), 75);
+            }else{
+            window.scrollTo(0,0);}
             var dailyQuotesInd = Number(localStorage.getItem('dq')) || 0 ;
             var day = new Date().getDay() ;
             localStorage.getItem('newDay') || localStorage.setItem('newDay',day) ;
@@ -1032,9 +1036,6 @@ function openPage(nb){
 
             acOp.innerText = studentName.first + ' ' + studentName.last;
 
-            if (window.innerHeight<=525){
-                ls.style.gap ="0.25vh";
-            }
             function OpenCloseOptions (){
                 if(clickAccess){
                     clickAccess = false ;
@@ -1402,4 +1403,3 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
-
