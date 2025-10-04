@@ -1230,7 +1230,7 @@ function openPage(nb){
                 display: flex;
                 flex-direction: column;
                 align-items: center;
-                gap: 2.5vh;
+                gap: 2.35vh;
             }
             .close-open-options{
                 /* padding-left: 5px; */
@@ -1385,3 +1385,4 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
+
