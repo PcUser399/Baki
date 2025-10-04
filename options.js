@@ -1090,6 +1090,7 @@ function openPage(nb){
                     setTimeout(()=>{
                         setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
                         document.body.style.overflow = "visible";
+                        document.body.style.overflowX = "hidden";
                         ls.style.animation = "openOptions 1s ease forwards";
                         btOp.style.left='20vw';
                         setTimeout(()=>{btOp.innerHTML= "<&nbsp&nbsp";
@@ -1385,4 +1386,5 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
+
 
