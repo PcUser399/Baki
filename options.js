@@ -1296,8 +1296,11 @@ function openPage(nb){
                 font-size: calc(1.15vh + 1.15vw);
             }
             @media (max-height : 525px ){
+                #track{
+                    font-size: calc(0.7vh + 0.6vw);
+                }
                 .option{
-                    font-size: calc(0.8vh + 0.65vw);
+                    font-size: calc(0.8vh + 0.75vw);
                 }
 
                 .bigOptionFont{
@@ -1365,7 +1368,7 @@ function openPage(nb){
                 </div>
                 <div id="profile-container">
                 <img class="profile-icon" src="opt2-icon.jpg">
-                  <div class="option" >Track my study hours</div>
+                  <div class="option" id="track">Track my study hours</div>
                 </div>
                 <div id="profile-container">
                   <div id="follow-options" style="font-size: calc(1.5vh + 1.5vw);color: black;cursor: pointer;opacity: 0;transition: 0.5s;">🎓</div>
