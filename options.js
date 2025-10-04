@@ -1297,7 +1297,7 @@ function openPage(nb){
             }
             @media (max-height : 525px ){
                 .option{
-                    font-size: calc(0.8vh + 0.75vw);
+                    font-size: calc(0.8vh + 0.65vw);
                 }
 
                 .bigOptionFont{
