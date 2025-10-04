@@ -1007,7 +1007,7 @@ function openPage(nb){
     else if(nb == 3){
         var script3 = document.createElement("script");
         script3.innerHTML=`
-            window.scrollTo(0,0);
+            setTimeout(() => window.scrollTo(0,0), 75);
             var dailyQuotesInd = Number(localStorage.getItem('dq')) || 0 ;
             var day = new Date().getDay() ;
             localStorage.getItem('newDay') || localStorage.setItem('newDay',day) ;
@@ -1402,3 +1402,4 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
+
