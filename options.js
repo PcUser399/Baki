@@ -1270,7 +1270,7 @@ function openPage(nb){
                 width: 17vw;
                 height: 10vh;
                 border-radius: 50%;
-
+                padding: 0 calc(1vh + 1vw);
             }
             .option{
                 display: inline-block;
@@ -1281,7 +1281,6 @@ function openPage(nb){
                 transition: 0.5s;
                 cursor: pointer;
                 font-size: calc(0.85vh + 0.85vw);
-                padding: 0 calc(0.35vh + 0.35vw);
             }
 
             .profile-icon{
@@ -1390,4 +1389,3 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
-
