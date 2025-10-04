@@ -1267,7 +1267,7 @@ function openPage(nb){
                 flex-direction: row;
                 align-items: center;
                 justify-content: center;
-                width: 17vw;
+                width: 14vw;
                 height: 10vh;
                 border-radius: 50%;
                 padding: 0 calc(1vh + 1vw);
@@ -1389,3 +1389,4 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
+
