@@ -1032,7 +1032,7 @@ function openPage(nb){
             acOp.innerText = studentName.first + ' ' + studentName.last;
 
             if (window.innerHeight<=525){
-                ls.style.gap ="2vh";
+                ls.style.gap ="0.25vh";
             }
             function OpenCloseOptions (){
                 if(clickAccess){
@@ -1390,3 +1390,4 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
+
