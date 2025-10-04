@@ -1009,7 +1009,7 @@ function openPage(nb){
         script3.innerHTML=`
             if (window.innerHeight<=525){
                 ls.style.gap ="0.25vh";
-                setTimeout(() => window.scrollTo(0,0), 75);
+                setTimeout(() => window.scrollTo(0,0), 35);
             }else{
             window.scrollTo(0,0);}
             var dailyQuotesInd = Number(localStorage.getItem('dq')) || 0 ;
@@ -1403,3 +1403,4 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
+
