@@ -113,10 +113,10 @@ let numberOfRequiredHours = { // subject then level then objective
                         exelent : {bt18 : "7 hours per week." , bt17:"6 hours per week." , bt16:"4.5 hours per week." },
                     },
             Physic :    {
-                        bad : {bt18 : "5.5 hours per week." , bt17:"5 hours per week." , bt16:"4 hours per week." },
-                        normal : {bt18 : "5 hours per week." , bt17:"4.5 hours per week." , bt16:"4 hours per week." },                
-                        good : {bt18 : "4.5 hours per week." , bt17:"4 hours per week." , bt16:"4 hours per week." },
-                        exelent : {bt18 : "4 hours per week." , bt17:"3 hours per week." , bt16:"3 hours per week." },
+                        bad : {bt18 : "6 hours per week." , bt17:"5 hours per week." , bt16:"4 hours per week." },
+                        normal : {bt18 : "5.5 hours per week." , bt17:"4.5 hours per week." , bt16:"4 hours per week." },                
+                        good : {bt18 : "5 hours per week." , bt17:"4 hours per week." , bt16:"4 hours per week." },
+                        exelent : {bt18 : "4.5 hours per week." , bt17:"3.5 hours per week." , bt16:"3 hours per week." },
                     },        
             Svt : {
                         bad : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
@@ -161,8 +161,59 @@ let numberOfRequiredHours = { // subject then level then objective
                         exelent : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
                     }
 }; 
+var studentObjective = JSON.parse(localStorage.getItem('stObj')) ; 
+var studentLvl = JSON.parse(localStorage.getItem('stLvl')) ;
+var studentName = JSON.parse(localStorage.getItem('stName')) ;
+function generateAllHTMLSubjects(){
+                for (let key in studentWeeklyObjective){
+                    let a = studentWeeklyObjective[key]
 
 
+                    if ( a != 0){
+                        let msg = 
+                            '<div class="subject-title" id="' + key + '-title">' + key + '</div>' +
+                            '<div class="subject-mainPage" id="' + key + '-box">' +
+                                '<div class="subject-hours">' +
+                                    '<div class="subject-hours-details">' +
+                                        '<div id="' + key + '-done-hours">0</div>/' +
+                                        '<div id="' + key + '-total-hours"></div>&nbsp Hours done This Week' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="submiting-hours-section">' +
+                                    '<input type="number" min="0" id="input-' + key + '-hours" ' +
+                                    'onkeypress="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week)}" ' +
+                                    'placeholder="Please enter here" ' +
+                                    'title="after studing ' + key + ' for any amount enter it in hours here">' +
+                                    
+                                    '<button onclick="unSubmit(\'' + key + '\')" class="unsubmit" ' +
+                                    'title="undo Last Submitted Hours">Unsubmit</button>' +
+                                '</div>' +
+                            '</div>';
+                        document.querySelector('.subject-container').innerHTML += msg ;
+                        let thr = document.getElementById(key+'-total-hours') 
+                        let tsh = document.getElementById(key+'-done-hours')
+                        let t = document.getElementById(key+'-title')
+                        let b = document.getElementById(key+'-box')
+                        let s = studentStudyHoursAchievedInThisWeekDetails ;
+                        let sb = studentWeeklyObjective ;
+
+                        if (s[key]>=sb[key]){
+                            t.classList.add('finished-subject-title')
+                            b.classList.add('finished-subject-box')
+                        }
+
+                        if (thr && tsh ){
+                            thr.innerText =  a ;
+                            tsh.innerText = studentStudyHoursAchievedInThisWeekDetails[key] ;}
+                        
+
+                    }
+            }
+            }
+
+// localStorage.clear()// removes
+localStorage.getItem('lg') || localStorage.setItem('lg',false) ;
+var isLogedIn = JSON.parse(localStorage.getItem('lg')) ;
 function generatePage(sub1,sub2,sub3,index,mode=1){
     if(mode==1){
                 document.querySelector('.filler').innerHTML=`
@@ -176,24 +227,24 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                                                                     </div>
                             <div class="sub-container">
                                 <div class="subject-level">In ${sub1} I am <div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)" name="${sub1}" data-level="bad" data-subject="${sub1}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="good" data-subject="${sub1}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;" name="${sub1}" data-level="exelent" data-subject="${sub1}">    
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event);localStorage.setItem('stLvl',JSON.stringify(studentLvl))" name="${sub1}" data-level="bad" data-subject="${sub1}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event);localStorage.setItem('stLvl',JSON.stringify(studentLvl))" name="${sub1}" data-level="normal" data-subject="${sub1}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;localStorage.setItem('stLvl',JSON.stringify(studentLvl))" name="${sub1}" data-level="good" data-subject="${sub1}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;localStorage.setItem('stLvl',JSON.stringify(studentLvl))" name="${sub1}" data-level="exelent" data-subject="${sub1}">    
                                                                         </div>
                                 </div>
                                 <div class="subject-level">In ${sub2} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub2}" data-level="bad" data-subject="${sub2}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="good" data-subject="${sub2}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub2}" data-level="exelent" data-subject="${sub2}">    
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event);localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub2}" data-level="bad" data-subject="${sub2}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event);localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub2}" data-level="normal" data-subject="${sub2}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub2}" data-level="good" data-subject="${sub2}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub2}" data-level="exelent" data-subject="${sub2}">    
                                                                         </div>
                                  </div>
                                 <div class="subject-level">In ${sub3} I am<div class="input-container">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub3}" data-level="bad" data-subject="${sub3}">
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event)"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="good" data-subject="${sub3}"> 
-                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;"  name="${sub3}" data-level="exelent" data-subject="${sub3}">    
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event);localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub3}" data-level="bad" data-subject="${sub3}">
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;special(event);localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub3}" data-level="normal" data-subject="${sub3}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub3}" data-level="good" data-subject="${sub3}"> 
+                                                                                                        <input type="radio" onclick="studentLvl[event.target.dataset.subject] = event.target.dataset.level;localStorage.setItem('stLvl',JSON.stringify(studentLvl))"  name="${sub3}" data-level="exelent" data-subject="${sub3}">    
                                                                         </div>
                                  </div>
                             </div>
@@ -255,12 +306,17 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                 }
         
         }
+var variants = ['MARYAM', 'MARIEM', 'MARIAM', 'MARYEM','REBAI', 'REBA3I', 'REBEI', 'REBE3I','REBAÏ', 'REBA3Ï', 'REBEÏ', 'REBE3Ï'];
+function isSheMaryam(){
+                return variants.includes(studentName.first.toUpperCase()) && variants.includes(studentName.last.toUpperCase())
+            }
 function  updatePage(how,ev){
     if (how == 'next'){
         if(globalInfo.currentPage<2){
         if(globalInfo.currentPage==-1){
             studentName.first = document.getElementById('first-name').value;
             studentName.last = document.getElementById('last-name').value;
+            localStorage.setItem('stName',JSON.stringify(studentName))
             for (let key in studentName){
                 if (!studentName[key]){
                     document.getElementById('next1').setCustomValidity('Some options weren t selected . Please enter all required data');
@@ -282,7 +338,6 @@ function  updatePage(how,ev){
         }
     }
     else if (how == 'back'){
-        console.log('hi')
         globalInfo.currentPage-=1;
         if(globalInfo.currentPage>-1){
         generatePage(...pagesSubjects[globalInfo.currentPage],null);
@@ -296,13 +351,7 @@ function  updatePage(how,ev){
     }
     else if (how == 'finish'){
         if (checkIfAllSelected()){
-
-            var selectedObjective ;
-            for(let key in studentObjective){
-                if (studentObjective[key]){selectedObjective = key;break}
-            }
             openPage(3)
-
     }
         else {
             // document.body.style.height='100vh';
@@ -311,7 +360,6 @@ function  updatePage(how,ev){
             ev.target.reportValidity();
         }
     }
-    console.log(globalInfo.currentPage)
 }
 function fullScreen(){
         if(window.innerWidth<1000){
@@ -339,12 +387,37 @@ function  checkIfAllSelected(){
     }
     return false ;
 }
+function getObjective(){
+    for (let key in studentObjective){
+        if (studentObjective[key]){return key}
+    }
+}
+function special(event){
+    if( isSheMaryam() ){
+        msgNumber++;
+        msgNumber= msgNumber%3;
+        event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));
+        event.target.reportValidity();
+        }
+}
+function splitDateTime(str) {
+    let parts = str.trim().split(/\s+/);
+
+    let day = parts[0];
+    let time = parts[1] + " " + parts[2];
+    let date = parts[3];
+
+    return {
+        time: time,                      // "9:32 PM"
+        dayAndDate: day + " " + date    // "Wednesday 11/19/2025"
+    };
+}
 function openPage(nb){
+    if (isLogedIn){nb=3}
     if (nb==2){
         document.documentElement.innerHTML='';
         var script = document.createElement("script");
         script.innerHTML=`
-            var variants = ['MARYAM', 'MARIEM', 'MARIAM', 'MARYEM','REBAI', 'REBA3I', 'REBEI', 'REBE3I','REBAÏ', 'REBA3Ï', 'REBEÏ', 'REBE3Ï'];
             var studentName = {'first':null , 'last':null}
             var msgNumber = -1
             function  maryamSpecialMsg (subject,msgNumber){
@@ -381,17 +454,11 @@ function openPage(nb){
                 reset = [16,17,18]
                 document.getElementById("bt"+id).style.scale || (document.getElementById("bt"+id).style.scale = 1)
                 ! studentObjective['bt'+id] ? ( studentObjective['bt'+id] = true , studentObjective['bt'+(((id-16+1)%3)+16)] = false , studentObjective['bt'+(((id-16+2)%3)+16)] = false ):( studentObjective['bt'+id] = false)
-                console.log(studentObjective)
+                localStorage.setItem('stObj',JSON.stringify(studentObjective))
                 updateDisplayForSelectedObj()
             }
-            function special(event){
-                if( variants.includes(studentName.first.toUpperCase()) && variants.includes(studentName.last.toUpperCase()) ){
-                    msgNumber++;
-                    msgNumber= msgNumber%3;
-                    event.target.setCustomValidity(maryamSpecialMsg(event.target.dataset.subject,msgNumber));
-                    event.target.reportValidity();
-                    }
-            }
+
+            
             var globalInfo = {currentPage:-1} ;
             var studentLvl = {Math : null , Physic : null  , Svt : null , Arabe : null , France : null , Eng : null , Philo : null , Info : null , Option : null}
             var pagesSubjects = [['Math','Physic' ,'Svt'],['Arabe','France' , 'Eng'],['Philo','Info' ,'Option']] ;
@@ -768,8 +835,7 @@ function openPage(nb){
     else if (nb==1){
         var script2 = document.createElement("script")
         script2.innerHTML=`
-            var isLogedIn = false ;
-            document.querySelectorAll('input').forEach((el)=>{ isLogedIn || el.setCustomValidity('please press start first')}) ;
+            document.querySelectorAll('input').forEach((el)=>{ el.setCustomValidity('please press start first')}) ;
             var bt = document.getElementById('str-bt') ;
             var sty = document.getElementById('change') ;
             bt.addEventListener('click',discriptionPage);
@@ -1007,18 +1073,33 @@ function openPage(nb){
     else if(nb == 3){
         var script3 = document.createElement("script");
         script3.innerHTML=`
-            if (window.innerHeight<=525){
-                ls.style.gap ="0.25vh";
-                setTimeout(() => window.scrollTo(0,0), 75);
-            }else{
-            window.scrollTo(0,0);}
-            var dailyQuotesInd = Number(localStorage.getItem('dq')) || 0 ;
-            var day = new Date().getDay() ;
-            localStorage.getItem('newDay') || localStorage.setItem('newDay',day) ;
-            if (day !=  localStorage.getItem('newDay')){
-                dailyQuotesInd++;
-                localStorage.setItem('dq',dailyQuotesInd)
-            }
+            window.scrollTo(0,0);
+            // localStorage.clear()// remove
+            var day = new Date().getDate() ;
+            
+            defaultLS = {Math : [] , Physic : [] , Svt : [] , Arabe : [] , France : [] , Eng : [] , Philo : [] , Info : [] ,  Option : []};
+            studentWeeklyObjective = {Math : 0 , Physic : 0 , Svt : 0 , Arabe : 0 , France : 0 , Eng : 0 , Philo : 0 , Info : 0 ,  Option : 0}
+            defaultSW = {Math : 0 , Physic : 0 , Svt : 0 , Arabe : 0 , France : 0 , Eng : 0 , Philo : 0 , Info : 0 ,  Option : 0};
+            defaultSA = {Math : [] , Physic : [] , Svt : [] , Arabe : [] , France : [] , Eng : [] , Philo : [] , Info : [] ,  Option : []};
+            defaultAchivedSubjects = {Math : false , Physic : false , Svt : false , Arabe : false , France : false , Eng : false , Philo : false , Info : false ,  Option : false};
+
+            localStorage.getItem('firstDay') || localStorage.setItem('firstDay',day) ;
+            localStorage.getItem('previousWeek') || localStorage.setItem('previousWeek','1') ;
+            localStorage.getItem('sw') || localStorage.setItem('sw',JSON.stringify(defaultSW)) ;
+            localStorage.getItem('sa') || localStorage.setItem('sa',JSON.stringify(defaultSA)) ;
+            localStorage.getItem('ls') || localStorage.setItem('ls',JSON.stringify(defaultLS)) ;
+            localStorage.getItem('strike') || localStorage.setItem('strike',0) ;
+            localStorage.getItem('nbS') || localStorage.setItem('nbS',0) ;
+            localStorage.getItem('as') || localStorage.setItem('as',JSON.stringify(defaultAchivedSubjects)) ;
+
+            var strike = Number(localStorage.getItem('strike')) ;
+            var initialDay = localStorage.getItem('firstDay') ;
+            var dailyQuotesInd = day - initialDay ;
+            var week = Math.floor((day-initialDay)/7) + 1;
+            var prvWeek = Number(localStorage.getItem('previousWeek'))
+            var diffInWeeks = week - prvWeek ; 
+
+
             var txt = document.querySelector(".loading-text") ;
             var an = document.querySelector(".loading-animation") ;
             var textAnimation = ["Planning Study Schedule.","Planning Study Schedule..","Planning Study Schedule..."];
@@ -1031,15 +1112,286 @@ function openPage(nb){
             var jss = document.getElementById('js-styles');
             var mt = document.querySelector(".main-theme");
             var dc = document.getElementById("daily-quote");
+
+            var ws = document.getElementById('strike-number');
+            var wt = document.querySelector('.strike-title');
+            var dhp = document.querySelector('.display-hour-progress');
+            var hdw = document.getElementById('hours-done-this-week');
+            var th = document.getElementById('total-hours');
+            var b = document.querySelector('.block')
+            var studentStudyHoursAchievedInThisWeekDetails =  JSON.parse(localStorage.getItem('sw'));
+            var allStudiedHoursData = JSON.parse(localStorage.getItem('sa'))  // [{hours , date ,week },...] week = (day-initialDay)%7 + 1
+            var selectedObjective = getObjective();
+            var totalHours =  getAllRequiredHoursInOneWeak(selectedObjective );
+            var lastSubmition = JSON.parse(localStorage.getItem('ls'));
+            var allStudyHoursAchievedInThisWeek = calculateSumOfStudiedHoursThisWeek() ;
+            var achivedSubjects = JSON.parse(localStorage.getItem('as')) ;
+            updateEachevedSubjectsEachReload();
+
+            var specialMessages = isSheMaryam() ;
+            var finishSubjectsSpecialMessages = ['Sahiiit maryam ena mit2kd kenik nchlh bich twasel hakka fa2inno il bac fil maktob ou winnik bich tfarahna kolna',
+            'very impressive ! biir8m innik te3ba ou moch mistensa birritim hetha inti waselt maryam ou ma5alitich il t3b ou il bo5l yi8lbk nchlh yarabi tji mil 2awe2il fil jomhoria',
+            'haja mohima ysr innik ta3ti kol matiere 9darha maryam wasil ou nchlh nchofok nej7a bil 18 ou il 19','tebrik ederim maryaaam , don t stress up juste 5ali ritim motwasit ou hetha yikfi innik titfawa9 !',
+            'consistancy is every thing momken hetha il ritim jek kesa7 maryaaam ama raho yok3d nafso hatta fil 3otal donc bich ikon andik brcha wkt bich tarteeeh fihom walla hatta tzid takra',
+            'wasel .wasel maryaam ou nchlh mokch bich titfwk wakahaw bal akthr min hakeka a3mmel illi manijimtich na3mlo ena ou fr7 5laila ysr . fara7ha ysrrrrr ou fara7 3ayaltik kolha . Maraym hot fi mo5ik ken 7ajtin kraitik ou si7tik ou itilhe bihom imni7 ou nchlh mafama ken il 5ir']
+            
+            var nbOfFinishedSubjects = Number(localStorage.getItem('nbS')) ;
+            var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+
+            if(diffInWeeks != 0 ){
+                resetMainPage()
+                if ( diffInWeeks == 1 ){
+                    if (allStudyHoursAchievedInThisWeek < totalHours ){
+                        strike = 0 ;
+                        localStorage.setItem('strike',0) }
+                    else {
+                        strike += 1 ;
+                        localStorage.setItem('strike',strike)
+                    }
+                }
+                else if (diffInWeeks > 1 ){
+                    strike = 0 ;
+                    localStorage.setItem('strike',0) ;
+                    alert('You have missed one week or more please update the web after any study session')
+                }
+                localStorage.setItem('previousWeek',week)
+            }
+
+
             dc.innerHTML = '&nbsp&nbsp'+dailyQuotes[dailyQuotesInd];
-            dailyQuotesInd++;
+            hdw.innerText = allStudyHoursAchievedInThisWeek;
+            th.innerText = totalHours ;
+
+            generateAllHTMLSubjects() ;
+
+            function updateEachevedSubjectsEachReload(){
+                let s = studentStudyHoursAchievedInThisWeekDetails ;
+                let sb = studentWeeklyObjective ;
+                for (let key in studentWeeklyObjective){
+                    if(s[key]<sb[key]){
+                        achivedSubjects[key] = false ;
+                    }
+                    else{
+                        achivedSubjects[key] = true ; 
+                    }
+                }
+            }
+
+            function resetMainPage(){
+                localStorage.setItem('sw',JSON.stringify(defaultSW)) ;
+                localStorage.setItem('ls',JSON.stringify(defaultLS)) ;
+                lastSubmition = defaultLS ;
+
+                allStudyHoursAchievedInThisWeek = 0 ;
+                studentStudyHoursAchievedInThisWeekDetails = defaultSW ;
+                achivedSubjects = defaultAchivedSubjects ; 
+                localStorage.setItem('as',JSON.stringify(defaultAchivedSubjects)) ;
+
+                
+
+            }
+            
+  
+            // <div class="subject-title" id="Math-title">Math</div>
+            // <div class="subject-mainPage" id="Math-box">
+            //     <div class="subject-hours"> *
+            //         <div class="subject-hours-details"> *
+            //             <div id="Math-done-hours">0</div>/ *
+            //             <div id="Math-total-hours">8.5</div>&nbsp Hours done This Week *
+            //         </div>*
+            //     </div>*
+            //     <div class="submiting-hours-section">*
+            //         <input type="number" min="0" id="input-Math-hours"  onkeypress=" if(event.key == 'Enter'){submitHours('Math',event.target,day,week)}"  placeholder="Please enter here" title="after studing Math for any amount enter it in hours here">*
+            //         <buttom onclick="unSubmit('Math')" class="unsubmit" title="undo Last Submitted Hours">Unsubmit</buttom>*
+            //     </div>*
+            // </div>*
+            
+
+            function submitHours(subject,el,day,week){
+                if(el.value<=0){el.setCustomValidity('Please Enter a positive number');el.reportValidity();el.setCustomValidity('');return null}
+
+
+                let dis = document.getElementById(subject+'-done-hours');
+                let t = document.getElementById(subject+'-title');
+                let b = document.getElementById(subject+'-box');
+
+                let date = getDateYearMonthDayTime() ;
+                let arr = allStudiedHoursData[subject];
+                let s = studentStudyHoursAchievedInThisWeekDetails ;
+                let sb = studentWeeklyObjective ;
+
+
+                let h = removeOverObjectiveHours (s[subject],sb[subject],Number(el.value))
+                if(arr.length>0 && day == getDayFromExpression(arr[arr.length-1]['date'])) {
+                    arr[arr.length-1]['hours'] += Number(el.value) ;
+                    lastSubmition[subject].push(Number(el.value)) ;
+                    s[subject] += Number(el.value) ;
+
+                    localStorage.setItem('ls',JSON.stringify(lastSubmition)) ;
+                    localStorage.setItem('sw',JSON.stringify(s));
+                    localStorage.setItem('sa',JSON.stringify(allStudiedHoursData));
+            
+                }
+
+                else {
+                    arr.push({hours:Number(el.value) , date , week });
+                    lastSubmition[subject].push(Number(el.value)) ;
+                    s[subject] += Number(el.value) ;
+
+                    localStorage.setItem('ls',JSON.stringify(lastSubmition)) ;
+                    localStorage.setItem('sw',JSON.stringify(s));
+                    localStorage.setItem('sa',JSON.stringify(allStudiedHoursData))
+                }
+                console.log('')
+                console.log('allStudiedHoursData :' , allStudiedHoursData )
+                console.log('studentStudyHoursAchievedInThisWeekDetails :' , studentStudyHoursAchievedInThisWeekDetails )
+                console.log('lastSubmittion :' , lastSubmition )
+                console.log('localStorage : ',localStorage)
+
+                dis.innerText = s[subject] ;
+                allStudyHoursAchievedInThisWeek += h
+                displayHourProgress()
+                el.value=''
+                if (s[subject]>=sb[subject] && (!achivedSubjects[subject])){
+                    t.classList.add('finished-subject-title')
+                    b.classList.add('finished-subject-box')
+                    achivedSubjects[subject] = true ; 
+                    localStorage.setItem('as',JSON.stringify(achivedSubjects))
+                    if (specialMessages){
+                        setTimeout(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]),750)          
+                        nbOfFinishedSubjects = (nbOfFinishedSubjects+1)%(finishSubjectsSpecialMessages.length) ;
+                        localStorage.setItem('nbS',nbOfFinishedSubjects)
+                    }
+                }
+                
+                loadTrackingPage() ;
+            }
+
+            function unSubmit(subject){
+                let dis = document.getElementById(subject+'-done-hours');
+                let t = document.getElementById(subject+'-title');
+                let b = document.getElementById(subject+'-box');
+
+                let date = getDateYearMonthDayTime() ;
+                let arr = allStudiedHoursData[subject];
+                let s = studentStudyHoursAchievedInThisWeekDetails ;
+                let sb = studentWeeklyObjective ;
+                let len = lastSubmition[subject].length
+
+                if (arr.length>0 && len > 0 ){
+                    let h = removeOverObjectiveHours (s[subject],sb[subject],lastSubmition[subject][len-1],1);
+                    if (arr[arr.length-1]['hours'] - lastSubmition[subject][len-1] == 0 ){
+                        arr.pop();
+                        s[subject] -= lastSubmition[subject][len-1];
+                        localStorage.setItem('sw',JSON.stringify(s));
+                        localStorage.setItem('sa',JSON.stringify(allStudiedHoursData));
+                    }
+                    else{
+                        arr[arr.length-1]['hours']-=lastSubmition[subject][len-1];
+                        s[subject] -= lastSubmition[subject][len-1];
+                        localStorage.setItem('sw',JSON.stringify(s));
+                        localStorage.setItem('sa',JSON.stringify(allStudiedHoursData));
+                    }
+                    dis.innerText = s[subject] ;
+                    allStudyHoursAchievedInThisWeek -= h;
+                    displayHourProgress();
+                    lastSubmition[subject].pop() ;
+                    localStorage.setItem('ls',JSON.stringify(lastSubmition)) ;
+                    if (s[subject]<sb[subject]){
+                        t.classList.remove('finished-subject-title') ;
+                        b.classList.remove('finished-subject-box') ;
+                        achivedSubjects[subject] = false ; 
+                        localStorage.setItem('as',JSON.stringify(achivedSubjects)) ;
+
+                    }
+                    console.log('')
+                    console.log('allStudiedHoursData :' , allStudiedHoursData ) ;
+                    console.log('studentStudyHoursAchievedInThisWeekDetails :' , studentStudyHoursAchievedInThisWeekDetails ) ;
+                    console.log('lastSubmittion :' , lastSubmition ) ;
+                    console.log('localStorage : ',localStorage) ;
+                    loadTrackingPage()
+                }
+            }
+
+            function removeOverObjectiveHours (str,lim,add,mode=0){
+                if (mode == 0){
+                if (str>=lim){return 0}
+                return lim-str>=add ? add:lim-str}
+                else{
+                    afterRemoval = str-add ;
+                    if (afterRemoval>=lim){return 0}
+                    else{
+                        if (str>lim){ return lim-afterRemoval}
+                        else{return add}
+                       
+                    }
+                }
+            }
+            function getDateYearMonthDayTime(){
+                date = new Date();
+                let hours = date.getHours();
+                const minutes = date.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                if(hours >= 13){hours %= 12}
+                days = date.getDate();
+                months = date.getMonth();
+                years = date.getFullYear();
+                
+                daysInWeek = dayNames[date.getDay()];
+                return daysInWeek+'  '+hours+":"+minutes+' '+ampm+'  '+(months+1)+"/"+days+"/"+years
+            }
+            function getDayFromExpression(exp){
+                ind = exp.indexOf('/') ;
+                end=ind+3;
+                if(exp[ind+2] == '/'){end=ind+2}
+                nb = exp.slice(ind+1,end)
+                return Number(nb)
+            }
+            function displayHourProgress(){
+                hdw.innerText = allStudyHoursAchievedInThisWeek;
+                percentage = ((allStudyHoursAchievedInThisWeek/totalHours).toFixed(4)*100) ;
+                if (percentage>100){percentage=100}
+                else if(percentage < 2.5){percentage=2.5};
+                dhp.style.width = percentage+'%';
+
+                if (percentage==100){dhp.style.animation = 'glowGreen 1s ease alternate infinite'}
+                else {dhp.style.animation = 'none'} 
+            }
+
+            function calculateSumOfStudiedHoursThisWeek(){
+                acc = 0 ; 
+                for (let key in studentStudyHoursAchievedInThisWeekDetails){
+                    if (studentStudyHoursAchievedInThisWeekDetails[key]<=studentWeeklyObjective[key]){
+                    acc+=studentStudyHoursAchievedInThisWeekDetails[key]}
+                    else{
+                        acc+= studentWeeklyObjective[key]
+                    }
+                }
+                return acc
+            }
+            ws.innerText = strike
+            if (strike>0){
+                wt.classList.add('hot-strike');
+            }
+            else{
+                wt.classList.remove('hot-strike');
+                }
+
+
+            // first part
+            if (window.innerHeight<=525){
+                ls.style.gap ="0.25vh";
+                setTimeout(() => window.scrollTo(0,0), 35);
+            }else{
+            window.scrollTo(0,0);}
+
 
             acOp.innerText = studentName.first + ' ' + studentName.last;
 
             function OpenCloseOptions (){
                 if(clickAccess){
                     clickAccess = false ;
-                    console.log(clickAccess)
                     if (btOp.innerText.includes('<')){
                         jss.innerHTML=''
                         document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="0";})
@@ -1049,7 +1401,8 @@ function openPage(nb){
                             
                             ls.style.animation = "closeOptions 1s ease forwards";
                             btOp.style.left='0px';
-                            mt.style.left = 'calc(calc(calc(2.25vh + 2.25vw) + 0vw) + 10px)'
+                            mt.style.left = 'calc(calc(calc(2.25vh + 2.25vw) + 0vw) + 10px)';
+                            mt.style.width = '90%';
                         },150)
                         
                         
@@ -1057,7 +1410,8 @@ function openPage(nb){
                     }
                     else {
                         setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
-                        ls.classList.remove('hide')               
+                        ls.classList.remove('hide')      
+                        mt.style.width = '71%'         
                         ls.style.animation = "openOptions 1s ease forwards";
                         btOp.style.left='20vw';
                         mt.style.left = 'calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px)'
@@ -1065,12 +1419,22 @@ function openPage(nb){
                         setTimeout(()=>{
                             btOp.innerHTML= "<&nbsp&nbsp";
                             clickAccess = true;   
-                            jss.innerHTML='#profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                            jss.innerHTML='.profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
                         },1050);
                     }
                 }
             }
 
+            var  t1 = 2000 ;
+            var  t2 = 1050 ;
+            var  t4 = 2050 ;
+            var  t5 = 3900 ;
+            if(isLogedIn){
+                t1 = 0 ;
+                t2 = 0 ;
+                t4 = 0 ; 
+                t5 = 0 ;
+            }
             txtAnInt = setInterval(()=>{txt.innerText = textAnimation[currentTxt];currentTxt++;currentTxt%=3;},2000/3);
             setTimeout(()=>{clearInterval(txtAnInt);
                 an.style.animationPlayState = "paused";
@@ -1088,7 +1452,7 @@ function openPage(nb){
                 setTimeout(()=>{
                     an.classList.add('hide');
                     txt.classList.add('hide');
-                },2000)
+                },t1)
 
                 setTimeout(()=>{
                     ls.classList.remove('hide');
@@ -1101,15 +1465,319 @@ function openPage(nb){
                         btOp.style.left='20vw';
                         setTimeout(()=>{btOp.innerHTML= "<&nbsp&nbsp";
                         clickAccess = true;
-                        jss.innerHTML='#profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                        jss.innerHTML='.profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
                         btOp.addEventListener("click",()=>{OpenCloseOptions()}); 
                         mt.classList.remove('hide');
                         setTimeout(()=>mt.style.opacity ='1',100)
-                    },1050);
+                        setTimeout (() => {displayHourProgress();isLogedIn = true;localStorage.setItem('lg',true)},500)
+                    },t2);
                     },550)
-                },2050)
-            },3900);
+                },t4)
+                
+            },t5);
+
+            function getNumberOfHours(ch){
+                h = ch.indexOf("hour") ;
+                w = ch.indexOf("week") ;
+                if (h >-1 && w > -1){
+                    return Number(ch.slice(0,h)) 
+                }
+                else{
+                    return 0
+                }
+                
+            }
+            function getAllRequiredHoursInOneWeak(obj) {
+                acc=0;
+                for (let key in numberOfRequiredHours){
+                    a = getNumberOfHours(numberOfRequiredHours[key][studentLvl[key]][obj]) ;
+                    acc += a
+                    studentWeeklyObjective[key] = a ;
+                }
+                console.log(' initial : ')
+                console.log('weekly objectuve : ',studentWeeklyObjective)
+                console.log('weekly done hours: ',studentStudyHoursAchievedInThisWeekDetails)
+                console.log('all student data : ',allStudiedHoursData)
+                return acc
+            }
+
+            function createBox(id){
+                const box = document.createElement("div");
+
+                box.id = "box-"+id;
+                box.dataset.number = ""+id;
+
+                // Set styles
+                box.style.position = "fixed";
+                box.style.zIndex = 1001
+                box.style.top = "50%";
+                box.style.left = "50%";
+                box.style.transform = "translate(-50%, -50%)";
+                box.style.width = "calc(33vh + 33vw)";
+                box.style.backgroundColor = "#100020";
+                box.style.borderRadius = "150px";
+                box.style.padding = "calc(1vh + 1vw) calc(3vh + 3vw)";
+                box.style.textAlign = "center";
+                box.style.color = "white";
+                box.style.fontSize = "calc(1.35vh + 1.35vw)";
+                box.style.overflow = "hidden";
+                box.style.boxShadow = '0px 0 10px rgba(224, 14, 179, 0.5) '  ; 
+                box.style.transition = 'ease 1s' ;
+
+                const title = document.createElement("div");
+
+                title.id = "box-"+id+"-title";
+            
+                title.style.fontSize = "calc(2vh + 2vw)";
+                title.style.color = "aqua";
+                title.style.textShadow = "0 0 8px rgb(71, 187, 187), 0 0 8px aqua";
+                box.appendChild(title);
+
+                const message = document.createElement("div");
+                message.style.maxWidth = "100%";
+                message.style.overflowWrap = "break-word";
+                message.style.marginTop = "calc(0.5vh + 0.5vw)";
+                message.style.overflow = "hidden";
+                message.id = "box-"+id+"-message"
+                box.appendChild(message);
+
+                const exitButton = document.createElement("div");
+                exitButton.style.marginTop = "calc(0.75vh + 0.75vw)";
+                exitButton.style.display = "inline-block";
+                exitButton.style.backgroundColor = "rgb(94, 0, 0)";
+                exitButton.style.width = "calc(8vh + 8vw)";
+                exitButton.style.borderRadius = "50px";
+                exitButton.style.cursor = "pointer";
+                exitButton.style.border = "3px solid rgb(44, 0, 0)";
+                exitButton.textContent = "Exit";
+
+                mouseIn = ()=>{
+                    exitButton.style.backgroundColor = 'rgb(44, 0, 0)' ;
+                    exitButton.style.border = '3px solid rgb(94, 0, 0)' ;  
+                }
+                mouseOut = ()=>{
+                    exitButton.style.backgroundColor = 'rgb(94, 0, 0)' ;
+                    exitButton.style.border = '3px solid rgb(44, 0, 0)' ;  
+                }
+
+                exitButton.addEventListener('mouseenter',mouseIn)
+                exitButton.addEventListener('mouseleave',mouseOut)
+
+
+
+                box.appendChild(exitButton);
+
+                return {box,title,message,exitButton}
+            }
+
+            function displayBox(obj,fc = ()=>{}){ // fc to apllie orders when exit is clicked
+
+
+                const coverAll = document.createElement("div");
+                coverAll.style.position = 'fixed' ; 
+                coverAll.style.top = '0';
+                coverAll.style.bottom = '0';
+                coverAll.style.right = '0';
+                coverAll.style.left = '0';
+                coverAll.style.backdropFilter = 'blur(10px)';
+                coverAll.style.zIndex = 1000 ;
+                var body = document.querySelector('body')
+                body.style.position = 'relative' ;
+                body.appendChild(coverAll);
+                body.appendChild(obj.box) ;
+
+                obj.box.style.transform = "translate(-50%, -50%) scale(0)";
+                requestAnimationFrame(() => {
+                    obj.box.style.transform = "translate(-50%, -50%) scale(1)";
+                });
+
+                exit = ()=>{
+                    body.removeChild(coverAll);
+                    body.removeChild(obj.box) ;
+                    fc() ;
+                }
+
+                setTimeout(()=>{obj.exitButton.addEventListener('click',exit,{ once: true });},1000)
+            }
+
+
+            function affiche(msg,tit='Mabrouk !',fc = ()=>{},id=0){
+                let bubble = createBox(id);
+
+                bubble.title.innerText = tit;
+                bubble.message.innerText = msg ; 
+
+                displayBox(bubble,fc);
+            }
+
+            var warningMsgDisplay = true;
+
+            function resetLvl(subject,lvl,event){
+                if(warningMsgDisplay){
+                    affiche('Changing your level in a subject or your objective will change the required hours for subjects .','Warning !',()=>{el = event.target ;el.setCustomValidity(lvl);el.reportValidity()});
+                    warningMsgDisplay=false;
+                
+                }    
+                else{
+                    el = event.target ;
+                    el.setCustomValidity(lvl);
+                    el.reportValidity();}
+                studentLvl[subject] = lvl;
+                planChanges = true ;
+
+                localStorage.setItem('stLvl',JSON.stringify(studentLvl)) ;
+
+            
+            }
+            function fixToFitProprety(ch){
+                if (ch.indexOf('18')>-1){return 18}
+                else if (ch.indexOf('17')>-1){return 17}
+                else if (ch.indexOf('16')>-1){return 16}
+            }
+            function resetObjective(){
+                if(warningMsgDisplay){
+                    affiche('Changing your objective or you level will change the required hours for subjects.','Warning !')
+                    warningMsgDisplay=false;
+                }
+                const b =  fixToFitProprety(document.getElementById('objective-reselect').value)
+                const c = ((b-16 + 1)%3)+16 ;
+                const d = ((b-16 + 2)%3)+16 ;
+
+                studentObjective['bt'+b] = true ;
+                studentObjective['bt'+c] = false ;
+                studentObjective['bt'+d] = false ;
+
+                planChanges = true ;
+
+                localStorage.setItem('stObj',JSON.stringify(studentObjective)) ;
+                
+            }
+
+            var pages ={
+                mainPage : document.getElementById('mainPage'),
+                profilePage : document.getElementById('profilePage'),
+                trackingPage : document.getElementById('trackingPage') // mahdi when u add new padges check everu thing !!!!!!!!!!
+            }
+
+
+
+            var currentPage = 'mainPage' ;
+            var planChanges = false ;
+            loadProfilePage() ;
+            loadTrackingPage() ;
+
+            function optionClicked(option){
+                if (option == 'profilePage'){
+                    openProfilePage()
+                }
+
+            }
+
+            function openSubPage(ch){
+                window.scrollTo(0,0);
+                console.log(ch,pages[ch],currentPage)
+                if(currentPage != ch){
+                pages[ch].classList.remove('hide');    
+                pages[currentPage].classList.add('hide');
+                console.log(pages[currentPage].classList)
+                currentPage = ch ;}
+            }
+            function openMainPage(currentPage='mainPage',planChanges=false){
+                if(currentPage == 'profilePage' && planChanges){openPage(3);currentPage = 'mainPage'}
+                else{
+                    openSubPage('mainPage')
+                }
+            }
+
+            function loadProfilePage(){
+                for (let key in studentLvl){
+                    inp = document.getElementById('input-'+key+'-'+studentLvl[key]) ; 
+                    console.log(inp,key,studentLvl[key])
+                    inp.checked = true ;
+                }
+                document.getElementById('objective-reselect').value = selectedObjective ;
+
+            }
+
+            function loadTrackingPage(){
+                function appendChildD3(wkId,dt,key,el,a){
+                    let fnSt = document.getElementById('study-hours-week-nb-'+wkId+'-day-nb-'+dt);
+                    let cherche = document.getElementById('track-data-week-'+wkId+'-day-'+dt+'-subject-'+key);
+                    if(cherche){
+                        fnSt.removeChild(cherche);}
+                    let lsDim = document.createElement("div");
+                    lsDim.classList = 'last-dimention-data-track' ;
+                    lsDim.id = 'track-data-week-'+wkId+'-day-'+dt+'-subject-'+key ;
+                    lsDim.innerText = key+' : '+el.hours +' hours done at around '+a;
+                    fnSt.appendChild(lsDim);
+
+                }
+                function appendChildD2(wkId,dt,a,b,key,el){
+                    D1El= document.getElementById('week-nb-'+wkId+'-container');
+                    let atDay = document.createElement("div");
+                    atDay.id = 'day-'+dt+'-at-week-'+wkId ;
+                    atDay.classList = 'date-container';
+                    atDay.style.order = 40-Number(dt) ;
+                    atDay.innerText = b ;  
+                    chld = document.createElement("div");
+                    chld.classList = 'track-study-hours-for-subjects' ;
+                    chld.id = 'study-hours-week-nb-'+wkId+'-day-nb-'+dt ;
+                    atDay.appendChild(chld);
+                    D1El.appendChild(atDay);
+                    appendChildD3(wkId,dt,key,el,a)
+                }
+                function appendChildD1(wkId,dt,a,b,key,el){
+                    trkP = document.getElementById('trackingPage')
+                    weekElement = document.createElement("div");
+                    weekElement.classList = 'week-container' ;
+                    weekElement.id = 'week-nb-'+wkId+'-container' ; 
+                    weekElement.style.order = 200-wkId ;
+                    weekElement.innerText = 'Week '+wkId
+                    trkP.appendChild(weekElement);
+                    appendChildD2(wkId,dt,a,b,key,el)
+
+                }
+                for(let key in allStudiedHoursData){
+                    subArr = allStudiedHoursData[key]
+                    subArr.forEach((el)=>{
+                        wkId = el['week'];
+                        T =  splitDateTime(el['date']) ;
+                        a = T.time ; // "9:32 PM"
+                        b = T.dayAndDate ;// "Wednesday 11/19/2025"
+                        dt = getDayFromExpression(el['date']);
+                        console.log(1) ;
+                        wkEl = document.getElementById('week-nb-'+wkId+'-container') ;
+                        if(wkEl){
+                            dtEl = document.getElementById('day-'+dt+'-at-week-'+wkId);
+                            if (dtEl){
+                                appendChildD3(wkId,dt,key,el,a)
+                            }
+                            else{
+                                appendChildD2(wkId,dt,a,b,key,el)
+                            }
+                            
+                        }
+                        else{
+                            appendChildD1(wkId,dt,a,b,key,el)
+                        }
+                        
+                    })
+                }
+
+            }
+        
+
+            function openProfilePage(){
+                openSubPage('profilePage')
+            }
+
+            function openTrackingPage(){
+                console.log(document.getElementById('trackinPage'))
+                openSubPage('trackingPage')
+            }
+
           `
+          
         document.documentElement.innerHTML= `
     <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -1139,11 +1807,10 @@ function openPage(nb){
             }
 
             body{
-                padding-top: max(calc(8.5vh + 16px), 72px);
+                margin-top: max(calc(8.5vh + 16px), 72px) !important;
                 color: rgb(230, 115, 191);
-                height: 100vh;
+                height: 100%;
                 width :100vw;
-                margin: 0px;         
                 background: linear-gradient(90deg,rgb(20, 10, 44), rgb(11, 11, 41),rgb(20, 10, 44));
                 position: relative;
                 overflow: hidden;
@@ -1229,7 +1896,6 @@ function openPage(nb){
                 width: 0vw; 
                 background: linear-gradient(90deg, #100020 0%, #19024b  100%);
                 box-shadow: 0px 5px 8px rgba(224, 14, 179, 1) ;
-                /* border-right: : */
                 position: fixed;
                 top : calc(max(calc(8.5vh + 16px), 72px) + 5px) ;
                 bottom: 0px;
@@ -1240,7 +1906,6 @@ function openPage(nb){
                 gap: 2.5vh;
             }
             .close-open-options{
-                /* padding-left: 5px; */
                 position: fixed;
                 width: calc(2.25vh + 2.25vw);
                 height: calc(2.75vh + 2.75vw);
@@ -1260,7 +1925,7 @@ function openPage(nb){
                 transition: 1s;
             
             }
-            #profile-container{
+            .profile-container{
                 margin-top: 5vh;
                 transition: 0.5s;
                 color: transparent;
@@ -1312,10 +1977,10 @@ function openPage(nb){
             .main-theme{
                 position: absolute;
                 left: calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px);
-                top : calc(max(calc(8.5vh + 16px), 72px) + 5px);
-                width: 100%;
-                z-index: -5;
-                height: 150vh;/*to be changed*/
+                top : 5px;
+                width: 71vw;
+                z-index: 5;
+                height: 150vh;
                 transition:  1s;
                 padding-top: calc(0.75vw + 0.75vh);
                 padding-left: calc(0.5vw + 0.5vh);
@@ -1334,13 +1999,267 @@ function openPage(nb){
                 color: white;
                 padding-top: calc(1vh + 1vw);
             }
-            .block1{
+            .block{
                 padding-bottom: calc(1vh + 1vw);
                 border-bottom:  2px solid aqua  ;
-                width: 71vw;
+                width: 100%;
+            }
+            .strike-title{
+                padding-top: calc(1vh + 1vw);
+                font-size: calc(1.75vh + 1.75vw) ;
+                font-family:'Caveat', cursive;
+                color: white;
+                display : flex ;
+                justify-content : center ;
+                
+            }
+            .hot-strike{
+                color: rgb(170, 13, 13);
+                text-shadow: 0 5px 5px rgb(170, 13, 13);
+                animation: glow 1s ease alternate infinite ;
+            }
+            @keyframes glow{
+                to {text-shadow:0 0 8px  red, 0 0 16px red;
+                    
+                }
+            }
+            @keyframes glowGreen{
+                to {box-shadow: 0px 0px 5px rgba(14, 224, 49, 0.45) , 0px 0px 10px rgba(12, 243, 62, 0.45) , 0px 0px 15px rgba(6, 245, 38, 0.45) ;
+                    
+                }
+            }
+            .week-progress-container{
+                margin-top:  calc(3vh + 3vw);
+                width: 100%;
+                background-color: white;
+                height: calc(1.5vh + 1.5vw);
+                border: none;
+                border-radius: 50px;
+                position: relative;
+                color: black;
+                font-size: calc(1.25vh + 1.25vw);
+            }
+            .display-hour-progress{
+                height: 100%;
+                width: 2.5%;
+                background-color: rgb(41, 199, 120);
+                border: none;
+                border-radius: 50px;
+                transition: ease 2s;
+            }
+            .subject-mainPage{
+                width: 100%;
+                height: calc(15vw + 15vh);
+                background-color: rgb(23, 0, 46) ;
+                box-shadow: 0px 0px 5px rgba(224, 14, 179, 0.45);
+                border: none;
+                transition: 0.5s;
+                border-radius: 50px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;    
+                z-index: 10;
+                cursor: pointer;
+                color: white;
+            }
+            .subject-title{
+                margin-top: calc(5vh + 5vw) ;
+                font-size: calc(2vw + 2vh);
+                font-family:'Pacifico', cursive;
+                width: 100%;
+                text-align: center;
+                color: aqua;
+                text-shadow:  0px 0px 6px rgb(19, 177, 172);
+            }
+            .finished-subject-title{
+                color: rgb(23, 228, 40) ;
+                text-shadow:  0px 0px 6px rgb(16, 224, 68) ;
+            }
+            .finished-subject-box{
+                box-shadow: 0px 0px 5px rgba(10, 236, 59, 0.45);
+                color: green;
+            }
+            .finished-subject-box:hover{
+                box-shadow: 0px 0px 5px rgba(14, 224, 49, 0.45) , 0px 0px 10px rgba(12, 243, 62, 0.45) , 0px 0px 15px rgba(6, 245, 38, 0.45) !important ;           
+            }
+            .subject-mainPage:hover{
+                box-shadow: 0px 0px 5px rgba(224, 14, 179, 0.45) , 0px 0px 10px rgba(243, 12, 193, 0.45) , 0px 0px 15px rgba(245, 6, 193, 0.45);
+            }
+            .subject-hours-details{
+                display: flex;
+                flex-direction: row;
+                font-size: calc(1.4vh + 1.4vw);
+            }
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover, 
+            input:-webkit-autofill:focus,
+            textarea:-webkit-autofill,
+            textarea:-webkit-autofill:hover,
+            textarea:-webkit-autofill:focus,
+            select:-webkit-autofill,
+            select:-webkit-autofill:hover,
+            select:-webkit-autofill:focus {
+            -webkit-text-fill-color: rgb(128,128,128);
+            transition: background-color 5000s ease-in-out 0s;
+            }
+            input:not([type="radio"]) {
+                background-color: #19024b;
+                border-color:midnightblue ;
+                outline: none;
+                border-radius: 50px;
+                height: calc(1.5vh + 1.5vw);
+                width: calc(15vh + 15vw);
+                color: rgb(128, 128, 128);
+                padding:  0 15px;
+                font-size: calc(1vh + 1vw);
+            }
+            input::placeholder{
+                text-align: center;
+            }
+            input[type=number]::-webkit-outer-spin-button,
+            input[type=number]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            .submiting-hours-section{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .unsubmit{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white !important;
+                border: 3px solid rgb(43, 0, 0);
+                margin-left: calc(2vh + 2vw);
+                background-color: rgb(94, 0, 0);
+                border-radius: 50px;
+                height: calc(1.5vh + 1.5vw);
+                width: calc(7vh + 7vw);
+                font-size : calc(0.75vh + 0.75vw) ;
+            }
+            .unsubmit:hover{
+                background-color: rgb(43, 0, 0);
+                border: 3px solid rgb(94, 0, 0);
+            }
+            .end{
+                height: calc(5vh + 5vw);
+                width: 100%;
+            }
+            .name{
+                margin-top: calc(1.5vh + 1.5vw);
+                text-align: center;
+                color: white;
+                font-size: calc(2vh + 2vw);
+            }
+            .input-title{
+                margin-top: calc(3vh + 3vw);
+            }
+            input[type="radio"]{
+                outline: none;
+        
+                border: none;
+                width:2.75vw ;
+                height: 2.75vw;
+                /* appearance: none;   */
+                border: 1px solid gray;
+                border-radius:1vw ;
+                background-color: transparent;
+                cursor: pointer;
+            }
+            .level-displayer{
+                max-width: 100%;
+                padding: 0px calc(2.5vh + 2.5vw);
+                padding-bottom: calc(0.5vh + 0.5vw);
+                padding-top: calc(0.5vh + 0.5vw);
+                margin-top: calc(2.5vh + 2.5vw);
+                display: flex;
+                justify-content: space-between;
+                gap: calc(1.5vh + 1.5vw);
+                font-size: calc(2vh + 2vw);
+                align-items: center;
+                border-bottom: 2px solid rgb(11, 47, 114) ;
+            }
+            .input-conatainer{
+                display: flex;
+                gap: calc(5vh + 5vw);
+            }
+            .objective-title{
+                color: red;
+                text-align: center;
+                margin-top: calc(2vh + 2vw);
+                font-size: calc(2.25vh + 2.25vw);
+                animation : glow ease 1s alternate infinite ;
+                padding-bottom: calc(0.4vh + 0.4vw);
+            }
+            option{
+                color: red;    
+                font-size: calc(1.25vh + 1.25vw);
+                background-color: rgb(20, 10, 44);
+                border: none;
+                
+
+            }
+            #objective-reselect{
+                color: red;
+                animation : glow ease 1s alternate infinite ;
+                font-size: calc(1.75vh + 1.75vw);
+                background-color: transparent;
+                border: none;
+                outline: none;
+                cursor: pointer;
+            }
+
+
+            .week-container{    
+                display: flex;
+                flex-direction: column;
+                gap: calc(1.5vh + 1.5vw);
+                padding: calc(1vh + 1vw) calc(2.5vh + 2.5vw);
+                padding-bottom:calc(2.5vh + 2.5vw)   ;
+                background-color: #100020;
+                border-radius: 150px;
+                box-shadow: 0px 0px 8px rgba(224, 14, 179, 0.45);
+                text-align: center;
+                font-size: calc(2.5vh + 2.5vw);
+                color: aqua;
+                text-shadow: 0px 0px 8px #37eeffcb;
+                margin-top: calc(2vh + 2vw);
+                display: flex;
+                flex-direction: column;
+                
+            }
+            .date-container{
+                color: #FF33CC;
+                text-shadow : none;
+                font-size: calc(1.5vh + 1.5vw);
+                background-color: #16023f;
+                box-shadow: 0px 0px 8px rgba(14, 224, 28, 0.45);
+                border-radius: 150px;
+                padding: calc(0.5vh + 0.5vw) calc(1.5vh + 1.5vw);
+                display: flex;
+                flex-direction: column;
+                gap: calc(1vh + 1vw);
+
+            }
+            .track-study-hours-for-subjects{
+                font-size: calc(1vh + 1vw);
+                color: white;
+                display: flex;
+                flex-direction: column;
+                
+            }
+            .last-dimention-data-track{
+                margin-top: calc(0.5vh + 0.5vw);
+            }
+            #trackingPage{
+                display: flex;
+                flex-direction: column;
             }
             .hide{
-                display: none;
+                display: none !important;
             }
         </style>
         <style id="js-styles">
@@ -1350,9 +2269,9 @@ function openPage(nb){
 
     <body>
         <header>
-            <div style="position: relative;">
-            <input inputmode="none" autocomplete="off" id="inp1" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
-            <img src="light baki logo.png" class="requiresLogIn">
+            <div style="position: relative;" onclick="openMainPage(currentPage,planChanges);">
+                <input inputmode="none" autocomplete="off" id="inp1" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
+                <img src="light baki logo.png" class="requiresLogIn">
             </div>
             <div></div>
             <div id="left-side" style="position: relative;">
@@ -1364,25 +2283,25 @@ function openPage(nb){
             <div class="loading-text">Planning Study Schedule.</div>
             <div class="loading-animation"></div>
             <div class="left-section hide">
-                <div id="profile-container" title="Profile">
+                <div class="profile-container" title="Profile" onclick="openProfilePage()">
                   <img class="profile-icon" src="default avatar icon.png">
                   <div class="option bigOptionFont" id="accountOptions"></div>
                 </div>
-                <div id="profile-container">
-                <img class="profile-icon" src="opt2-icon.jpg">
+                <div class="profile-container" onclick="openTrackingPage()">
+                  <img class="profile-icon" src="opt2-icon.jpg">
                   <div class="option" id="track">Track my study hours</div>
                 </div>
-                <div id="profile-container">
+                <div class="profile-container">
                   <div id="follow-options" style="font-size: calc(1.5vh + 1.5vw);color: black;cursor: pointer;opacity: 0;transition: 0.5s;">🎓</div>
-                  <div class="option" > Finished Bac Exams</div>
+                  <div class="option bigOptionFont" >Study Plan</div>
                 </div>
                 
-                <div id="profile-container">
+                <div class="profile-container">
                 <img class="profile-icon" style="border-radius: 0%;" src="calcIcon.png">
                   <div class="option bigOptionFont" >GPA calculator</div>
                 </div>
 
-                <div id="profile-container">
+                <div class="profile-container">
                 <img class="profile-icon" style="border-radius: 0%;" src="objIcon.png">
                   <div class="option bigOptionFont" >Set Objectives</div>
                 </div>
@@ -1391,10 +2310,166 @@ function openPage(nb){
             <div class="close-open-options hide"> >&nbsp&nbsp </div>
         </div>
         <div class="main-theme hide">
-            <div style="display: flex;align-items: center;" class="block1">
-                <div class="daily-quote">Daily Quote :</div>
-                <div id="daily-quote"></div>
+            <div id="mainPage">
+                <div style="display: flex;align-items: center;" class="block">
+                    <div class="daily-quote">Daily Quote :</div>
+                    <div id="daily-quote"></div>
+                </div>
+
+                <div class="strike-title">
+                    <div id="strike-number">1</div>&nbsp Weeks strike
+                </div>
+                
+                <div class="week-progress-container">
+                    <div class="display-hour-progress"></div>
+                    <div style="height: calc(1.5vh + 1.5vw);display: flex;position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);">
+                        <div id="hours-done-this-week">1</div>/<div id="total-hours">10</div>&nbsp hours done this week
+                    </div>
+                </div>
+
+                <div class="subject-container">
+                </div>
+
+                <div class="end"></div>
+
             </div>
+
+            <div id="profilePage" class="hide">
+                <div style="display: flex;flex-direction: row;justify-content: space-between;align-items: center;padding: 0 calc(4vh + 4vw);">
+                    <div class="name">Name : ${studentName.first} ${studentName.last}</div> 
+                    <div class="objective-title" style="font-family: Arial, Helvetica, sans-serif;">My objective :  
+                        <select id="objective-reselect" onchange="resetObjective()">
+                            <option value="bt18">≥18</option>
+                            <option value="bt17">≥17</option>
+                            <option value="bt16">≥16</option>
+                       </select>
+                    </div>
+                </div>
+                <div class="input-lvl-container">
+                    <div class="input-title subject-title" style="font-family: Arial, Helvetica, sans-serif;">My Level :</div>
+                    <div class="level-displayer">
+                        Math  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Math','bad',event)" name="Math" id="input-Math-bad"> 
+                            <input type="radio" onclick="resetLvl('Math','normal',event)" name="Math" id="input-Math-normal">
+                            <input type="radio" onclick="resetLvl('Math','good',event)" name="Math" id="input-Math-good">
+                            <input type="radio" onclick="resetLvl('Math','exelent',event)" name="Math" id="input-Math-exelent">
+                        </div>
+                    </div>
+
+                    <div class="level-displayer">
+                        Physic  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Physic','bad',event)" name="Physic" id="input-Physic-bad"> 
+                            <input type="radio" onclick="resetLvl('Physic','normal',event)" name="Physic" id="input-Physic-normal">
+                            <input type="radio" onclick="resetLvl('Physic','good',event)" name="Physic" id="input-Physic-good">
+                            <input type="radio" onclick="resetLvl('Physic','exelent',event)" name="Physic" id="input-Physic-exelent">
+                        </div>
+
+
+                    </div>
+
+                    <div class="level-displayer">
+                        Svt  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Svt','bad',event)" name="Svt" id="input-Svt-bad"> 
+                            <input type="radio" onclick="resetLvl('Svt','normal',event)" name="Svt" id="input-Svt-normal">
+                            <input type="radio" onclick="resetLvl('Svt','good',event)" name="Svt" id="input-Svt-good">
+                            <input type="radio" onclick="resetLvl('Svt','exelent',event)" name="Svt" id="input-Svt-exelent">
+                        </div>
+                    </div>
+
+                    <div class="level-displayer">
+                        Arabe  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Arabe','bad',event)" name="Arabe" id="input-Arabe-bad"> 
+                            <input type="radio" onclick="resetLvl('Arabe','normal',event)" name="Arabe" id="input-Arabe-normal">
+                            <input type="radio" onclick="resetLvl('Arabe','good',event)" name="Arabe" id="input-Arabe-good">
+                            <input type="radio" onclick="resetLvl('Arabe','exelent',event)" name="Arabe" id="input-Arabe-exelent">
+                        </div>
+                    </div>
+
+                    <div class="level-displayer">
+                        France  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('France','bad',event)" name="France" id="input-France-bad"> 
+                            <input type="radio" onclick="resetLvl('France','normal',event)" name="France" id="input-France-normal">
+                            <input type="radio" onclick="resetLvl('France','good',event)" name="France" id="input-France-good">
+                            <input type="radio" onclick="resetLvl('France','exelent',event)" name="France" id="input-France-exelent">
+                        </div>
+                    </div>
+
+                    <div class="level-displayer">
+                        Eng  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Eng','bad',event)" name="Eng" id="input-Eng-bad"> 
+                            <input type="radio" onclick="resetLvl('Eng','normal',event)" name="Eng" id="input-Eng-normal">
+                            <input type="radio" onclick="resetLvl('Eng','good',event)" name="Eng" id="input-Eng-good">
+                            <input type="radio" onclick="resetLvl('Eng','exelent',event)" name="Eng" id="input-Eng-exelent">
+                        </div>
+                    </div>
+
+                    <div class="level-displayer">
+                        Philo  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Philo','bad',event)" name="Philo" id="input-Philo-bad"> 
+                            <input type="radio" onclick="resetLvl('Philo','normal',event)" name="Philo" id="input-Philo-normal">
+                            <input type="radio" onclick="resetLvl('Philo','good',event)" name="Philo" id="input-Philo-good">
+                            <input type="radio" onclick="resetLvl('Philo','exelent',event)" name="Philo" id="input-Philo-exelent">
+                        </div>
+                    </div>
+
+                    <div class="level-displayer">
+                        Info  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Info','bad',event)" name="Info" id="input-Info-bad"> 
+                            <input type="radio" onclick="resetLvl('Info','normal',event)" name="Info" id="input-Info-normal">
+                            <input type="radio" onclick="resetLvl('Info','good',event)" name="Info" id="input-Info-good">
+                            <input type="radio" onclick="resetLvl('Info','exelent',event)" name="Info" id="input-Info-exelent">
+                        </div>
+                    </div>
+
+                    <div class="level-displayer">
+                        Option  
+                        <div></div>
+                        <div class="input-conatainer">
+                            <input type="radio" onclick="resetLvl('Option','bad',event)" name="Option" id="input-Option-bad"> 
+                            <input type="radio" onclick="resetLvl('Option','normal',event)" name="Option" id="input-Option-normal">
+                            <input type="radio" onclick="resetLvl('Option','good',event)" name="Option" id="input-Option-good">
+                            <input type="radio" onclick="resetLvl('Option','exelent',event)" name="Option" id="input-Option-exelent">
+                        </div>
+                    </div>
+
+                    <div class="end"></div>
+                </div>
+            </div>
+
+
+            <div id="trackingPage" class="hide">
+
+
+
+
+            </div>
+
+
+
+
+
+
+
+
+
+
+
 
         </div>
         
@@ -1403,5 +2478,3 @@ function openPage(nb){
         document.body.appendChild(script3);
     }
 }
-
-
