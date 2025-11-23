@@ -412,7 +412,94 @@ function splitDateTime(str) {
         dayAndDate: day + " " + date    // "Wednesday 11/19/2025"
     };
 }
-function openPage(nb){
+function loadStudyPlanPage(){
+                msg='';
+                for (let key in numberOfRequiredHours){
+                    msg += `
+                        <div class="one-subject-element">
+                            <img class="sub-img" src="/baki/images/${key}.jpg">
+                            ${key}: ${numberOfRequiredHours[key][studentLvl[key]][selectedObjective]}
+                        </div>
+                        `;
+                }
+                msg += '<div class="end"></div><div class="end"></div>'
+                document.getElementById('studyPlanPage').innerHTML = msg ;
+            }
+
+function loadSetObjectivePage(){
+                let contant = '' ;
+                for(let i = nbNotes-1 ; i>-1;i--){
+
+                    contant +=`
+                    <div class="note" id="note-nb-${i}">
+                        <div class="note-title">
+                            <input class="inp-note-title" id="I1-${i}" placeholder="." autocomplete="off" value="${notesDetails[i].title}">
+                            <label class="shadow-lab" for="I1-${i}">Title</label>
+                        </div>
+                        <div class="main-message">
+                            <textarea cols="40" class="inp-note-title mainMsg" id="I2-${i}" placeholder=".">${notesDetails[i].main}</textarea>
+                            <label class="shadow-lab" for="I2-${i}">Note content</label>
+                        </div>
+                        <div class="note-bottom-section">
+                            ${notesDetails[i].date}
+                            <button class="unsubmit del" onclick="deleteNote(${i})">Delete</button>
+                        </div>
+                    </div>`
+                }
+                adH.innerHTML = contant ; 
+            }
+    
+function createNoteBox(){
+    let d = new Date() ;
+    let dy = d.getDay(); 
+    let st = dayNames[dy] + '&nbsp&nbsp&nbsp'+ d.toISOString().slice(0,10)
+    let ht = `
+    <div class="note" id="note-nb-${nbNotes}">
+        <div class="note-title">
+            <input class="inp-note-title" id="I1-${nbNotes}" placeholder="." autocomplete="off">
+            <label class="shadow-lab" for="I1-${nbNotes}">Title</label>
+        </div>
+        <div class="main-message">
+            <textarea cols="40" class="inp-note-title mainMsg" id="I2-${nbNotes}" placeholder="."></textarea>
+            <label class="shadow-lab" for="I2-${nbNotes}">Note content</label>
+        </div>
+        <div class="note-bottom-section">
+            ${st}
+            <button class="unsubmit del" onclick="deleteNote(${nbNotes})">Delete</button>
+        </div>
+    </div>`;
+    notesDetails.push({title:'',main:'',date:''}) ;
+    adH.insertAdjacentHTML("afterbegin", ht);
+    storeTitles(nbNotes) ;
+    storeMainMsg(nbNotes) ;
+    notesDetails[nbNotes].date = st ;
+    localStorage.setItem('notesDetails',JSON.stringify(notesDetails)) ;
+    
+    nbNotes++;
+    localStorage.setItem('nbNotes',nbNotes);
+    console.log(nbNotes,notesDetails)
+    
+}
+function specialNoteForHer(){
+    let forHer = `
+    <div class="note" id="special-for-her">
+        <div class="note-title">
+            <input class="inp-note-title" id="I1-special" placeholder="." autocomplete="off" value="You are doing Great !" disabled>
+            <label class="shadow-lab" for="I1-special">Title</label>
+        </div>
+        <div class="main-message" style="display:flex;justify-content:center;">
+            <div class="inp-note-title mainMsg" id="I2-special">kad matmor layam ou kad mat7is rohik te3ba ou be5la innik ti5dim just tswr 7awel titswr il far7a illi nchlh bich t3ichha ou t3ichha 3ayiltik fi nhar il resultat . Hawel titsawer il farhailli bich tifra7ha ommik ou ataw wahdik wahdik yolli 3inik inik takra ou tijtahid . Ama just keep in mind innik tokod mni7 ou tekil mni7 5tr ki bich takra ala a7seb si7tek bich tthor rohik fil kraya akthr milli bich t3awen.7awel kol nhar tothmon 8h noum . Ya lit ena jibt ma5ir moch ala 7aja Ena fir7an bi hide 3l5r ama juste habit nfarah ommi akthr 5trha habit 18 wena majibthhech . I leave itto you Maryam . il bac 3omrou lakan 3ala 5trk. howa ala 5tr weldik . Akra Maryam ou inja7 mni7 ou fara7om 3l5r 3l5rr 5trhom yist7ako far7it il dinia kolha. ou nchlh ya rabi bich tinjaa7 mnniii7 ou tfara7na kolna.Kol mat7is ro7ik te3ba walla faddit mil kraya tthaker il klem hetha ou nchlh tw yirja3lik ch8af fil kraya </div>
+            <label class="shadow-lab" for="I2-special">Note content</label>
+        </div>
+        <div class="note-bottom-section"  style="display:flex;justify-content:center;" >
+            <button class="unsubmit del" onclick="adH.removeChild(document.getElementById('special-for-her'))">Delete</button>
+        </div>
+    </div>`;
+    adH.insertAdjacentHTML("beforeend",forHer) ;
+    let spcEl = document.getElementById('I2-special');
+
+}
+function openPage(nb,showSlide=true){
     if (isLogedIn){nb=3}
     if (nb==2){
         document.documentElement.innerHTML='';
@@ -1075,7 +1162,9 @@ function openPage(nb){
         script3.innerHTML=`
             window.scrollTo(0,0);
             // localStorage.clear()// remove
-            var day = new Date().getDate() ;
+            var day = Date.now() ; // new Date().getDate()
+            var msInDay = 86400000 ;
+            var msInWeek = 604800000;
             
             defaultLS = {Math : [] , Physic : [] , Svt : [] , Arabe : [] , France : [] , Eng : [] , Philo : [] , Info : [] ,  Option : []};
             studentWeeklyObjective = {Math : 0 , Physic : 0 , Svt : 0 , Arabe : 0 , France : 0 , Eng : 0 , Philo : 0 , Info : 0 ,  Option : 0}
@@ -1091,11 +1180,15 @@ function openPage(nb){
             localStorage.getItem('strike') || localStorage.setItem('strike',0) ;
             localStorage.getItem('nbS') || localStorage.setItem('nbS',0) ;
             localStorage.getItem('as') || localStorage.setItem('as',JSON.stringify(defaultAchivedSubjects)) ;
+            localStorage.getItem('nbNotes') || localStorage.setItem('nbNotes',0) ;
+            localStorage.getItem('notesDetails') ||  localStorage.setItem('notesDetails',JSON.stringify([])) ;
 
             var strike = Number(localStorage.getItem('strike')) ;
-            var initialDay = localStorage.getItem('firstDay') ;
-            var dailyQuotesInd = day - initialDay ;
-            var week = Math.floor((day-initialDay)/7) + 1;
+            var initialDay = Number(localStorage.getItem('firstDay')) ;
+            var dailyQuotesInd = diffInDay(day,initialDay) ;
+
+
+            var week = diffInWeek(day,initialDay) + 1;
             var prvWeek = Number(localStorage.getItem('previousWeek'))
             var diffInWeeks = week - prvWeek ; 
 
@@ -1137,12 +1230,14 @@ function openPage(nb){
             
             var nbOfFinishedSubjects = Number(localStorage.getItem('nbS')) ;
             var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+            console.log(day,initialDay,week,prvWeek,diffInWeeks)
 
 
             if(diffInWeeks != 0 ){
+                let prvSum = allStudyHoursAchievedInThisWeek
                 resetMainPage()
                 if ( diffInWeeks == 1 ){
-                    if (allStudyHoursAchievedInThisWeek < totalHours ){
+                    if ( prvSum < totalHours ){
                         strike = 0 ;
                         localStorage.setItem('strike',0) }
                     else {
@@ -1207,6 +1302,12 @@ function openPage(nb){
             //     </div>*
             // </div>*
             
+            function diffInDay(a,b){
+                return Math.floor((a-b)/msInDay)
+            }
+            function diffInWeek(a,b){
+                return Math.floor((a-b)/msInWeek)
+            }
 
             function submitHours(subject,el,day,week){
                 if(el.value<=0){el.setCustomValidity('Please Enter a positive number');el.reportValidity();el.setCustomValidity('');return null}
@@ -1243,11 +1344,6 @@ function openPage(nb){
                     localStorage.setItem('sw',JSON.stringify(s));
                     localStorage.setItem('sa',JSON.stringify(allStudiedHoursData))
                 }
-                console.log('')
-                console.log('allStudiedHoursData :' , allStudiedHoursData )
-                console.log('studentStudyHoursAchievedInThisWeekDetails :' , studentStudyHoursAchievedInThisWeekDetails )
-                console.log('lastSubmittion :' , lastSubmition )
-                console.log('localStorage : ',localStorage)
 
                 dis.innerText = s[subject] ;
                 allStudyHoursAchievedInThisWeek += h
@@ -1305,12 +1401,10 @@ function openPage(nb){
                         localStorage.setItem('as',JSON.stringify(achivedSubjects)) ;
 
                     }
-                    console.log('')
-                    console.log('allStudiedHoursData :' , allStudiedHoursData ) ;
-                    console.log('studentStudyHoursAchievedInThisWeekDetails :' , studentStudyHoursAchievedInThisWeekDetails ) ;
-                    console.log('lastSubmittion :' , lastSubmition ) ;
-                    console.log('localStorage : ',localStorage) ;
-                    loadTrackingPage()
+                    loadTrackingPage();
+                    if(s[subject] == 0 ){
+                        removeTrackingElements = true ;
+                    }
                 }
             }
 
@@ -1328,6 +1422,12 @@ function openPage(nb){
                     }
                 }
             }
+            function toTwo(nb){
+                if (nb >= 10){return nb}
+                else{
+                    return '0'+nb
+                }
+            }
             function getDateYearMonthDayTime(){
                 date = new Date();
                 let hours = date.getHours();
@@ -1339,7 +1439,7 @@ function openPage(nb){
                 years = date.getFullYear();
                 
                 daysInWeek = dayNames[date.getDay()];
-                return daysInWeek+'  '+hours+":"+minutes+' '+ampm+'  '+(months+1)+"/"+days+"/"+years
+                return daysInWeek+'  '+toTwo(hours)+":"+toTwo(minutes)+' '+ampm+'  '+toTwo(months+1)+"/"+toTwo(days)+"/"+years
             }
             function getDayFromExpression(exp){
                 ind = exp.indexOf('/') ;
@@ -1435,46 +1535,103 @@ function openPage(nb){
                 t4 = 0 ; 
                 t5 = 0 ;
             }
-            txtAnInt = setInterval(()=>{txt.innerText = textAnimation[currentTxt];currentTxt++;currentTxt%=3;},2000/3);
-            setTimeout(()=>{clearInterval(txtAnInt);
-                an.style.animationPlayState = "paused";
-                an.style.animation = "PlanningFinished ease 4s";
-                an.style.border = "5px solid transparent";
-                txt.innerText = "" ;
-                an.style.backgroundColor = "rgb(2, 125, 104)" ;
-                txt.style.color = "rgb(15, 234, 227)";
-                txt.style.textShadow = "0 0 6px rgb(19, 177, 172)"
-                txt.innerText="✓ Fhinised";
-                txt.style.zIndex = "2";
-                txt.style.fontSize = "calc(2.2vh + 2.2vw)";
-                an.style.animation = "spreadOut 1.5s ease forwards";
-                txt.style.animation = "spreadOut 1.5s ease forwards";
-                setTimeout(()=>{
-                    an.classList.add('hide');
-                    txt.classList.add('hide');
-                },t1)
-
-                setTimeout(()=>{
-                    ls.classList.remove('hide');
-                    btOp.classList.remove('hide');
+            run(${showSlide})
+            function runInitialTime(){
+                txtAnInt = setInterval(()=>{txt.innerText = textAnimation[currentTxt];currentTxt++;currentTxt%=3;},2000/3);
+                setTimeout(()=>{clearInterval(txtAnInt);
+                    an.style.animationPlayState = "paused";
+                    an.style.animation = "PlanningFinished ease 4s";
+                    an.style.border = "5px solid transparent";
+                    txt.innerText = "" ;
+                    an.style.backgroundColor = "rgb(2, 125, 104)" ;
+                    txt.style.color = "rgb(15, 234, 227)";
+                    txt.style.textShadow = "0 0 6px rgb(19, 177, 172)"
+                    txt.innerText="✓ Fhinised";
+                    txt.style.zIndex = "2";
+                    txt.style.fontSize = "calc(2.2vh + 2.2vw)";
+                    an.style.animation = "spreadOut 1.5s ease forwards";
+                    txt.style.animation = "spreadOut 1.5s ease forwards";
                     setTimeout(()=>{
-                        setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
+                        an.classList.add('hide');
+                        txt.classList.add('hide');
+                    },t1)
+
+                    setTimeout(()=>{
+                        ls.classList.remove('hide');
+                        btOp.classList.remove('hide');
+                        setTimeout(()=>{
+                            setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
+                            document.body.style.overflow = "visible";
+                            document.body.style.overflowX = "hidden";
+                            ls.style.animation = "openOptions 1s ease forwards";
+                            btOp.style.left='20vw';
+                            setTimeout(()=>{btOp.innerHTML= "<&nbsp&nbsp";
+                            clickAccess = true;
+                            jss.innerHTML='.profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                            btOp.addEventListener("click",()=>{OpenCloseOptions()}); 
+                            mt.classList.remove('hide');
+                            setTimeout(()=>mt.style.opacity ='1',100)//100
+                            setTimeout (() => {displayHourProgress();isLogedIn = true;localStorage.setItem('lg',true)},500)//500
+                        },t2);
+                        },550)//550
+                    },t4)
+                    
+                },t5);
+                
+            }
+            function run(showSlide=true){
+
+                if(!isLogedIn){runInitialTime()}
+                else{
+                    if(showSlide){
+                        an.classList.add('hide');
+                        txt.classList.add('hide');
+                        setTimeout(()=>{
+                        ls.classList.remove('hide');
+                        btOp.classList.remove('hide');
+                        setTimeout(()=>{
+                            setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
+                            document.body.style.overflow = "visible";
+                            document.body.style.overflowX = "hidden";
+                            ls.style.animation = "openOptions 1s ease forwards";
+                            btOp.style.left='20vw';
+                            setTimeout(()=>{btOp.innerHTML= "<&nbsp&nbsp";
+                            clickAccess = true;
+                            jss.innerHTML='.profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                            btOp.addEventListener("click",()=>{OpenCloseOptions()}); 
+                            mt.classList.remove('hide');
+                            setTimeout(()=>mt.style.opacity ='1',100)//100
+                            setTimeout (() => {displayHourProgress();isLogedIn = true;localStorage.setItem('lg',true)},500)//500
+                        },t2);
+                        },550)//550
+                    },t4)
+
+                    }
+                    else{
+                        an.classList.add('hide');
+                        txt.classList.add('hide');
+
+                        ls.classList.remove('hide');
+                        btOp.classList.remove('hide');
+                        document.getElementById("follow-options").style.opacity = "1";
+                        document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});
+                        document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";
+                        el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"});
                         document.body.style.overflow = "visible";
                         document.body.style.overflowX = "hidden";
-                        ls.style.animation = "openOptions 1s ease forwards";
+                        ls.style.animation = "openOptions 0.001s ease forwards";
                         btOp.style.left='20vw';
-                        setTimeout(()=>{btOp.innerHTML= "<&nbsp&nbsp";
+                        btOp.innerHTML= "<&nbsp&nbsp";
                         clickAccess = true;
                         jss.innerHTML='.profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
                         btOp.addEventListener("click",()=>{OpenCloseOptions()}); 
                         mt.classList.remove('hide');
-                        setTimeout(()=>mt.style.opacity ='1',100)
-                        setTimeout (() => {displayHourProgress();isLogedIn = true;localStorage.setItem('lg',true)},500)
-                    },t2);
-                    },550)
-                },t4)
-                
-            },t5);
+                        mt.style.opacity ='1'
+                        displayHourProgress();isLogedIn = true;localStorage.setItem('lg',true)
+                    }
+                    
+                }
+            }
 
             function getNumberOfHours(ch){
                 h = ch.indexOf("hour") ;
@@ -1487,17 +1644,13 @@ function openPage(nb){
                 }
                 
             }
-            function getAllRequiredHoursInOneWeak(obj) {
+            function getAllRequiredHoursInOneWeak(obj) { 
                 acc=0;
                 for (let key in numberOfRequiredHours){
                     a = getNumberOfHours(numberOfRequiredHours[key][studentLvl[key]][obj]) ;
                     acc += a
                     studentWeeklyObjective[key] = a ;
                 }
-                console.log(' initial : ')
-                console.log('weekly objectuve : ',studentWeeklyObjective)
-                console.log('weekly done hours: ',studentStudyHoursAchievedInThisWeekDetails)
-                console.log('all student data : ',allStudiedHoursData)
                 return acc
             }
 
@@ -1610,7 +1763,7 @@ function openPage(nb){
                 displayBox(bubble,fc);
             }
 
-            var warningMsgDisplay = true;
+            var warningMsgDisplay = ${showSlide};
 
             function resetLvl(subject,lvl,event){
                 if(warningMsgDisplay){
@@ -1656,15 +1809,26 @@ function openPage(nb){
             var pages ={
                 mainPage : document.getElementById('mainPage'),
                 profilePage : document.getElementById('profilePage'),
-                trackingPage : document.getElementById('trackingPage') // mahdi when u add new padges check everu thing !!!!!!!!!!
+                trackingPage : document.getElementById('trackingPage'), 
+                studyPlanPage : document.getElementById('studyPlanPage'),
+                setObjectivesPage : document.getElementById('setObjectivesPage') 
             }
 
 
 
             var currentPage = 'mainPage' ;
             var planChanges = false ;
+            var removeTrackingElements = false;
+            var nbNotes = Number(localStorage.getItem('nbNotes'));
+            var notesDetails = JSON.parse(localStorage.getItem('notesDetails')) ;
+            var adH = document.getElementById('addHere')
+
+
             loadProfilePage() ;
             loadTrackingPage() ;
+            loadStudyPlanPage() ;
+            loadSetObjectivePage() ;
+            if(specialMessages){specialNoteForHer()}
 
             function optionClicked(option){
                 if (option == 'profilePage'){
@@ -1672,27 +1836,59 @@ function openPage(nb){
                 }
 
             }
+            
+            
+            function dataIsEmpty(){
+                for (let key in allStudiedHoursData){
+                    if (allStudiedHoursData[key].length!=0){
+                        return false
+                    }
+                }
+                return true ;
+            }
+
+            function deleteNote(id){
+                let ext = document.getElementById('note-nb-'+id)
+                adH.removeChild(ext);
+                notesDetails.splice(id,1);
+                localStorage.setItem('notesDetails',JSON.stringify(notesDetails)) ;
+                nbNotes-= 1 ;
+                localStorage.setItem('nbNotes',nbNotes) ;
+                console.log(nbNotes,notesDetails)
+            }
+            function storeMainMsg(nb) {
+                var txtarea = document.getElementById("I2-"+nb);
+                txtarea.addEventListener("input", function(){
+                this.style.height = "auto";
+                this.style.height = this.scrollHeight + "px"; 
+                notesDetails[nb].main = this.value ;
+                localStorage.setItem('notesDetails',JSON.stringify(notesDetails)) ;
+                console.log(nbNotes,notesDetails[nb])
+            })
+            }
+            function storeTitles(nb){
+                var Tit = document.getElementById("I1-"+nb);
+                Tit.addEventListener("input", function(){
+                notesDetails[nb].title = this.value ;
+                localStorage.setItem('notesDetails',JSON.stringify(notesDetails)) ;
+                console.log(nbNotes,notesDetails[nb]) ;
+            })
+            }
+
+            
 
             function openSubPage(ch){
                 window.scrollTo(0,0);
-                console.log(ch,pages[ch],currentPage)
                 if(currentPage != ch){
                 pages[ch].classList.remove('hide');    
                 pages[currentPage].classList.add('hide');
-                console.log(pages[currentPage].classList)
                 currentPage = ch ;}
             }
-            function openMainPage(currentPage='mainPage',planChanges=false){
-                if(currentPage == 'profilePage' && planChanges){openPage(3);currentPage = 'mainPage'}
-                else{
-                    openSubPage('mainPage')
-                }
-            }
+
 
             function loadProfilePage(){
                 for (let key in studentLvl){
                     inp = document.getElementById('input-'+key+'-'+studentLvl[key]) ; 
-                    console.log(inp,key,studentLvl[key])
                     inp.checked = true ;
                 }
                 document.getElementById('objective-reselect').value = selectedObjective ;
@@ -1745,7 +1941,6 @@ function openPage(nb){
                         a = T.time ; // "9:32 PM"
                         b = T.dayAndDate ;// "Wednesday 11/19/2025"
                         dt = getDayFromExpression(el['date']);
-                        console.log(1) ;
                         wkEl = document.getElementById('week-nb-'+wkId+'-container') ;
                         if(wkEl){
                             dtEl = document.getElementById('day-'+dt+'-at-week-'+wkId);
@@ -1765,15 +1960,43 @@ function openPage(nb){
                 }
 
             }
+
+
+            
+
+
+            function openMainPage(currentPage='mainPage',planChanges=false){
+                if(currentPage == 'profilePage' && planChanges){openPage(3);currentPage = 'mainPage'}
+                else{
+                    openSubPage('mainPage')
+                }
+            }
         
 
             function openProfilePage(){
                 openSubPage('profilePage')
             }
 
-            function openTrackingPage(){
-                console.log(document.getElementById('trackinPage'))
+            function openTrackingPage(rf=false){
+                if(rf){openPage(3,false)}
+                if(dataIsEmpty()){document.getElementById('nothingSubmetted').classList.remove('hide')}
+                else{document.getElementById('nothingSubmetted').classList.add('hide')}
                 openSubPage('trackingPage')
+            }
+
+            function openStudyPlanPage(){
+                if(planChanges){
+                    openPage(3,false)
+                }
+                loadStudyPlanPage();
+                openSubPage('studyPlanPage');
+            }
+            function openGPAcalculatorPage(){
+                console.log(specialMessages)
+                window.open("Mo3adli.html?value=" + encodeURIComponent(specialMessages), "_blank");
+            }
+            function openSetObjectivesPage(){
+                openSubPage('setObjectivesPage')
             }
 
           `
@@ -1788,7 +2011,7 @@ function openPage(nb){
             * {
                 -webkit-tap-highlight-color: transparent;
                 }
-            img:not(.profile-icon){
+            img:not(.profile-icon):not(.sub-img){
                 height: 8.5vh;
                 min-height: 56px;
                 width: auto;
@@ -1797,7 +2020,7 @@ function openPage(nb){
                 filter: drop-shadow(0 0 8px rgba(255, 51, 204,1));
             }
             #inp1:hover+img,
-            img:not(.profile-icon):hover{
+            img:not(.profile-icon):not(.sub-img):hover{
                 scale: 1.1;
                 transition: 0.25s;
                 filter: drop-shadow(0 0 8px rgba(255, 51, 204))  drop-shadow(0 0 12px rgba(255, 51, 204));
@@ -2103,7 +2326,7 @@ function openPage(nb){
             -webkit-text-fill-color: rgb(128,128,128);
             transition: background-color 5000s ease-in-out 0s;
             }
-            input:not([type="radio"]) {
+            input:not([type="radio"]):not([class="inp-note-title"]) {
                 background-color: #19024b;
                 border-color:midnightblue ;
                 outline: none;
@@ -2139,10 +2362,15 @@ function openPage(nb){
                 height: calc(1.5vh + 1.5vw);
                 width: calc(7vh + 7vw);
                 font-size : calc(0.75vh + 0.75vw) ;
+                cursor: pointer;
             }
             .unsubmit:hover{
                 background-color: rgb(43, 0, 0);
                 border: 3px solid rgb(94, 0, 0);
+            }
+            .unsubmit:active{
+                background-color: rgb(26, 0, 0);
+                border: 3px solid rgb(110, 0, 0);
             }
             .end{
                 height: calc(5vh + 5vw);
@@ -2258,6 +2486,144 @@ function openPage(nb){
                 display: flex;
                 flex-direction: column;
             }
+            #studyPlanPage{
+                text-align: center;
+                font-size: calc(1.8vh + 1.8vw);
+                color: white;
+                padding-top: calc(3vh + 3vw);/*add bad2an mil honi*/
+                display: grid;
+                grid-template-columns: repeat(2,1fr);
+                justify-items: center;
+                row-gap: calc(5vh + 5vw);
+            }
+            .sub-img{
+                width: calc(17.5vh + 17.5vw);
+                height: auto;
+                border-radius: 100%;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+            .sub-img:hover{
+                transform: scale(1.1);
+            }
+            .one-subject-element{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                gap:calc(0.25vh + 0.25vw);
+                
+            }
+            #setObjectivesPage{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding-top: calc(3vh + 3vw);
+            }
+            .add{
+                width: calc(3vh + 3vw);
+            }
+            .add:hover{
+                transform: scale(1.4);
+            }
+            .note{
+                margin-top: calc(3.5vh + 3.5vw);
+                width: 100%;
+                background-color: rgb(34, 22, 51);
+                border-radius: 10px;
+                box-shadow: 0px 0px 8px rgba(224, 14, 179, 0.45);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding-top: calc(1.5vh + 1.5vw);
+            }
+            .note-title{
+                width: 100%;
+                border-radius: 10px;
+               
+                text-align: center;
+                position: relative;
+            }
+            .inp-note-title{
+                top: 0;
+                right: 0;
+                width: 85%;
+                /* height: 100%; */
+                border-radius: 10px;
+                text-shadow: 0px 0px 8px #37eeffcb;
+                background-color: transparent;
+                font-size: calc(1.75vh + 1.75vw);
+                padding: calc(0.5vh + 0.5vw);
+                border: 1px solid rgb(68, 50, 80);
+                color: aqua;
+                text-align: center;
+                outline: none;
+            }
+            .inp-note-title::placeholder{
+                color: transparent;
+                text-shadow: none;
+            }
+            .shadow-lab{
+                position:absolute;
+                top: 50%;
+                left: calc(5vh + 5vw);
+                transform: translate(0,-50%);
+                color: gray;
+                font-size: calc(1.5vh + 1.5vw);
+                transition: 0.35s;
+                background-color:rgb(34, 22, 51) ;
+            }
+            .inp-note-title:hover + .shadow-lab,
+            .inp-note-title:focus + .shadow-lab,
+            .inp-note-title:not(:placeholder-shown) + .shadow-lab{
+                top: calc(0px - calc(0.3vh + 0.3vw));
+                transition: 0.35;
+            }
+            .inp-note-title:hover + .shadow-lab,
+            .inp-note-title:focus + .shadow-lab{
+                color: rgb(121, 158, 214);
+
+            }
+            .inp-note-title:hover,
+            .inp-note-title:focus{
+                border: 1px solid rgb(121, 158, 214);
+            }
+            .main-message{
+                margin-top: calc(1.5vh + 1.5vw);
+                position: relative;
+                width: 100%;
+                text-align: center;
+            }
+            .mainMsg{
+                color: white;
+                font-size: calc(1.25vh + 1.25vw);
+                text-shadow: none;
+                
+            }
+            textarea::-webkit-scrollbar{
+                display: none;
+
+            }
+            textarea{
+                overflow: hidden;
+                resize: none;
+                transition: 0.25s;
+            }
+            .note-bottom-section{
+                display: grid;
+                width: 100%;
+                box-sizing: border-box;
+                padding:  calc(1vh + 1vw) calc(3.5vh + 3.5vw);
+                grid-template-columns: repeat(2,1fr);
+                justify-items: center;
+                font-size: calc(1.25vh + 1.25vw);
+            }
+
+            .del{
+                margin: 0;
+            }
             .hide{
                 display: none !important;
             }
@@ -2287,21 +2653,21 @@ function openPage(nb){
                   <img class="profile-icon" src="default avatar icon.png">
                   <div class="option bigOptionFont" id="accountOptions"></div>
                 </div>
-                <div class="profile-container" onclick="openTrackingPage()">
+                <div class="profile-container" onclick="openTrackingPage(removeTrackingElements)">
                   <img class="profile-icon" src="opt2-icon.jpg">
                   <div class="option" id="track">Track my study hours</div>
                 </div>
-                <div class="profile-container">
+                <div class="profile-container" onclick="openStudyPlanPage()">
                   <div id="follow-options" style="font-size: calc(1.5vh + 1.5vw);color: black;cursor: pointer;opacity: 0;transition: 0.5s;">🎓</div>
                   <div class="option bigOptionFont" >Study Plan</div>
                 </div>
                 
-                <div class="profile-container">
+                <div class="profile-container" onclick="openGPAcalculatorPage()">
                 <img class="profile-icon" style="border-radius: 0%;" src="calcIcon.png">
                   <div class="option bigOptionFont" >GPA calculator</div>
                 </div>
 
-                <div class="profile-container">
+                <div class="profile-container" onclick="openSetObjectivesPage()">
                 <img class="profile-icon" style="border-radius: 0%;" src="objIcon.png">
                   <div class="option bigOptionFont" >Set Objectives</div>
                 </div>
@@ -2455,15 +2821,26 @@ function openPage(nb){
 
             <div id="trackingPage" class="hide">
 
+            <div id="nothingSubmetted" class="hide" style="font-size: calc(2vh + 2vw);text-align: center;color: white;margin-top:calc(1.5vh + 1.5vw);">You haven't submitted any hours for any subject yet . please submit first</div>
 
+            <div class="end" style="order:10000;"></div>
+            </div>
 
+            <div id="studyPlanPage" class="hide">
 
             </div>
 
 
 
 
+            <div id="setObjectivesPage" class="hide">
+                <img title="click to add notes" class="sub-img add" src="/baki/images/add.png" onclick="createNoteBox('','','',true)">
+                <div style="width: 100%;" id="addHere">
 
+
+                </div>
+                <div class="end"></div>
+            </div>
 
 
 
