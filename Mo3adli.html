@@ -1,0 +1,578 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Mo3adli</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="screen-orientation" content="landscape">
+    <meta name="x5-orientation" content="landscape">
+     <style>
+      body{
+        background-color: black;
+        padding: 20px 0px;
+
+      }
+      body::-webkit-scrollbar {
+             display: none; /* Chrome, Safari */
+      } 
+        .title-container-and-options{
+          width: 100%;
+          height: auto;
+          text-align: center;
+          /* padding: 10px; */
+          margin-bottom: 200px;
+        }
+        .title{
+          color: white;
+          font-size: 26px;
+          font-weight: bolder;
+          text-transform: uppercase;
+          text-align: center;
+          letter-spacing: 2px;
+          line-height: 33px;
+          font-family: serif;
+        }
+        .section-container{
+          margin-top: 28.5px;
+          display: flex;
+          justify-content: center;
+          gap: 25px;
+        }
+        .section{
+          padding: 10px 0px;
+          min-width: 80px;
+          font: 14px Arial ;
+          background-color: #1ebba3;
+          text-align: center;
+          border: 5px solid #099983;
+          border-radius: 30px;
+          color: white;
+          outline: none;;
+        
+          display: inline-block;
+          cursor:pointer;
+          margin-bottom: 25px;
+        }
+        .section:hover{
+          background-color: rgb(9, 153, 131) ;
+          border: 5px solid rgb(0, 110, 100);
+      }
+      .section:active{
+          background-color: rgb(0, 90, 80);
+      }
+        .session{
+          color: gray;
+          margin-bottom: 50px;
+          text-transform: uppercase;
+          font: 20px serif ;
+          letter-spacing: 3px;
+          text-decoration: underline;
+          outline: none;
+          text-align: center;
+          
+        }
+        .inputs-container{
+          display: grid;
+          margin: 25px 0px;
+          align-items: center;
+          width: auto;  
+          grid-template-columns: 1fr 0.41fr 1fr;
+          justify-items: s;
+          height: auto;
+        }
+        .first-element{
+          text-align: center;
+        }
+        .middal-element{
+          text-align: center;
+        }
+        .right-element{
+          text-align: center;
+        }
+        .input{
+          background-color: transparent;
+          border:2px solid #3498db;
+          height: 38px;
+          width: 170px;
+          border-radius: 50px;
+          color: white;
+          text-align: center;
+          transition: 0.25s;
+          min-width: 0px;
+          outline: none;
+      }
+      .input::placeholder{
+        font-family: serif;
+      }
+      .stopDefaultFocus{
+        border: none;
+        position: absolute;
+        background-color: transparent;
+        min-width: 0px;
+        /* display: none; */
+      }
+      .clear{
+        padding:5px 25px;
+        font: 20px Arial ;
+        text-align: center;
+        background-color: #df0000;
+        border: 5px solid #930000;
+        border-radius: 50px;
+        color: white;
+        cursor:pointer;
+        outline: none;
+      }
+      .clear:hover{
+        background-color: rgb(165, 0, 0);
+        border: 5px solid rgb(105, 0, 0);
+      }
+      .clear:active{
+        background-color:rgb(75, 0, 0) ;
+      }
+      .calculer{
+        background-color: transparent;
+        color: white;
+        text-align: center;
+        font: 20px serif;
+        padding: 10px 175px;
+        border: 2px solid rgb(66, 210, 66);
+        border-radius: 50px;
+        cursor: pointer;
+        outline: none;
+      }
+
+      .calculer:active{
+        background-color: rgb(36, 100, 36);
+        
+      }
+      .activateAnimation{
+        animation :  whide 0.25s ease forwards ;
+      }
+      .hideAnimation{
+        animation: shrink 0.25s ease forwards;
+      }
+      @keyframes whide {
+        from{width: 421.75px;}
+        to{width: 470px;background-color:rgb(36, 100, 36) ;}
+      }
+
+      @keyframes shrink {
+        from{width:470px;background-color:rgb(36, 100, 36)}
+        to{width: 421.75px;;background-color:transparent }
+      }
+      @media (hover: hover) and (pointer: fine) {
+        .input:hover{
+          width: 210px;
+        /* margin-left: 20px; */
+          transition: 0.25s;
+          border:2px solid rgb(66, 210, 66);
+        }
+      }
+      .input:focus{
+        width: 210px;
+        /* margin-left: 20px; */
+        transition: 0.25s;
+        border:2px solid rgb(66, 210, 66);
+        
+      }
+      @media(min-width : 575px){
+      .big{
+        padding: 0 50px;
+      }
+      .clear{
+        padding:5px 17.5px;
+      }
+  
+  }
+      .hide{
+        display: none;
+      }
+      @media(max-width : 575px){
+        .input{
+          width: 110px;
+        }
+
+        #c{
+          display: none;
+        }
+        #c2{
+          display:ruby;
+          margin-bottom: 5px;
+        }
+        .calculer{
+          padding: 10px 105px;
+        }
+        @keyframes whide {
+        from{padding: 10px 105px;}
+        to{padding: 10px 125px;background-color:rgb(36, 100, 36) ;}
+        }
+
+        @keyframes shrink {
+          from{padding: 10px 125px;background-color:rgb(36, 100, 36)}
+          to{padding: 10px 105px;background-color:transparent }
+        }
+        .inputs-container{
+          grid-template-columns: 1fr 0.2fr 1fr;
+        }
+        .input:focus{
+          width: 150px;
+        }
+
+      }
+      .valid{
+        border:2px solid green;
+      }
+      .unValid{
+        border:2px solid red;
+      }
+      .result{
+        font-size: 20px;
+        line-height: 25px;
+      }
+      .direct-input-container{
+        height: auto;
+        width: auto;
+        position: relative;
+        display: inline-block ;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+      .lab{
+        position: absolute;
+        padding: 0px 5px;
+        /* left: 50%;
+        top: 50%;
+        transform: translate(-50%, -50%); */
+        font-family: serif;
+        font-size: 14px;
+        color: #999;
+        transition: 0.25s;
+        z-index: 1111;
+        background-color: black;
+        cursor: text;
+      }
+      input::placeholder{
+        font-size: 0.1px;
+        color: transparent;
+      }
+      .input:focus + .lab,
+      .input:not(:placeholder-shown) +.lab{
+        transform: translate(0px,-21px);
+        color :#402bde;
+        
+      }
+      .disp-unvalid{
+        color: red !important;
+      }
+      .disp-valid{
+        color: green !important;
+      }
+     </style>
+  </head>
+
+  <body>
+    <div class="title-container-and-options">
+        <div class="title">Calculer Moyenne et Score BAC MATHÉMATIQUES</div>
+        <div class="section-container">
+          <button class="section">Principale</button>
+        </div>
+        <div class="session">Session principale</div>
+
+
+      <div class="big">
+
+        <div class="inputs-container">
+          <div class="first-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a1" id="i1"  onkeypress="if(event.key=='Enter'){ enterPressed(1)}" onblur="clickedAway(1)" onkeydown="document.querySelector('.a'+1).setCustomValidity('')"><label class="lab" for="i1" id="l1">Math</label> </div>
+          <div class="middal-element"> <button class="stopDefaultFocus"></button> </div>
+          <div class="right-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a2" id="i2" onkeypress="if(event.key=='Enter'){ enterPressed(2)}" onblur="clickedAway(2)" onkeydown="document.querySelector('.a'+2).setCustomValidity('')"> <label class="lab" for="i2" id="l2">Physique</label> </div>
+          <button class="stopDefaultFocus"></button> 
+        </div>
+
+        <div class="inputs-container">
+          <div class="first-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a3" id="i3" onkeypress="if(event.key=='Enter'){ enterPressed(3)}" onblur="clickedAway(3)" onkeydown="document.querySelector('.a'+3).setCustomValidity('')"> <label class="lab" for="i3" id="l3">Science</label></div>
+          <div class="middal-element"> <button class="stopDefaultFocus"></button> </div>
+          <div class="right-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a4" id="i4" onkeypress="if(event.key=='Enter'){ enterPressed(4)}" onblur="clickedAway(4)" onkeydown="document.querySelector('.a'+4).setCustomValidity('')"> <label class="lab" for="i4" id="l4">Arabe</label>  </div>
+          <button class="stopDefaultFocus"></button> 
+        </div>
+
+        <div class="inputs-container">
+          <div class="first-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a5" id="i5" onkeypress="if(event.key=='Enter'){ enterPressed(5)}" onblur="clickedAway(5)" onkeydown="document.querySelector('.a'+5).setCustomValidity('')"> <label class="lab" for="i5" id="l5">Français</label> </div>
+          <div class="middal-element"> <button class="stopDefaultFocus"></button> </div>
+          <div class="right-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a6" id="i6" onkeypress="if(event.key=='Enter'){ enterPressed(6)}" onblur="clickedAway(6)" onkeydown="document.querySelector('.a'+6).setCustomValidity('')"> <label class="lab" for="i6" id="l6">Anglais</label>  </div>
+          <button class="stopDefaultFocus"></button> 
+        </div>
+
+        <div class="inputs-container">
+          <div class="first-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a7" id="i7" onkeypress="if(event.key=='Enter'){ enterPressed(7)}" onblur="clickedAway(7)" onkeydown="document.querySelector('.a'+7).setCustomValidity('')"> <label class="lab" for="i7" id="l7">Philo</label> </div>
+          <div class="middal-element"> <button class="stopDefaultFocus"></button> </div>
+          <div class="right-element direct-input-container"> <input autocomplete="off" placeholder="." class="input a8" id="i8" onkeypress="if(event.key=='Enter'){ enterPressed(8)}" onblur="clickedAway(8)" onkeydown="document.querySelector('.a'+8).setCustomValidity('')"> <label class="lab" for="i8" id="l8">Sport</label> </div>
+          <button class="stopDefaultFocus"></button> 
+        </div>
+
+        <div class="inputs-container" id="last">
+          <div class="first-element direct-input-container" id="fl"> <input autocomplete="off" placeholder="." class="input a9" id="info" onkeypress="if(event.key=='Enter'){ enterPressed(9)}" onblur="clickedAway(9)" onkeydown="document.querySelector('.a'+9).setCustomValidity('')"> <label class="lab" for="info" id="l9">Informatique</label> </div>
+          <div class="middal-element" id="ml"> <button class="clear" id="c" onclick="Clear()">Clear</button> </div>
+          <div class="right-element direct-input-container" id="rl"> <input autocomplete="off" placeholder="." class="input a10"  id="opt" onkeypress="if(event.key=='Enter'){ enterPressed(10)}" onblur="clickedAway(10)" onkeydown="document.querySelector('.a'+10).setCustomValidity('')"> <label class="lab" for="opt" id="l10">Option</label>  </div>
+        </div>
+      </div>
+         <button class="clear hide 11" id="c2" onclick="Clear()">Clear</button><p></p> 
+
+        <button class="calculer" onclick="display()">Calculer</button>
+        <p class="result title" onclick=""></p>
+    </div>
+
+    <script>
+      let params = new URLSearchParams(window.location.search);
+      let special = JSON.parse(params.get("value")); 
+      if(window.innerWidth < 768){
+        document.querySelectorAll('input').forEach((el)=>{
+            el.addEventListener('click', () => {
+                document.documentElement.requestFullscreen()
+                .then(() => screen.orientation.lock("landscape"))
+                    .catch(err => console.error(err));
+                });
+
+        })
+        document.querySelectorAll('.input').forEach((el)=>{
+            el.addEventListener('focus',()=>{const isMobile = window.innerWidth < 768;el.scrollIntoView( {behavior: "smooth" , block : isMobile ? "start" : "center" })})
+        })
+        document.querySelectorAll('.input').forEach((el,ind)=>{
+            el.addEventListener('click',()=>{document.getElementById('l'+(ind+1)).classList.remove('disp-valid');
+            document.getElementById('l'+(ind+1)).classList.remove('disp-unvalid');
+            })
+        })
+        document.body.addEventListener('touchstart', () => {
+            document.documentElement.requestFullscreen()
+            .then(() => screen.orientation.lock("landscape"))
+            .catch(err => console.error(err));
+        });}
+      let r = false ;
+      let b = false ;
+      document.querySelector('.calculer').addEventListener('touchstart',()=>{ r = false ;b=false ; document.querySelector('.calculer').classList.remove('hideAnimation')
+        document.querySelector('.calculer').classList.add('activateAnimation')
+      })
+      document.querySelector('.calculer').addEventListener('touchend',()=>{ b = true ; r && document.querySelector('.calculer').classList.replace('activateAnimation','hideAnimation')})
+      document.querySelector('.calculer').addEventListener('animationend',()=> {  r = true ; b && document.querySelector('.calculer').classList.replace('activateAnimation','hideAnimation')})
+
+
+
+
+      const matiere = ['Math','Physique','Science','Arbi','Français','Anglais','Philo','Sport','Info  ','Option'] ;
+      const msg = ['Ya Maryam sabak il 5ir ena mit2akda innik makch bich tjib akal mil 18 fil ','wlh ya Maryam rak nchlh bich tfara7na lkol ou tfara7 5alaila ou l3aila wlh raho lik inti il 18 mathmona nchlh fil ','taw chnowa taw moch koltlik mat7otich akal mil 18 Allah\'ın izniyle, çok başarılı olacaksın alanında ','Maryaaam i have confidance on you . i am sure that inchalah you will shine this year for u 18 is nothing in ']
+      let contain={ind:0}
+      document.querySelector('.a1').focus();
+      let obj={}
+      for(let i = 1;i<11;i++){
+        obj['a'+i]=false
+      }
+      let inp = {};
+      for(let i = 1 ;i<11;i++){
+        inp['a'+i] = document.querySelector('.a'+i)
+      }
+      function getFirstUnvalidInput(obj){
+        i = 1;
+        while(i<11 && obj['a'+i] ){
+          i++
+        }
+        return i ;
+      }
+      function isdecimal(ch=''){
+        let i = 0 
+        while (i<ch.length && '0123456789'.includes(ch[i]) ){
+          i++
+        }
+        return i == ch.length && ch != '' }
+        function valid(ch){
+          return (ch.indexOf('.') > -1 ?  isdecimal(ch.slice(0,ch.indexOf('.'))) &&(isdecimal( ch.slice(ch.indexOf('.')+1,ch.length) )) : isdecimal(ch))&&Number(ch)<=20;
+        }
+      function enterPressed(nb){
+        if(!special){enterPressedBase(nb)}
+        else{
+        const ch =document.querySelector('.a'+nb).value;
+        if(valid(ch)){
+          if( Number(ch)>=18 && nb != 5 && nb!=7 ){
+            obj['a'+nb]=true;
+            document.querySelector('.a'+nb).classList.add('valid')
+            document.querySelector('.a'+nb).classList.remove('unValid');
+            const i =getFirstUnvalidInput(obj) ;
+            if (i!=11){document.querySelector('.a'+i).focus();}
+            else{display()}
+          
+          }
+          else if(Number(ch)<18 && nb != 5 && nb!=7 && Number(ch)>=13) {
+              document.querySelector('.a'+nb).setCustomValidity(msg[contain.ind]+matiere[nb-1]) ;
+              document.querySelector('.a'+nb).reportValidity();
+              contain.ind= (contain.ind+1)%4;
+            }
+          else if(nb!=7 && Number(ch)<13){
+              document.querySelector('.a'+nb).setCustomValidity('Maryam yizzi mil tfadlik ou 3amer serieusement hetha hatta bil tfadlik maisirich') ;
+              document.querySelector('.a'+nb).reportValidity();
+            }
+          else if(Number(ch)<16 && nb == 5) {
+              document.querySelector('.a'+nb).setCustomValidity('ya Maryam il Français ta3 lbac sehil 3l5r raho  ti barcha 3bdel mafetitch il 10 ou fil bac tharba 16 , donc 16 fih evidant nchlh') ;
+              document.querySelector('.a'+nb).reportValidity();
+            }
+          else if (Number(ch)>=16 && nb == 5){
+              obj['a'+nb]=true;
+              document.querySelector('.a'+nb).classList.add('valid')
+              document.querySelector('.a'+nb).classList.remove('unValid');
+              const i =getFirstUnvalidInput(obj) ;
+              if (i!=11){document.querySelector('.a'+i).focus();}
+              else{display()}
+            }
+          else if (nb==7 && Number(ch)<13 ){
+              document.querySelector('.a'+nb).setCustomValidity('Maryam shih il filo s3ib chwaya howa ama nitsawrik tgid rohik fih fil akid nitsawer mostahil tjib fih akal mil 13 nchlh') ;
+              document.querySelector('.a'+nb).reportValidity();
+            }
+          else if (nb==7 && Number(ch)>=13 ){
+              obj['a'+nb]=true;
+              document.querySelector('.a'+nb).classList.add('valid')
+              document.querySelector('.a'+nb).classList.remove('unValid');
+              const i =getFirstUnvalidInput(obj) ;
+              if (i!=11){document.querySelector('.a'+i).focus()}
+             else{display()}
+          }
+      }
+      else {
+        document.querySelector('.a'+nb).setCustomValidity('Veuillez entrer un nombre entre 0 et 20') ;
+        document.querySelector('.a'+nb).reportValidity();
+        obj['a'+nb]=false ;
+      }
+    }}
+
+      function clickedAway(nb){
+        
+        if(!special){clickedAwayBase(nb)}
+        else{
+        const ch = document.querySelector('.a'+nb).value ;
+        if(valid(ch)){
+          document.getElementById('l'+nb).classList.remove('disp-unvalid')
+          if( Number(ch)>=18 && nb != 5 && nb!=7 ){
+            obj['a'+nb]=true;
+            document.querySelector('.a'+nb).classList.add('valid')
+            document.querySelector('.a'+nb).classList.remove('unValid');
+          
+          }
+          else if(Number(ch)<18 && nb != 5 && nb!=7 && Number(ch)>=13) {
+              document.querySelector('.a'+nb).setCustomValidity(msg[contain.ind]+matiere[nb-1]) ;
+              document.querySelector('.a'+nb).reportValidity();
+              contain.ind= (contain.ind+1)%4;
+            }
+          else if(nb!=7 && Number(ch)<13){
+              document.querySelector('.a'+nb).setCustomValidity('Maryam yizzi mil tfadlik ou 3amer serieusement hetha hatta bil tfadlik maisirich') ;
+              document.querySelector('.a'+nb).reportValidity();
+            }
+          else if(Number(ch)<16 && nb == 5) {
+              document.querySelector('.a'+nb).setCustomValidity('ya Maryam il Français ta3 lbac sehil 3l5r raho  ti barcha 3bdel mafetitch il 10 ou fil bac tharba 16 , donc 16 fih evidant nchlh') ;
+              document.querySelector('.a'+nb).reportValidity();
+            }
+          else if (Number(ch)>=16 && nb == 5){
+              obj['a'+nb]=true;
+              document.querySelector('.a'+nb).classList.add('valid')
+              document.querySelector('.a'+nb).classList.remove('unValid');
+              const i =getFirstUnvalidInput(obj) ;
+
+            }
+          else if (nb==7 && Number(ch)<13 ){
+              document.querySelector('.a'+nb).setCustomValidity('Maryam shih il filo s3ib chwaya howa ama nitsawrik tgid rohik fih fil akid nitsawer mostahil tjib fih akal mil 13 nchlh') ;
+              document.querySelector('.a'+nb).reportValidity();
+            }
+          else if (nb==7 && Number(ch)>=13 ){
+              obj['a'+nb]=true;
+              document.querySelector('.a'+nb).classList.add('valid')
+              document.querySelector('.a'+nb).classList.remove('unValid');
+              const i =getFirstUnvalidInput(obj) ;
+          }
+      }
+        else {
+          obj['a'+nb]=false ;
+          document.querySelector('.a'+nb).classList.remove('valid');
+          document.querySelector('.a'+nb).classList.remove('unValid');
+          document.getElementById('l'+nb).classList.remove('disp-valid');
+          if (ch !=''){document.querySelector('.a'+nb).classList.add('unValid');document.getElementById('l'+nb).classList.add('disp-unvalid')  }
+          else{document.getElementById('l'+nb).classList.remove('disp-unvalid');document.getElementById('l'+nb).classList.remove('disp-valid')  }
+        }
+      }}
+
+
+      function enterPressedBase(nb){
+        const ch =document.querySelector('.a'+nb).value;
+        if(valid(ch)){
+            obj['a'+nb]=true;
+            document.querySelector('.a'+nb).classList.add('valid')
+            document.querySelector('.a'+nb).classList.remove('unValid');
+            document.activeElement.blur();
+            const i =getFirstUnvalidInput(obj) ;
+            if (i!=11){document.querySelector('.a'+i).focus()}
+            else{display()}
+      }
+      else {
+        document.querySelector('.a'+nb).setCustomValidity('Veuillez entrer un nombre entre 0 et 20') ;
+        document.querySelector('.a'+nb).reportValidity();
+        obj['a'+nb]=false ;
+      }
+    }
+
+      function clickedAwayBase(nb){
+        const ch = document.querySelector('.a'+nb).value ;
+        if(valid(ch)){
+          obj['a'+nb]=true;
+          document.querySelector('.a'+nb).classList.add('valid');
+          document.querySelector('.a'+nb).classList.remove('unValid');
+          document.getElementById('l'+nb).classList.remove('disp-valid');
+          document.getElementById('l'+nb).classList.add('disp-valid');
+        }
+        else {
+          obj['a'+nb]=false ;
+          document.querySelector('.a'+nb).classList.remove('valid');
+          document.querySelector('.a'+nb).classList.remove('unValid');
+          document.getElementById('l'+nb).classList.remove('disp-valid');
+          if (ch !=''){document.querySelector('.a'+nb).classList.add('unValid');document.getElementById('l'+nb).classList.add('disp-unvalid')  }
+          else{document.getElementById('l'+nb).classList.remove('disp-unvalid');document.getElementById('l'+nb).classList.remove('disp-valid')  }
+        }
+      }
+      function display(){
+        const i = getFirstUnvalidInput(obj) ;
+        if (i==11){
+        const res = document.querySelector('.result');
+        const mat = Number(inp['a1'].value);
+        const phy = Number(inp['a2'].value);
+        const svt = Number(inp['a3'].value);
+        const arb = Number(inp['a4'].value);
+        const frc = Number(inp['a5'].value);
+        const eng = Number(inp['a6'].value);
+        const phi = Number(inp['a7'].value);
+        const spt = Number(inp['a8'].value);
+        const inf = Number(inp['a9'].value);
+        let opt = Number(inp['a10'].value);if(opt<10){opt=10}
+        let moye = (mat*4+phy*4+svt+arb+frc+eng+phi+spt+inf+(opt-10))/15;
+        let score = moye*4 + mat*2 + phy*1.5 + 0.5*svt + eng + frc
+        res.innerText = `Mabrouuuuk ! Votre moyenne est ${moye.toFixed(2)}
+        Votre score est ${score.toFixed(3)}
+        
+        bi2ithni allah bich tjib haka ou ma5ir Ayez confiance en vous`
+        res.scrollIntoView({ behavior: "smooth", block: "center" });
+      }
+        else{
+          document.querySelector('.a'+i).setCustomValidity('Veuillez entrer un nombre entre 0 et 20') ;
+          document.querySelector('.a'+i);
+        }
+      }
+      function Clear(){
+        document.querySelector('.result').innerText = '';
+        for (let i = 1 ; i<11 ; i++){
+          inp['a'+i].value = '';
+          inp['a'+i].classList.remove('valid');
+          inp['a'+i].classList.remove('unValid');
+          for(let i = 1;i<11;i++){
+            obj['a'+i]=false
+          }
+          document.getElementById('l'+i).classList.remove('disp-valid','disp-unvalid')
+        }
+      }
+    </script>
+
+  </body>
+</html>
+
+
