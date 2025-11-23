@@ -1355,8 +1355,8 @@ function openPage(nb,showSlide=true){
                     achivedSubjects[subject] = true ; 
                     localStorage.setItem('as',JSON.stringify(achivedSubjects))
                     if (specialMessages){
-                        if (window.innerWidth< 1000){setTimeout(() => el.blur(), 50)}
-                        requestAnimationFrame(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]))                
+                        // if (window.innerWidth< 1000){setTimeout(() => el.blur(), 50)}
+                        setTimeout(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]),750)                         
                         nbOfFinishedSubjects = (nbOfFinishedSubjects+1)%(finishSubjectsSpecialMessages.length) ;
                         localStorage.setItem('nbS',nbOfFinishedSubjects) ;
                     }
@@ -2865,6 +2865,7 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
+
 
 
 
