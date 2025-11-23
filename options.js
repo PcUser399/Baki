@@ -181,7 +181,7 @@ function generateAllHTMLSubjects(){
                                 '</div>' +
                                 '<div class="submiting-hours-section">' +
                                     '<input type="number" min="0" id="input-' + key + '-hours" ' +
-                                    'onkeypress="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week);if (window.innerWidth< 1000){input.addEventListener(\'keydown\', function (e) {e.preventDefault();event.target.blur();})}   };" ' +
+                                    'onkeypress="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week)};" ' +
                                     'placeholder="Please enter here" ' +
                                     'title="after studing ' + key + ' for any amount enter it in hours here">' +
                                     
@@ -1357,7 +1357,8 @@ function openPage(nb,showSlide=true){
                     if (specialMessages){
                         setTimeout(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]),750)          
                         nbOfFinishedSubjects = (nbOfFinishedSubjects+1)%(finishSubjectsSpecialMessages.length) ;
-                        localStorage.setItem('nbS',nbOfFinishedSubjects)
+                        localStorage.setItem('nbS',nbOfFinishedSubjects) ;
+                        if (window.innerWidth< 1000){el.blur()}
                     }
                 }
                 
