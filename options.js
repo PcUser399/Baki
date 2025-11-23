@@ -1356,7 +1356,7 @@ function openPage(nb,showSlide=true){
                     localStorage.setItem('as',JSON.stringify(achivedSubjects))
                     if (specialMessages){
                         if (window.innerWidth< 1000){setTimeout(() => el.blur(), 50)}
-                        setTimeout(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]),750)                         
+                        setTimeout(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]),750)          
                         nbOfFinishedSubjects = (nbOfFinishedSubjects+1)%(finishSubjectsSpecialMessages.length) ;
                         localStorage.setItem('nbS',nbOfFinishedSubjects) ;
                     }
@@ -2131,10 +2131,10 @@ function openPage(nb,showSlide=true){
                 top : calc(max(calc(8.5vh + 16px), 72px) + 5px) ;
                 bottom: 0px;
                 left: 0px;
-                display: flex;
-                flex-direction: column;
+                display: grid;
+                grid-template-rows: repeat(5,1fr);
+                justify-items: center;
                 align-items: center;
-                gap: 2.5vh;
             }
             .close-open-options{
                 position: fixed;
@@ -2157,7 +2157,6 @@ function openPage(nb,showSlide=true){
             
             }
             .profile-container{
-                margin-top: calc(1.5vh + 1.5vw);
                 transition: 0.5s;
                 color: transparent;
                 text-shadow: none ;
@@ -2169,9 +2168,6 @@ function openPage(nb,showSlide=true){
                 height: 10vh;
                 border-radius: 50%;
                 padding: 0 calc(1vh + 1vw);
-            }
-            @media (max-width:1000px){
-                .profile-container{margin-top: calc(1vh + 1vw);}
             }
             .option{
                 display: inline-block;
@@ -2866,8 +2862,3 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
-
-
-
-
-
