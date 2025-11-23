@@ -211,7 +211,7 @@ function generateAllHTMLSubjects(){
             }
             }
 
-// localStorage.clear()// removes
+localStorage.clear()// removes
 localStorage.getItem('lg') || localStorage.setItem('lg',false) ;
 var isLogedIn = JSON.parse(localStorage.getItem('lg')) ;
 function generatePage(sub1,sub2,sub3,index,mode=1){
@@ -2855,4 +2855,5 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
+
 
