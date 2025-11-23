@@ -181,7 +181,7 @@ function generateAllHTMLSubjects(){
                                 '</div>' +
                                 '<div class="submiting-hours-section">' +
                                     '<input type="number" min="0" id="input-' + key + '-hours" ' +
-                                    'onkeypress="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week)}" ' +
+                                    'onkeypress="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week);if (window.innerWidth< 1000){input.addEventListener(\'keydown\', function (e) {e.preventDefault();event.target.blur();})}   };" ' +
                                     'placeholder="Please enter here" ' +
                                     'title="after studing ' + key + ' for any amount enter it in hours here">' +
                                     
@@ -417,7 +417,7 @@ function loadStudyPlanPage(){
                 for (let key in numberOfRequiredHours){
                     msg += `
                         <div class="one-subject-element">
-                            <img class="sub-img" src="${key}.jpg">
+                            <img class="sub-img" src="/baki/images/${key}.jpg">
                             ${key}: ${numberOfRequiredHours[key][studentLvl[key]][selectedObjective]}
                         </div>
                         `;
@@ -2834,7 +2834,7 @@ function openPage(nb,showSlide=true){
 
 
             <div id="setObjectivesPage" class="hide">
-                <img title="click to add notes" class="sub-img add" src="add.png" onclick="createNoteBox()">
+                <img title="click to add notes" class="sub-img add" src="/baki/images/add.png" onclick="createNoteBox()">
                 <div style="width: 100%;" id="addHere">
 
 
@@ -2855,6 +2855,3 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
-
-
-
