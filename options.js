@@ -181,7 +181,7 @@ function generateAllHTMLSubjects(){
                                 '</div>' +
                                 '<div class="submiting-hours-section">' +
                                     '<input type="number" min="0" id="input-' + key + '-hours" ' +
-                                    'onkeypress="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week)};" ' +
+                                    'onkeydown="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week)};" ' +
                                     'placeholder="Please enter here" ' +
                                     'title="after studing ' + key + ' for any amount enter it in hours here">' +
                                     
@@ -1355,10 +1355,10 @@ function openPage(nb,showSlide=true){
                     achivedSubjects[subject] = true ; 
                     localStorage.setItem('as',JSON.stringify(achivedSubjects))
                     if (specialMessages){
+                        if (window.innerWidth< 1000){el.blur()}
                         setTimeout(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]),750)          
                         nbOfFinishedSubjects = (nbOfFinishedSubjects+1)%(finishSubjectsSpecialMessages.length) ;
                         localStorage.setItem('nbS',nbOfFinishedSubjects) ;
-                        if (window.innerWidth< 1000){el.blur()}
                     }
                 }
                 
@@ -2865,6 +2865,3 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
-
-
-
