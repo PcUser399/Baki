@@ -1999,6 +1999,12 @@ function openPage(nb,showSlide=true){
             function openSetObjectivesPage(){
                 openSubPage('setObjectivesPage')
             }
+            if (window.innerWidth< 1000) {
+            document.body.addEventListener('click', () => { 
+            document.documentElement.requestFullscreen() 
+            .then(() => screen.orientation.lock("landscape")) 
+            .catch(err => console.error(err));
+            })};
 
           `
           
@@ -2856,4 +2862,5 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
+
 
