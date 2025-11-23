@@ -1355,7 +1355,7 @@ function openPage(nb,showSlide=true){
                     achivedSubjects[subject] = true ; 
                     localStorage.setItem('as',JSON.stringify(achivedSubjects))
                     if (specialMessages){
-                        // if (window.innerWidth< 1000){setTimeout(() => el.blur(), 50)}
+                        if (window.innerWidth< 1000){setTimeout(() => el.blur(), 50)}
                         setTimeout(()=> affiche(finishSubjectsSpecialMessages[nbOfFinishedSubjects]),750)                         
                         nbOfFinishedSubjects = (nbOfFinishedSubjects+1)%(finishSubjectsSpecialMessages.length) ;
                         localStorage.setItem('nbS',nbOfFinishedSubjects) ;
@@ -1741,6 +1741,7 @@ function openPage(nb,showSlide=true){
                 body.appendChild(obj.box) ;
 
                 obj.box.style.transform = "translate(-50%, -50%) scale(0)";
+                obj.box.offsetHeight;
                 requestAnimationFrame(() => {
                     obj.box.style.transform = "translate(-50%, -50%) scale(1)";
                 });
@@ -2865,6 +2866,7 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
+
 
 
 
