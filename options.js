@@ -2156,7 +2156,7 @@ function openPage(nb,showSlide=true){
             
             }
             .profile-container{
-                margin-top: 5vh;
+                margin-top: calc(1.5vh + 1.5vw);
                 transition: 0.5s;
                 color: transparent;
                 text-shadow: none ;
@@ -2168,6 +2168,9 @@ function openPage(nb,showSlide=true){
                 height: 10vh;
                 border-radius: 50%;
                 padding: 0 calc(1vh + 1vw);
+            }
+            @media (max-width:1000px){
+                .profile-container{margin-top: calc(1vh + 1vw);}
             }
             .option{
                 display: inline-block;
@@ -2862,5 +2865,6 @@ function openPage(nb,showSlide=true){
         document.body.appendChild(script3);
     }
 }
+
 
 
