@@ -310,7 +310,7 @@ var variants = ['MARYAM', 'MARIEM', 'MARIAM', 'MARYEM','REBAI', 'REBA3I', 'REBEI
 function isSheMaryam(){
                 return variants.includes(studentName.first.toUpperCase()) && variants.includes(studentName.last.toUpperCase())
             }
-function  updatePage(how,ev){
+async function  updatePage(how,ev){
     if (how == 'next'){
         if(globalInfo.currentPage<2){
         if(globalInfo.currentPage==-1){
@@ -323,6 +323,12 @@ function  updatePage(how,ev){
                     document.getElementById('next1').reportValidity();
                     return 
                 }
+            }
+            try{
+                await Load("Save User Full Name",{Name : studentName.first , LastName : studentName.last });
+            }
+            catch(err){
+                console.log(err);
             }
         }
         globalInfo.currentPage++;
@@ -417,7 +423,7 @@ function loadStudyPlanPage(){
                 for (let key in numberOfRequiredHours){
                     msg += `
                         <div class="one-subject-element">
-                            <img class="sub-img" src="${key}.jpg">
+                            <img class="sub-img" src="/baki/images/${key}.jpg">
                             ${key}: ${numberOfRequiredHours[key][studentLvl[key]][selectedObjective]}
                         </div>
                         `;
@@ -2841,7 +2847,7 @@ function openPage(nb,showSlide=true){
 
 
             <div id="setObjectivesPage" class="hide">
-                <img title="click to add notes" class="sub-img add" src="add.png" onclick="createNoteBox()">
+                <img title="click to add notes" class="sub-img add" src="/baki/images/add.png" onclick="createNoteBox()">
                 <div style="width: 100%;" id="addHere">
 
 

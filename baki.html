@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📘</text></svg>">
+        <style>
+            body{
+                height: 100vh;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            button{
+                width: calc(12.5vw + 12.5vh);
+                height: calc(12.5vw + 12.5vh);
+                border-radius: 1500px;
+                font-size: calc(2.5vw + 2.5vh);
+                cursor: pointer;
+            }
+        </style>
+    </head>
+    <body>
+        <button onclick="
+                    if (window.innerWidth< 1000) {
+                    document.body.addEventListener('click', () => { 
+                    document.documentElement.requestFullscreen() 
+                    .then(() => {screen.orientation.lock('landscape');openPage(1)}) // 1
+                    .catch(err => console.error(err));
+            })}
+            else{
+                openPage(1); // 1
+            }
+        ">Click here</button>
+        <script src="Load.js"></script>
+        <script src="options.js" ></script>
+        <script>
+        </script>
+    </body>
+</html>

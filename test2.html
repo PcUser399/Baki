@@ -1,0 +1,649 @@
+<!DOCTYPE html> 
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>baki</title>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📘</text></svg>">
+        <style>
+            * {
+                -webkit-tap-highlight-color: transparent;
+                } 
+            img:not(.profile-icon):not(.sub-img){
+                height: 8.5vh;
+                min-height: 56px;
+                width: auto;
+                cursor: pointer;
+                transition: 0.25s;
+                filter: drop-shadow(0 0 8px rgba(255, 51, 204,1));
+            }
+            #inp1:hover+img,
+            img:not(.sub-img):not(.profile-icon):hover{
+                scale: 1.1;
+                transition: 0.25s;
+                filter: drop-shadow(0 0 8px rgba(255, 51, 204))  drop-shadow(0 0 12px rgba(255, 51, 204));
+            }
+            body::-webkit-scrollbar {
+             display: none; /* Chrome, Safari */
+            }
+
+            body{
+                margin-top: max(calc(8.5vh + 16px), 72px) !important;
+                color: rgb(230, 115, 191);
+                height: 100%;
+                width :100vw;
+                background: linear-gradient(90deg,rgb(20, 10, 44), rgb(11, 11, 41),rgb(20, 10, 44));
+                position: relative;
+                /* overflow: hidden; */
+            }
+            header{
+                display: flex;
+                justify-content: space-between;
+                padding: 7px 5vw;
+                background-color: rgb(23, 0, 46);
+                box-shadow: 0px 2px 5px rgba(224, 14, 179, 0.45);
+                position: fixed;
+                top: 0px;
+                right: 0px;
+                left: 0px;
+                z-index: 10;
+            }
+            #left-side{
+                text-align: center;
+                display: flex;
+                align-items: center;
+                font-size: 30px;
+                font-family:'Pacifico', cursive;
+                padding-bottom: 3px;
+                text-shadow:  0 0 8px #FF33CC, 0 0 16px #FF33CC;
+                transition: 0.25s;
+                cursor: pointer;
+            }
+            #inp2:hover+#left-side,
+            #left-side:active,
+            #left-side:hover{
+                scale: 1.2;
+                transition: 0.25s;
+                text-shadow:  0 0 8px #FF33CC, 0 0 16px #FF33CC, 0 0 24px #FF33CC;
+            }
+            .loading-container{
+                width: 100vw;
+                height: calc(100vh - max(calc(8.5vh + 16px), 72px));
+                display: flex;
+                justify-content: center;
+                align-items:center ;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+            .end{
+                height: calc(5vh + 5vw);
+                width: 100%;
+            }
+            .loading-animation{
+                width: calc(17.5vw + 17.5vh) ;
+                height:calc(17.5vw + 17.5vh) ;
+                border: 5px solid rgba(61, 4, 91,0.05);
+                box-shadow: 0 0 2px rgb(20, 10, 44);
+                border-top: 5px solid rgb(2, 125, 104);
+                border-radius: 50%;
+                animation: spin ease 2s infinite ;
+                transition: 0.5s;
+                cursor: pointer;
+
+            }
+            .loading-text{
+                position: absolute;
+                font-size: calc(1.4vh + 1.4vw);
+                transition: 0.5s;
+                cursor: pointer;
+            }
+            @keyframes spin{
+                to{rotate: 360deg;
+                }
+            
+            }
+            @keyframes spreadOut{
+                from{scale: 0.01;}
+                to{scale :1;
+                }
+            
+            }
+            @keyframes openOptions{
+                from{width: 0px;}
+                to{width: 20vw;}
+            }
+            @keyframes closeOptions{
+                from{width: 20vw;}
+                to{width: 0px;}
+            }
+            @keyframes glow{
+                to {text-shadow:0 0 8px  red, 0 0 16px red;
+                    
+                }
+            }
+            .subject-title{
+                margin-top: calc(5vh + 5vw) ;
+                font-size: calc(2vw + 2vh);
+                font-family:'Pacifico', cursive;
+                width: 100%;
+                text-align: center;
+                color: aqua;
+                text-shadow:  0px 0px 6px rgb(19, 177, 172);
+            }
+            .left-section{/*update*/
+                width: 20vw; 
+                background: linear-gradient(90deg, #100020 0%, #19024b  100%);
+                box-shadow: 0px 5px 8px rgba(224, 14, 179, 1) ;
+                position: fixed;
+                top : calc(max(calc(8.5vh + 16px), 72px) + 5px) ;
+                bottom: 0px;
+                left: 0px;
+                display: grid;
+                grid-template-rows: repeat(5,1fr);
+                justify-items: center;
+                align-items: center;
+            }
+            .close-open-options{
+                position: fixed;
+                width: calc(2.25vh + 2.25vw);
+                height: calc(2.75vh + 2.75vw);
+                display: flex;
+                align-items:center ;
+                justify-content: center;
+                background: linear-gradient(90deg, #19024b 0%, #280475  100%);
+                border-top-right-radius: 65%;
+                border-bottom-right-radius: 65%;
+                border-top: 2px solid rgba(224, 14, 179, 0.35) ;
+                border-bottom:2px solid rgba(224, 14, 179, 0.35) ;
+                border-right: 2px solid rgba(224, 14, 179, 0.35) ;
+                top: 50%;
+                left: 20vw;
+                font-size: calc(1.25vh + 1.25vw);
+                cursor: pointer;
+                transition: 1s;
+            
+            }
+            .profile-container{
+                transition: 0.5s;
+                color: rgb(15, 234, 227);
+                text-shadow:  0 0 6px rgb(19, 177, 172) ;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                width: 14vw;
+                height: 10vh;
+                border-radius: 50%;
+                padding: 0 calc(1vh + 1vw);
+            }
+            .option{
+                display: inline-block;
+                display: -webkit-box;  
+   	            -webkit-line-clamp: 1; 
+   		        -webkit-box-orient: vertical;
+   		        overflow: hidden;  
+                transition: 0.5s;
+                cursor: pointer;
+                font-size: calc(0.85vh + 0.85vw);
+            }
+
+            .profile-icon{
+                height: calc(1.5vh + 1.5vw);
+                width: calc(1.5vh + 1.5vw);
+                margin-right: 5px;
+                border-radius: 50%;
+                transition: 0.5s;
+                opacity: 1;
+                cursor: pointer;
+            }
+            .bigOptionFont{
+                font-size: calc(1.15vh + 1.15vw);
+            }
+            @media (max-height : 525px ){
+                #track{
+                    font-size: calc(0.7vh + 0.6vw);
+                }
+                .option{
+                    font-size: calc(0.8vh + 0.75vw);
+                }
+
+                .bigOptionFont{
+                    font-size: calc(1vh + 1vw);
+                 }
+            }
+            .main-theme{
+                position: absolute;
+                left: calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px);
+                top : 5px;
+                width: 71vw;
+                z-index: 5;
+                height: 150vh;
+                transition:  1s;
+                padding-top: calc(0.75vw + 0.75vh);
+                padding-left: calc(0.5vw + 0.5vh);
+                opacity: 1;
+                display: flex;
+                flex-direction: column;
+            }
+            #follow-options{
+                text-shadow: none;
+            }
+
+            .name{
+                margin-top: calc(1.5vh + 1.5vw);
+                text-align: center;
+                color: white;
+                font-size: calc(2vh + 2vw);
+            }
+            .input-title{
+                margin-top: calc(3vh + 3vw);
+            }
+            input[type="radio"]{
+                outline: none;
+        
+                border: none;
+                width:2.75vw ;
+                height: 2.75vw;
+                border: 1px solid gray;
+                border-radius:1vw ;
+                background-color: transparent;
+                cursor: pointer;
+            }
+            .level-displayer{
+                max-width: 100%;
+                padding: 0px calc(2.5vh + 2.5vw);
+                padding-bottom: calc(0.5vh + 0.5vw);
+                padding-top: calc(0.5vh + 0.5vw);
+                margin-top: calc(2.5vh + 2.5vw);
+                display: flex;
+                justify-content: space-between;
+                gap: calc(1.5vh + 1.5vw);
+                font-size: calc(2vh + 2vw);
+                align-items: center;
+                border-bottom: 2px solid rgb(11, 47, 114) ;
+            }
+            .input-conatainer{
+                display: flex;
+                gap: calc(5vh + 5vw);
+            }
+            .objective-title{
+                color: red;
+                text-align: center;
+                margin-top: calc(2vh + 2vw);
+                font-size: calc(2.25vh + 2.25vw);
+                animation : glow ease 1s alternate infinite ;
+                padding-bottom: calc(0.4vh + 0.4vw);
+            }
+            option{
+                color: red;    
+                font-size: calc(1.25vh + 1.25vw);
+                background-color: rgb(20, 10, 44);
+                border: none;
+                
+
+            }
+            select{
+                color: red;
+                animation : glow ease 1s alternate infinite ;
+                font-size: calc(1.75vh + 1.75vw);
+                background-color: transparent;
+                border: none;
+                outline: none;
+                cursor: pointer;
+            }
+
+
+            .week-container{    
+                display: flex;
+                flex-direction: column;
+                gap: calc(1.5vh + 1.5vw);
+                padding: calc(1vh + 1vw) calc(2.5vh + 2.5vw);
+                padding-bottom:calc(2.5vh + 2.5vw)   ;
+                background-color: #100020;
+                border-radius: 150px;
+                box-shadow: 0px 0px 8px rgba(224, 14, 179, 0.45);
+                text-align: center;
+                font-size: calc(2.5vh + 2.5vw);
+                color: aqua;
+                text-shadow: 0px 0px 8px #37eeffcb;
+                margin-top: calc(2vh + 2vw);
+            }
+            .date-container{
+                color: #FF33CC;
+                text-shadow : none;
+                font-size: calc(1.5vh + 1.5vw);
+                background-color: #16023f;
+                box-shadow: 0px 0px 8px rgba(14, 224, 28, 0.45);
+                border-radius: 150px;
+                padding: calc(0.5vh + 0.5vw) calc(1.5vh + 1.5vw);
+                display: flex;
+                flex-direction: column;
+                gap: calc(1vh + 1vw);
+
+            }
+            .track-study-hours-for-subjects{
+                font-size: calc(1vh + 1vw);
+                color: white;
+                
+            }
+            .last-dimention-data-track{
+                margin-top: calc(0.5vh + 0.5vw);
+            }
+            #studyPlanPage{
+                text-align: center;
+                font-size: calc(1.8vh + 1.8vw);
+                color: white;
+                padding-top: calc(3vh + 3vw);/*add bad2an mil honi*/
+                display: grid;
+                grid-template-columns: repeat(2,1fr);
+                justify-items: center;
+                row-gap: calc(5vh + 5vw);
+            }
+            .sub-img{
+                width: calc(17.5vh + 17.5vw);
+                height: auto;
+                border-radius: 100%;
+                cursor: pointer;
+                transition: 0.5s;
+            }
+            .sub-img:hover{
+                transform: scale(1.1);
+            }
+            .one-subject-element{
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                
+            }
+            .unsubmit{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white !important;
+                border: 3px solid rgb(43, 0, 0);
+                margin-left: calc(2vh + 2vw);
+                background-color: rgb(94, 0, 0);
+                border-radius: 50px;
+                height: calc(1.5vh + 1.5vw);
+                width: calc(7vh + 7vw);
+                font-size : calc(0.75vh + 0.75vw) ;
+            }
+            .unsubmit{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white !important;
+                border: 3px solid rgb(43, 0, 0);
+                margin-left: calc(2vh + 2vw);
+                background-color: rgb(94, 0, 0);
+                border-radius: 50px;
+                height: calc(1.5vh + 1.5vw);
+                width: calc(7vh + 7vw);
+                font-size : calc(0.75vh + 0.75vw) ;
+                cursor: pointer;
+            }
+            .unsubmit:hover{
+                background-color: rgb(43, 0, 0);
+                border: 3px solid rgb(94, 0, 0);
+            }
+
+            /* add */
+            #setObjectivesPage{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                flex-direction: column;
+                padding-top: calc(3vh + 3vw);
+            }
+            .add{
+                width: calc(3vh + 3vw);
+            }
+            .add:hover{
+                transform: scale(1.4);
+            }
+            .note{
+                margin-top: calc(1vh + 1vw);
+                width: 100%;
+                background-color: rgb(34, 22, 51);
+                border-radius: 10px;
+                box-shadow: 0px 0px 8px rgba(224, 14, 179, 0.45);
+                display: flex;
+                flex-direction: column;
+                justify-content: center;
+                align-items: center;
+                padding-top: calc(1.5vh + 1.5vw);
+            }
+            .note-title{
+                width: 100%;
+                border-radius: 10px;
+               
+                text-align: center;
+                position: relative;
+            }
+            .inp-note-title{
+                top: 0;
+                right: 0;
+                width: 85%;
+                /* height: 100%; */
+                border-radius: 10px;
+                text-shadow: 0px 0px 8px #37eeffcb;
+                background-color: transparent;
+                font-size: calc(1.75vh + 1.75vw);
+                padding: calc(0.5vh + 0.5vw);
+                border: 1px solid rgb(68, 50, 80);
+                color: aqua;
+                text-align: center;
+                outline: none;
+            }
+            .inp-note-title::placeholder{
+                color: transparent;
+                text-shadow: none;
+            }
+            .shadow-lab{
+                position:absolute;
+                top: 50%;
+                left: calc(5vh + 5vw);
+                transform: translate(0,-50%);
+                color: gray;
+                font-size: calc(1.5vh + 1.5vw);
+                transition: 0.35s;
+                background-color:rgb(34, 22, 51) ;
+            }
+            .inp-note-title:hover + .shadow-lab,
+            .inp-note-title:focus + .shadow-lab,
+            .inp-note-title:not(:placeholder-shown) + .shadow-lab{
+                top: calc(0px - calc(0.3vh + 0.3vw));
+                transition: 0.35;
+            }
+            .inp-note-title:hover + .shadow-lab,
+            .inp-note-title:focus + .shadow-lab{
+                color: rgb(121, 158, 214);
+
+            }
+            .inp-note-title:hover,
+            .inp-note-title:focus{
+                border: 1px solid rgb(121, 158, 214);
+            }
+            .main-message{
+                margin-top: calc(1.5vh + 1.5vw);
+                position: relative;
+                width: 100%;
+                text-align: center;
+            }
+            .mainMsg{
+                color: white;
+                font-size: calc(1.25vh + 1.25vw);
+                text-shadow: none;
+                
+            }
+            textarea::-webkit-scrollbar{
+                display: none;
+
+            }
+            textarea{
+                overflow: hidden;
+                resize: none;
+                transition: 0.25s;
+            }
+            .note-bottom-section{
+                display: grid;
+                width: 100%;
+                box-sizing: border-box;
+                padding:  calc(1vh + 1vw) calc(3.5vh + 3.5vw);
+                grid-template-columns: repeat(2,1fr);
+                justify-items: center;
+                font-size: calc(1.25vh + 1.25vw);
+            }
+
+            .del{
+                margin: 0;
+            }
+
+            .hide{
+                display: none;
+            }
+        </style>
+        <style id="js-styles">
+            .profile-container:hover{ 
+                scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;
+            } 
+        </style>
+    </head>
+
+    <body>
+        <header>
+            <div style="position: relative;">
+            <input inputmode="none" autocomplete="off" id="inp1" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
+            <img src="light baki logo.png" class="requiresLogIn">
+            </div>
+            <div></div>
+            <div id="left-side" style="position: relative;">
+                <input inputmode="none" autocomplete="off" id="inp2" style="z-index: 5;position: absolute;border: none ;height: 100%;width: 100%;; background-color:transparent ;outline: none;color: transparent; cursor: pointer;" onclick="event.target.reportValidity()">
+                <a class="requiresLogIn" title="click here for bac national exams" onclick="window.location.hre=''">Exams</a>
+            </div>
+        </header>
+        <div class="loading-container">
+            <div class="left-section">
+                <div class="profile-container" title="Profile">
+                  <img class="profile-icon" src="default avatar icon.png">
+                  <div class="option bigOptionFont" id="accountOptions"></div>
+                </div>
+                <div class="profile-container">
+                <img class="profile-icon" src="opt2-icon.jpg">
+                  <div class="option" id="track">Track my study hours</div>
+                </div>
+                <div class="profile-container">
+                  <div id="follow-options" style="font-size: calc(1.5vh + 1.5vw);color: black;cursor: pointer;opacity: 1;transition: 0.5s;">🎓</div>
+                  <div class="option bigOptionFont" >Study Plan</div>
+                </div>
+                
+                <div class="profile-container">
+                <img class="profile-icon" style="border-radius: 0%;" src="calcIcon.png">
+                  <div class="option bigOptionFont" >GPA calculator</div>
+                </div>
+
+                <div class="profile-container">
+                <img class="profile-icon" style="border-radius: 0%;" src="objIcon.png">
+                  <div class="option bigOptionFont" >Set Objectives</div>
+                </div>
+                
+            </div>
+            <div class="close-open-options" onclick="OpenCloseOptions()"> <&nbsp&nbsp </div>
+        </div>
+
+        
+        <div class="main-theme">
+            <div id="setObjectivesPage">
+                <img class="sub-img add" src="/baki/images/add.png" onclick="createNoteBox('','','',true)">
+                <div style="width: 100%;" id="addHere">
+
+
+                </div>
+                
+            </div>
+        </div>
+
+
+
+
+
+
+        <script>
+            var ls = document.querySelector(".left-section");
+            var btOp = document.querySelector('.close-open-options');
+            var clickAccess = true;
+            var acOp = document.getElementById("accountOptions");
+            var jss = document.getElementById('js-styles');
+            var mt = document.querySelector(".main-theme");
+            var defaultData = {"Math": [],"Physic": [],"Svt": [],"Arabe": [],"France": [],"Eng": [],"Philo": [],"Info": [],"Option": []} ;
+            var dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+            //add
+            var adH = document.getElementById('addHere')
+            var nbNotes = 2;// localStorage !
+            var notesDetails = [{title:'aaa',main:'vv',date:'Monday 2025/15/02'}]
+            loadSetObjective()
+            
+
+            function deleteNote(id){
+                let ext = document.getElementById('note-nb-'+id)
+                adH.removeChild(ext);
+            }
+            function storeMainMsg(nb) {
+                var txtarea = document.getElementById("I2-"+nb);
+                txtarea.addEventListener("input", function(){
+                this.style.height = "auto";
+                this.style.height = this.scrollHeight + "px"; 
+                notesDetails[nb].main = this.value ;
+            })
+            }
+            function storeTitles(nb){
+                var Tit = document.getElementById("I1-"+nb);
+                Tit.addEventListener("input", function(){
+                notesDetails[nb].title = this.value ;
+            })
+            }
+
+            function loadSetObjective(){
+                for(let i = 0 ; i<nbNotes;i++){
+                    createNoteBox(...Object.values(notesDetails[i]))
+                }
+            }
+
+            function createNoteBox(tit='',main='',DT='',increase=false){
+                let d = new Date() ;
+                let dy = d.getDay(); 
+                let st = dayNames[dy] + '&nbsp&nbsp&nbsp'+ d.toISOString().slice(0,10)
+                if(DT){st = DT}
+                let ht = `
+                <div class="note" id="note-nb-${nbNotes}">
+                    <div class="note-title">
+                        <input class="inp-note-title" id="I1-${nbNotes}" placeholder="." value="${tit}">
+                        <label class="shadow-lab" for="I1-${nbNotes}">Title</label>
+                    </div>
+                    <div class="main-message">
+                        <textarea cols="40" class="inp-note-title mainMsg" id="I2-${nbNotes}" placeholder=".">${main}</textarea>
+                        <label class="shadow-lab" for="I2-${nbNotes}">Note content</label>
+                    </div>
+                    <div class="note-bottom-section">
+                        ${st}
+                        <button class="unsubmit del" onclick="deleteNote(${nbNotes})">Delete</button>
+                    </div>
+                </div>`;
+                notesDetails.push({}) ;
+                adH.insertAdjacentHTML("afterbegin", ht);
+                storeTitles(nbNotes) ;
+                storeMainMsg(nbNotes) ;
+                notesDetails[nbNotes].date = st ;
+                
+                if(increase){nbNotes++;}
+                
+            }
+
+
+            
+        </script>
+    </body>
+</html>

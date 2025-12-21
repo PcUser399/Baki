@@ -1,13 +1,1018 @@
 <!DOCTYPE html>
 <html>
     <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>baki</title>
+        <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='0.9em' font-size='90'>📘</text></svg>">
+        <style>
+            * {
+                -webkit-tap-highlight-color: transparent;
+                }
+            img:not(.profile-icon){
+                height: 8.5vh;
+                min-height: 56px;
+                width: auto;
+                cursor: pointer;
+                transition: 0.25s;
+                filter: drop-shadow(0 0 8px rgba(255, 51, 204,1));
+            }
+            #inp1:hover+img,
+            img:not(.profile-icon):hover{
+                scale: 1.1;
+                transition: 0.25s;
+                filter: drop-shadow(0 0 8px rgba(255, 51, 204))  drop-shadow(0 0 12px rgba(255, 51, 204));
+            }
+            body::-webkit-scrollbar {
+             display: none; /* Chrome, Safari */
+            }
 
+            body{
+                margin-top: max(calc(8.5vh + 16px), 72px) !important;
+                color: rgb(230, 115, 191);
+                height: 100%;
+                width :100vw;
+                background: linear-gradient(90deg,rgb(20, 10, 44), rgb(11, 11, 41),rgb(20, 10, 44));
+                position: relative;
+                overflow: hidden;
+            }
+            header{
+                display: flex;
+                justify-content: space-between;
+                padding: 7px 5vw;
+                background-color: rgb(23, 0, 46);
+                box-shadow: 0px 2px 5px rgba(224, 14, 179, 0.45);
+                position: fixed;
+                top: 0px;
+                right: 0px;
+                left: 0px;
+                z-index: 10;
+            }
+            #left-side{
+                text-align: center;
+                display: flex;
+                align-items: center;
+                font-size: 30px;
+                font-family:'Pacifico', cursive;
+                padding-bottom: 3px;
+                text-shadow:  0 0 8px #FF33CC, 0 0 16px #FF33CC;
+                transition: 0.25s;
+                cursor: pointer;
+            }
+            #inp2:hover+#left-side,
+            #left-side:active,
+            #left-side:hover{
+                scale: 1.2;
+                transition: 0.25s;
+                text-shadow:  0 0 8px #FF33CC, 0 0 16px #FF33CC, 0 0 24px #FF33CC;
+            }
+            .loading-container{
+                width: 100vw;
+                height: calc(100vh - max(calc(8.5vh + 16px), 72px));
+                display: flex;
+                justify-content: center;
+                align-items:center ;
+                justify-content: center;
+                align-items: center;
+                position: relative;
+            }
+            .loading-animation{
+                width: calc(17.5vw + 17.5vh) ;
+                height:calc(17.5vw + 17.5vh) ;
+                border: 5px solid rgba(61, 4, 91,0.05);
+                box-shadow: 0 0 2px rgb(20, 10, 44);
+                border-top: 5px solid rgb(2, 125, 104);
+                border-radius: 50%;
+                animation: spin ease 2s infinite ;
+                transition: 0.5s;
+                cursor: pointer;
+
+            }
+            .loading-text{
+                position: absolute;
+                font-size: calc(1.4vh + 1.4vw);
+                transition: 0.5s;
+                cursor: pointer;
+            }
+            @keyframes spin{
+                to{rotate: 360deg;
+                }
+            
+            }
+            @keyframes spreadOut{
+                from{scale: 0.01;}
+                to{scale :1;
+                }
+            
+            }
+            @keyframes openOptions{
+                from{width: 0px;}
+                to{width: 20vw;}
+            }
+            @keyframes closeOptions{
+                from{width: 20vw;}
+                to{width: 0px;}
+            }
+            .left-section{
+                width: 0vw; 
+                background: linear-gradient(90deg, #100020 0%, #19024b  100%);
+                box-shadow: 0px 5px 8px rgba(224, 14, 179, 1) ;
+                position: fixed;
+                top : calc(max(calc(8.5vh + 16px), 72px) + 5px) ;
+                bottom: 0px;
+                left: 0px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                gap: 2.5vh;
+            }
+            .close-open-options{
+                position: fixed;
+                width: calc(2.25vh + 2.25vw);
+                height: calc(2.75vh + 2.75vw);
+                display: flex;
+                align-items:center ;
+                justify-content: center;
+                background: linear-gradient(90deg, #19024b 0%, #280475  100%);
+                border-top-right-radius: 65%;
+                border-bottom-right-radius: 65%;
+                border-top: 2px solid rgba(224, 14, 179, 0.35) ;
+                border-bottom:2px solid rgba(224, 14, 179, 0.35) ;
+                border-right: 2px solid rgba(224, 14, 179, 0.35) ;
+                top: 50%;
+                left: 0px;
+                font-size: calc(1.25vh + 1.25vw);
+                cursor: pointer;
+                transition: 1s;
+            
+            }
+            #profile-container{
+                margin-top: 5vh;
+                transition: 0.5s;
+                color: transparent;
+                text-shadow: none ;
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                justify-content: center;
+                width: 14vw;
+                height: 10vh;
+                border-radius: 50%;
+                padding: 0 calc(1vh + 1vw);
+            }
+            .option{
+                display: inline-block;
+                display: -webkit-box;  
+   	            -webkit-line-clamp: 1; 
+   		        -webkit-box-orient: vertical;
+   		        overflow: hidden;  
+                transition: 0.5s;
+                cursor: pointer;
+                font-size: calc(0.85vh + 0.85vw);
+            }
+
+            .profile-icon{
+                height: calc(1.5vh + 1.5vw);
+                width: calc(1.5vh + 1.5vw);
+                margin-right: 5px;
+                border-radius: 50%;
+                transition: 0.5s;
+                opacity: 0;
+                cursor: pointer;
+            }
+            .bigOptionFont{
+                font-size: calc(1.15vh + 1.15vw);
+            }
+            @media (max-height : 525px ){
+                #track{
+                    font-size: calc(0.7vh + 0.6vw);
+                }
+                .option{
+                    font-size: calc(0.8vh + 0.75vw);
+                }
+
+                .bigOptionFont{
+                    font-size: calc(1vh + 1vw);
+                 }
+            }
+            .main-theme{
+                position: absolute;
+                left: calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px);
+                top : 5px;
+                width: 71vw;
+                z-index: 5;
+                height: 150vh;
+                transition:  1s;
+                padding-top: calc(0.75vw + 0.75vh);
+                padding-left: calc(0.5vw + 0.5vh);
+                opacity: 0;
+            }
+            .daily-quote{
+                font-size: calc(2.25vh + 2.25vw);
+                font-family:'Pacifico', cursive;
+                text-shadow: 0px 5px 8px rgba(224, 14, 179, 1);
+                max-width: 60%;
+                min-width: 20vw;
+
+            }
+            #daily-quote{
+                font-size: calc(1.25vh + 1.25vw);
+                color: white;
+                padding-top: calc(1vh + 1vw);
+            }
+            .block{
+                padding-bottom: calc(1vh + 1vw);
+                border-bottom:  2px solid aqua  ;
+                width: 100%;
+            }
+            .strike-title{
+                padding-top: calc(1vh + 1vw);
+                font-size: calc(1.75vh + 1.75vw) ;
+                font-family:'Caveat', cursive;
+                color: white;
+                display : flex ;
+                justify-content : center ;
+                
+            }
+            .hot-strike{
+                color: rgb(170, 13, 13);
+                text-shadow: 0 5px 5px rgb(170, 13, 13);
+                animation: glow 1s ease alternate infinite ;
+            }
+            @keyframes glow{
+                to {text-shadow:0 0 8px  red, 0 0 16px red;
+                    
+                }
+            }
+            .week-progress-container{
+                margin-top:  calc(3vh + 3vw);
+                width: 100%;
+                background-color: white;
+                height: calc(1.5vh + 1.5vw);
+                border: none;
+                border-radius: 50px;
+                position: relative;
+                color: black;
+                font-size: calc(1.25vh + 1.25vw);
+            }
+            .display-hour-progress{
+                height: 100%;
+                width: 2.5%;
+                background-color: rgb(41, 199, 120);
+                border: none;
+                border-radius: 50px;
+                transition: ease 2s;
+            }
+            .subject-mainPage{
+                width: 100%;
+                height: calc(15vw + 15vh);
+                background-color: rgb(23, 0, 46) ;
+                box-shadow: 0px 0px 5px rgba(224, 14, 179, 0.45);
+                border: none;
+                transition: 0.5s;
+                border-radius: 50px;
+                display: flex;
+                flex-direction: column;
+                justify-content: space-evenly;
+                align-items: center;    
+                z-index: 10;
+                cursor: pointer;
+                color: white;
+            }
+            .subject-title{
+                margin-top: calc(5vh + 5vw) ;
+                font-size: calc(2vw + 2vh);
+                font-family:'Pacifico', cursive;
+                width: 100%;
+                text-align: center;
+                color: aqua;
+                text-shadow:  0px 0px 6px rgb(19, 177, 172);
+            }
+            .finished-subject-title{
+                color: rgb(23, 228, 40) ;
+                text-shadow:  0px 0px 6px rgb(16, 224, 68) ;
+            }
+            .finished-subject-box{
+                box-shadow: 0px 0px 5px rgba(10, 236, 59, 0.45);
+                color: green;
+            }
+            .finished-subject-box:hover{
+                box-shadow: 0px 0px 5px rgba(14, 224, 49, 0.45) , 0px 0px 10px rgba(12, 243, 62, 0.45) , 0px 0px 15px rgba(6, 245, 38, 0.45) !important ;           
+            }
+            .subject-mainPage:hover{
+                box-shadow: 0px 0px 5px rgba(224, 14, 179, 0.45) , 0px 0px 10px rgba(243, 12, 193, 0.45) , 0px 0px 15px rgba(245, 6, 193, 0.45);
+            }
+            .subject-hours-details{
+                display: flex;
+                flex-direction: row;
+                font-size: calc(1.4vh + 1.4vw);
+            }
+            input:-webkit-autofill,
+            input:-webkit-autofill:hover, 
+            input:-webkit-autofill:focus,
+            textarea:-webkit-autofill,
+            textarea:-webkit-autofill:hover,
+            textarea:-webkit-autofill:focus,
+            select:-webkit-autofill,
+            select:-webkit-autofill:hover,
+            select:-webkit-autofill:focus {
+            -webkit-text-fill-color: rgb(128,128,128);
+            transition: background-color 5000s ease-in-out 0s;
+            }
+            input{
+                background-color: #19024b;
+                border-color:midnightblue ;
+                outline: none;
+                border-radius: 50px;
+                height: calc(1.5vh + 1.5vw);
+                width: calc(15vh + 15vw);
+                color: rgb(128, 128, 128);
+                padding:  0 15px;
+                font-size: calc(1vh + 1vw);
+            }
+            input::placeholder{
+                text-align: center;
+            }
+            input[type=number]::-webkit-outer-spin-button,
+            input[type=number]::-webkit-inner-spin-button {
+                -webkit-appearance: none;
+                margin: 0;
+            }
+            .submiting-hours-section{
+                display: flex;
+                align-items: center;
+                justify-content: center;
+            }
+            .unsubmit{
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                color: white !important;
+                border: 3px solid rgb(43, 0, 0);
+                margin-left: calc(2vh + 2vw);
+                background-color: rgb(94, 0, 0);
+                border-radius: 50px;
+                height: calc(1.5vh + 1.5vw);
+                width: calc(7vh + 7vw);
+            }
+            .unsubmit:hover{
+                background-color: rgb(43, 0, 0);
+                border: 3px solid rgb(94, 0, 0);
+            }
+            #end{
+                height: calc(5vh + 5vw);
+                width: 100%;
+            }
+            .hide{
+                display: none;
+            }
+        </style>
+        <style id="js-styles">
+
+        </style>
     </head>
 
     <body>
+        <header>
+            <div style="position: relative;">
+            <input inputmode="none" autocomplete="off" id="inp1" style="z-index: 5;position: absolute;border: none ;height: 100%; background-color:transparent ;outline: none;color: transparent;width: 50px; right: 50%;transform: translate(50%);cursor: pointer;" onclick="event.target.reportValidity()">
+            <img src="light baki logo.png" class="requiresLogIn">
+            </div>
+            <div></div>
+            <div id="left-side" style="position: relative;">
+                <input inputmode="none" autocomplete="off" id="inp2" style="z-index: 5;position: absolute;border: none ;height: 100%;width: 100%;; background-color:transparent ;outline: none;color: transparent; cursor: pointer;" onclick="event.target.reportValidity()">
+                <a class="requiresLogIn" title="click here for bac national exams" onclick="window.location.hre=''">Exams</a>
+            </div>
+        </header>
+        <div class="loading-container">
+            <div class="loading-text">Planning Study Schedule.</div>
+            <div class="loading-animation"></div>
+            <div class="left-section hide">
+                <div id="profile-container" title="Profile">
+                  <img class="profile-icon" src="default avatar icon.png">
+                  <div class="option bigOptionFont" id="accountOptions"></div>
+                </div>
+                <div id="profile-container">
+                <img class="profile-icon" src="opt2-icon.jpg">
+                  <div class="option" id="track">Track my study hours</div>
+                </div>
+                <div id="profile-container">
+                  <div id="follow-options" style="font-size: calc(1.5vh + 1.5vw);color: black;cursor: pointer;opacity: 0;transition: 0.5s;">🎓</div>
+                  <div class="option bigOptionFont" >Study Plan</div>
+                </div>
+                
+                <div id="profile-container">
+                <img class="profile-icon" style="border-radius: 0%;" src="calcIcon.png">
+                  <div class="option bigOptionFont" >GPA calculator</div>
+                </div>
 
+                <div id="profile-container">
+                <img class="profile-icon" style="border-radius: 0%;" src="objIcon.png">
+                  <div class="option bigOptionFont" >Set Objectives</div>
+                </div>
+                
+            </div>
+            <div class="close-open-options hide"> >&nbsp&nbsp </div>
+        </div>
+        <div class="main-theme hide">
+            <div style="display: flex;align-items: center;" class="block">
+                <div class="daily-quote">Daily Quote :</div>
+                <div id="daily-quote"></div>
+            </div>
+
+            <div class="strike-title">
+                <div id="strike-number">1</div>&nbsp Weeks strike
+            </div>
+            <div class="week-progress-container">
+                <div class="display-hour-progress"></div>
+                <div style="height: calc(1.5vh + 1.5vw);display: flex;position: absolute;top: 50%;left: 50%;transform: translate(-50%,-50%);">
+                    <div id="hours-done-this-week">1</div>/<div id="total-hours">10</div>&nbsp hours done this week
+                </div>
+            </div>
+
+            <div class="subject-container">
+            </div>
+
+            <div id="end"></div>
+
+        </div>
         <script>
-            document.body.addEventListener('keydown',event=> console.log(event.key))
+            window.scrollTo(0,0);
+            var studentObjective = {bt18:true , bt17:false,bt16:false}; // not to be added in offecial
+            var studentLvl = {Math : 'exelent' , Physic : 'good' , Svt : 'good' , Arabe : 'good' , France : 'good' , Eng : 'exelent' , Philo : 'good' , Info : 'exelent', Option : 'exelent'} // not to be added
+            var studentName = {first : 'Mahdi' , last:'turki'} //not added
+            const dailyQuotes = [//not added
+                    "Trust in Allah, but tie your camel. Effort is part of faith.",
+                    "Knowledge is the best companion; never stop seeking it.",
+                    "Success comes to those who persist, not those who quit.",
+                    "Start your day with Bismillah and confidence will follow.",
+                    "The best of people are those who are most beneficial to others.",
+                    "Believe in yourself, for Allah has given you unique talents.",
+                    "Patience is key; every small effort counts in the long run.",
+                    "Struggle today, shine tomorrow.",
+                    "Make dua before exams; Allah knows what’s best for you.",
+                    "Knowledge enlivens the soul and strengthens the mind.",
+                    "A small step daily leads to great achievements.",
+                    "Your effort is a form of worship if your intention is sincere.",
+                    "Never compare your journey with others; everyone has their pace.",
+                    "Success is built on consistency, not intensity.",
+                    "Allah does not burden a soul beyond what it can bear.",
+                    "Difficulties are opportunities for growth, not defeat.",
+                    "Learn from mistakes; they are the stepping stones to wisdom.",
+                    "Be confident; Allah loves those who trust Him and themselves.",
+                    "Your mind is a gift; feed it with knowledge and positivity.",
+                    "Stay focused; distractions steal precious time.",
+                    "Every day is a new chance to improve yourself.",
+                    "Set goals, take action, and leave the rest to Allah.",
+                    "The best reward comes after the hardest effort.",
+                    "Surround yourself with those who uplift you.",
+                    "Pray for guidance and clarity; it will strengthen your path.",
+                    "Do not fear failure; fear never trying.",
+                    "Even the Prophet (PBUH) valued learning and self-improvement.",
+                    "Your time is valuable; spend it wisely.",
+                    "Discipline today brings freedom tomorrow.",
+                    "Always be curious; knowledge is endless.",
+                    "Success is a journey, not a destination.",
+                    "Believe in the power of dua and hard work together.",
+                    "Consistency outweighs occasional brilliance.",
+                    "Feed your mind with positivity, not doubts.",
+                    "Every hardship is a test of patience and faith.",
+                    "Smile; a confident mind performs better.",
+                    "Reflect on your achievements, no matter how small.",
+                    "Your intention matters more than speed.",
+                    "Never underestimate the power of starting over.",
+                    "Take breaks; your brain needs rest to perform well.",
+                    "Focus on progress, not perfection.",
+                    "Help others; it strengthens your own knowledge and character.",
+                    "Be grateful; gratitude increases motivation and happiness.",
+                    "A sound mind requires a sound body; sleep and eat well.",
+                    "Don’t rush the process; growth takes time.",
+                    "Every expert was once a beginner.",
+                    "Surround yourself with books, not just devices.",
+                    "The journey of knowledge is a lifelong path.",
+                    "Believe Allah has a plan; your effort is part of it.",
+                    "Stay humble; arrogance blocks learning.",
+                    "Mistakes are lessons, not failures.",
+                    "Your potential is limitless with effort and faith.",
+                    "Keep a journal; writing clarifies thoughts and goals.",
+                    "Think positive; negativity wastes energy.",
+                    "Organize your study; clarity reduces stress.",
+                    "Ask questions; curiosity leads to mastery.",
+                    "Do small good deeds daily; they build character and confidence.",
+                    "Motivation gets you started; discipline keeps you going.",
+                    "Learn to manage time; every minute counts.",
+                    "Celebrate your progress, not just the outcome.",
+                    "Reflect on the Quran; wisdom strengthens the mind and heart.",
+                    "Focus on what you can control, not what you can’t.",
+                    "Take responsibility for your learning; no one can do it for you.",
+                    "Visualize success; your mind follows your imagination.",
+                    "Be patient with yourself; growth is gradual.",
+                    "Confidence grows with preparation and practice.",
+                    "Avoid procrastination; action creates momentum.",
+                    "Remember, Allah rewards sincere effort, not just results.",
+                    "Find joy in learning, and you’ll never feel burdened.",
+                    "Every morning is a chance to start fresh.",
+                    "Trust your abilities; Allah has blessed you uniquely.",
+                    "Challenge yourself; comfort zones don’t lead to growth.",
+                    "Be persistent; small steps daily make a huge difference.",
+                    "Knowledge with action is the most beneficial.",
+                    "Plan, act, revise, repeat — that’s the cycle of success.",
+                    "Never underestimate the value of dua and tawakkul.",
+                    "Believe in the process; the results will follow.",
+                    "Reading strengthens the mind and expands the heart.",
+                    "Keep a positive environment; it fuels motivation.",
+                    "Be kind to yourself; self-love fosters confidence.",
+                    "Difficult times test patience and increase wisdom.",
+                    "Stay humble but aim high.",
+                    "Seek knowledge even if it takes you far and wide.",
+                    "Learning is an act of worship when done with the right intention.",
+                    "Do not let fear of failure stop your growth.",
+                    "Strive for excellence, not perfection.",
+                    "Your attitude shapes your results more than your talent.",
+                    "Time lost is never regained; use it wisely.",
+                    "Be curious and ask questions; curiosity is the fuel of knowledge.",
+                    "Trust the process; Allah’s timing is perfect.",
+                    "Keep moving forward; small steps lead to big achievements.",
+                    "Discipline your mind; focus is a skill to master.",
+                    "Every challenge is an opportunity to grow stronger.",
+                    "Knowledge combined with character is true success.",
+                    "Believe in yourself; Allah created you capable.",
+                    "Motivation fades, discipline remains.",
+                    "Never stop learning; the world is full of lessons.",
+                    "Stay determined; obstacles are temporary, your effort is permanent.",
+                    "Be proactive; waiting doesn’t lead to success.",
+                    "Self-confidence comes from preparation and faith.",
+                    "Help others learn; teaching reinforces your own understanding.",
+                    "Take one step at a time; even slow progress is progress.",
+                    "Stay consistent; even small efforts accumulate over time.",
+                    "Remember, with every difficulty comes ease.",
+                    "Success is a reflection of effort, intention, and patience."
+                    ];
+
+
+
+            let numberOfRequiredHours = { // subject then level then objective //not added
+            Math : {
+                        bad : {bt18 : "10 hours per week." , bt17:"9 hours per week." , bt16:"8 hours per week." },
+                        normal : {bt18 : "9 hours per week." , bt17:"7.5 hours per week." , bt16:"7 hours per week." },                
+                        good : {bt18 : "8 hours per week." , bt17:"6.5 hours per week." , bt16:"6 hours per week." },
+                        exelent : {bt18 : "7 hours per week." , bt17:"6 hours per week." , bt16:"4.5 hours per week." },
+                    },
+            Physic :    {
+                        bad : {bt18 : "5.5 hours per week." , bt17:"5 hours per week." , bt16:"4 hours per week." },
+                        normal : {bt18 : "5 hours per week." , bt17:"4.5 hours per week." , bt16:"4 hours per week." },                
+                        good : {bt18 : "4.5 hours per week." , bt17:"4 hours per week." , bt16:"4 hours per week." },
+                        exelent : {bt18 : "4 hours per week." , bt17:"3 hours per week." , bt16:"3 hours per week." },
+                    },        
+            Svt : {
+                        bad : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
+                        normal : {bt18 : "6 hours before each test." , bt17:"5 hours before each test." , bt16:"4 hours before each test." },                
+                        good : {bt18 : "5.5 hours before each test." , bt17:"4 hours before each test." , bt16:"3 hours before each test." },
+                        exelent : {bt18 : "5 hours before each test." , bt17:"4 hours before each test." , bt16:"3 hours before each test." },
+                    },
+            Arabe : {
+                        bad : {bt18 : "3 hours before each test." , bt17:"2 hours before each test." , bt16:"2 hours before each test." },
+                        normal : {bt18 : "2.5 hours before each test." , bt17:"2 hours before each test." , bt16:"2 hours before each test." },                
+                        good : {bt18 : "2 hours before each test." , bt17:"1.5 hours before each test." , bt16:"1 hour before each test." },
+                        exelent : {bt18 : "2 hours before each test." , bt17:"1.5 hours before each test." , bt16:"1 hour before each test." },
+                    },
+            France : {
+                        bad : {bt18 : "2 hours per week." , bt17:"2 hours per week." , bt16:"1.5 hours per week." },
+                        normal : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },                
+                        good : {bt18 : "4 hours before each test." , bt17:"3.5 hours before each test." , bt16:"3 hours before each test." },
+                        exelent : {bt18 : "3 hours before each test." , bt17:"2.5 hours before each test." , bt16:"2 hours before each test." },
+                    },
+            Eng : {
+                        bad : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
+                        normal : {bt18 : "3 hours before each test." , bt17:"2 hours before each test." , bt16:"1 hour before each test." },                
+                        good : {bt18 : "2 hours before each test." , bt17:"1 hour before each test." , bt16:"No need to revize now , only in the revision periode." },
+                        exelent : {bt18 : "No need to revize now , only in the revision periode." , bt17:"No need to revize now , only in the revision periode." , bt16:"No need to revize now , only in the revision periode." },
+                    },
+            Philo : {
+                        bad : {bt18 : "3.5 hours per week." , bt17:"3 hours per week." , bt16:"3 hours per week." },
+                        normal : {bt18 : "3 hours per week." , bt17:"3 hours per week." , bt16:"3 hours per week." },                
+                        good : {bt18 : "3 hours per week." , bt17:"2.5 hours per week." , bt16:"2 hours per week." },
+                        exelent : {bt18 : "3 hours per week." , bt17:"2 hours per week." , bt16:"2 hours per week." },
+                    },
+            Info  : {
+                        bad : {bt18 : "3 hours per week." , bt17:"3 hours per week." , bt16:"2.5 hours per week." },
+                        normal : {bt18 : "2.5 hours per week." , bt17:"2 hours per week." , bt16:"2 hours per week." },                
+                        good : {bt18 : "2 hours per week." , bt17:"2 hours per week." , bt16:"4 hours before each test." },
+                        exelent : {bt18 : "1.5 hours per week." , bt17:"1 hour per week." , bt16:"3 hours before each test." },
+                    },
+            Option : {
+                        bad : {bt18 : "2.5 hours per week." , bt17:"2 hours per week." , bt16:"2 hours per week." },
+                        normal : {bt18 : "2 hours per week." , bt17:"1.5 hours per week." , bt16:"1.5 hours per week." },                
+                        good : {bt18 : "2 hours per week." , bt17:"1.5 hours per week." , bt16:"1.5 hours per week." },
+                        exelent : {bt18 : "1.5 hours per week." , bt17:"1.5 hours per week." , bt16:"1 hour per week." },
+                    }
+}; 
+
+            // localStorage.clear()// remove
+            var strike = [1] ;
+            var day = new Date().getDate() ;
+            
+            defaultLS = {Math : [] , Physic : [] , Svt : [] , Arabe : [] , France : [] , Eng : [] , Philo : [] , Info : [] ,  Option : []};
+            studentWeeklyObjective = {Math : 0 , Physic : 0 , Svt : 0 , Arabe : 0 , France : 0 , Eng : 0 , Philo : 0 , Info : 0 ,  Option : 0}
+            defaultSW = {Math : 0 , Physic : 0 , Svt : 0 , Arabe : 0 , France : 0 , Eng : 0 , Philo : 0 , Info : 0 ,  Option : 0};
+            defaultSA = {Math : [] , Physic : [] , Svt : [] , Arabe : [] , France : [] , Eng : [] , Philo : [] , Info : [] ,  Option : []};
+
+            localStorage.getItem('firstDay') || localStorage.setItem('firstDay',day) ;
+            localStorage.getItem('previousWeek') || localStorage.setItem('previousWeek','1') ;
+            localStorage.getItem('sw') || localStorage.setItem('sw',JSON.stringify(defaultSW)) ;
+            localStorage.getItem('sa') || localStorage.setItem('sa',JSON.stringify(defaultSA)) ;
+            localStorage.getItem('ls') || localStorage.setItem('ls',JSON.stringify(defaultLS)) ;
+
+            var initialDay = localStorage.getItem('firstDay') ;
+            var dailyQuotesInd = day - initialDay ;
+            var week = Math.floor((day-initialDay)/7) + 1;
+            if(week != Number(localStorage.getItem('previousWeek') )){
+                localStorage.setItem('sw',JSON.stringify(defaultSW))
+
+            }
+
+            var txt = document.querySelector(".loading-text") ;
+            var an = document.querySelector(".loading-animation") ;
+            var textAnimation = ["Planning Study Schedule.","Planning Study Schedule..","Planning Study Schedule..."];
+            var currentTxt = 1 ;
+            var txtAnInt ;
+            var ls = document.querySelector(".left-section");
+            var btOp = document.querySelector('.close-open-options');
+            var clickAccess = true;
+            var acOp = document.getElementById("accountOptions");
+            var jss = document.getElementById('js-styles');
+            var mt = document.querySelector(".main-theme");
+            var dc = document.getElementById("daily-quote");
+
+            var ws = document.getElementById('strike-number');
+            var wt = document.querySelector('.strike-title');
+            var dhp = document.querySelector('.display-hour-progress');
+            var hdw = document.getElementById('hours-done-this-week');
+            var th = document.getElementById('total-hours');
+            var b = document.querySelector('.block')
+            var studentStudyHoursAchievedInThisWeekDetails =  JSON.parse(localStorage.getItem('sw'));
+            var allStudiedHoursData = JSON.parse(localStorage.getItem('sa'))  // [{hours , date ,week },...] week = (day-initialDay)%7 + 1
+            var selectedObjective = getObjective();
+            var totalHours =  getAllRequiredHoursInOneWeak(selectedObjective );
+            var lastSubmition = JSON.parse(localStorage.getItem('ls'));
+            var allStudyHoursAchievedInThisWeek = calculateSumOfStudiedHoursThisWeek() ;
+            dc.innerHTML = '&nbsp&nbsp'+dailyQuotes[dailyQuotesInd];
+            hdw.innerText = allStudyHoursAchievedInThisWeek;
+            th.innerText = totalHours ;
+            console.log(localStorage);
+            var isLogedIn = true ; // to be removed
+            generateAllHTMLSubjects()
+
+
+            function generateAllHTMLSubjects(){ // to be removed
+                for (let key in studentWeeklyObjective){
+                    let a = studentWeeklyObjective[key]
+
+
+                    if ( a != 0){
+                        msg = 
+                            '<div class="subject-title" id="' + key + '-title">' + key + '</div>' +
+                            '<div class="subject-mainPage" id="' + key + '-box">' +
+                                '<div class="subject-hours">' +
+                                    '<div class="subject-hours-details">' +
+                                        '<div id="' + key + '-done-hours">0</div>/' +
+                                        '<div id="' + key + '-total-hours"></div>&nbsp Hours done This Week' +
+                                    '</div>' +
+                                '</div>' +
+                                '<div class="submiting-hours-section">' +
+                                    '<input type="number" min="0" id="input-' + key + '-hours" ' +
+                                    'onkeypress="if(event.key==\'Enter\'){submitHours(\'' + key + '\', event.target, day, week)}" ' +
+                                    'placeholder="Please enter here" ' +
+                                    'title="after studing ' + key + ' for any amount enter it in hours here">' +
+                                    
+                                    '<button onclick="unSubmit(\'' + key + '\')" class="unsubmit" ' +
+                                    'title="undo Last Submitted Hours">Unsubmit</button>' +
+                                '</div>' +
+                            '</div>';
+                        document.querySelector('.subject-container').innerHTML += msg ;
+                        let thr = document.getElementById(key+'-total-hours') 
+                        let tsh = document.getElementById(key+'-done-hours')
+                        let t = document.getElementById(key+'-title')
+                        let b = document.getElementById(key+'-box')
+                        let s = studentStudyHoursAchievedInThisWeekDetails ;
+                        let sb = studentWeeklyObjective ;
+
+                        if (s[key]>=sb[key]){
+                            t.classList.add('finished-subject-title')
+                            b.classList.add('finished-subject-box')
+                        }
+
+                        if (thr && tsh ){
+                            thr.innerText =  a ;
+                            tsh.innerText = studentStudyHoursAchievedInThisWeekDetails[key] ;}
+                        
+
+                    }
+            }
+            }
+  
+            // <div class="subject-title" id="Math-title">Math</div>
+            // <div class="subject-mainPage" id="Math-box">
+            //     <div class="subject-hours"> *
+            //         <div class="subject-hours-details"> *
+            //             <div id="Math-done-hours">0</div>/ *
+            //             <div id="Math-total-hours">8.5</div>&nbsp Hours done This Week *
+            //         </div>*
+            //     </div>*
+            //     <div class="submiting-hours-section">*
+            //         <input type="number" min="0" id="input-Math-hours"  onkeypress=" if(event.key == 'Enter'){submitHours('Math',event.target,day,week)}"  placeholder="Please enter here" title="after studing Math for any amount enter it in hours here">*
+            //         <buttom onclick="unSubmit('Math')" class="unsubmit" title="undo Last Submitted Hours">Unsubmit</buttom>*
+            //     </div>*
+            // </div>*
+            
+
+            function submitHours(subject,el,day,week){
+                if(el.value<=0){el.setCustomValidity('Please Enter a positive number');el.reportValidity();el.setCustomValidity('');return null}
+
+
+                let dis = document.getElementById(subject+'-done-hours');
+                let t = document.getElementById(subject+'-title');
+                let b = document.getElementById(subject+'-box');
+
+                let date = getDateYearMonthDayTime() ;
+                let arr = allStudiedHoursData[subject];
+                let s = studentStudyHoursAchievedInThisWeekDetails ;
+                let sb = studentWeeklyObjective ;
+
+
+                let h = removeOverObjectiveHours (s[subject],sb[subject],Number(el.value))
+                if(arr.length>0 && day == getDayFromExpression(arr[arr.length-1]['date'])) {
+                    arr[arr.length-1]['hours'] += Number(el.value) ;
+                    lastSubmition[subject].push(Number(el.value)) ;
+                    s[subject] += Number(el.value) ;
+
+                    localStorage.setItem('ls',JSON.stringify(lastSubmition)) ;
+                    localStorage.setItem('sw',JSON.stringify(s));
+                    localStorage.setItem('sa',JSON.stringify(allStudiedHoursData));
+            
+                }
+
+                else {
+                    arr.push({hours:Number(el.value) , date , week });
+                    lastSubmition[subject].push(Number(el.value)) ;
+                    s[subject] += Number(el.value) ;
+
+                    localStorage.setItem('ls',JSON.stringify(lastSubmition)) ;
+                    localStorage.setItem('sw',JSON.stringify(s));
+                    localStorage.setItem('sa',JSON.stringify(allStudiedHoursData))
+                }
+                console.log('allStudiedHoursData :' , allStudiedHoursData )
+                console.log('studentStudyHoursAchievedInThisWeekDetails :' , studentStudyHoursAchievedInThisWeekDetails )
+                console.log('lastSubmittion :' , lastSubmition )
+                console.log('localStorage : ',localStorage)
+
+                dis.innerText = s[subject] ;
+                allStudyHoursAchievedInThisWeek += h
+                displayHourProgress()
+                console.log('display :',hdw,dhp)
+                el.value=''
+                if (s[subject]>=sb[subject]){
+                    t.classList.add('finished-subject-title')
+                    b.classList.add('finished-subject-box')
+                }
+                
+
+            }
+
+            function unSubmit(subject){
+                let dis = document.getElementById(subject+'-done-hours');
+                let t = document.getElementById(subject+'-title');
+                let b = document.getElementById(subject+'-box');
+
+                let date = getDateYearMonthDayTime() ;
+                let arr = allStudiedHoursData[subject];
+                let s = studentStudyHoursAchievedInThisWeekDetails ;
+                let sb = studentWeeklyObjective ;
+                let len = lastSubmition[subject].length
+
+                if (arr.length>0 && len > 0 ){
+                    let h = removeOverObjectiveHours (s[subject],sb[subject],lastSubmition[subject][len-1],1);
+                    if (arr[arr.length-1]['hours'] - lastSubmition[subject][len-1] == 0 ){
+                        arr.pop();
+                        console.log(arr)
+                        s[subject] -= lastSubmition[subject][len-1];
+                        localStorage.setItem('sw',JSON.stringify(s));
+                        localStorage.setItem('sa',JSON.stringify(allStudiedHoursData));
+                    }
+                    else{
+                        arr[arr.length-1]['hours']-=lastSubmition[subject][len-1];
+                        s[subject] -= lastSubmition[subject][len-1];
+                        localStorage.setItem('sw',JSON.stringify(s));
+                        localStorage.setItem('sa',JSON.stringify(allStudiedHoursData));
+                    }
+                    dis.innerText = s[subject] ;
+                    allStudyHoursAchievedInThisWeek -= h;
+                    displayHourProgress();
+                    lastSubmition[subject].pop() ;
+                    localStorage.setItem('ls',JSON.stringify(lastSubmition)) ;
+                    if (s[subject]<sb[subject]){
+                        t.classList.remove('finished-subject-title')
+                        b.classList.remove('finished-subject-box')
+                    }
+                console.log('allStudiedHoursData :' , allStudiedHoursData )
+                console.log('studentStudyHoursAchievedInThisWeekDetails :' , studentStudyHoursAchievedInThisWeekDetails )
+                console.log('lastSubmittion :' , lastSubmition )
+                console.log('localStorage : ',localStorage)
+                console.log('display :',hdw,dhp)
+            }
+            }
+
+            function removeOverObjectiveHours (str,lim,add,mode=0){
+                if (mode == 0){
+                if (str>=lim){return 0}
+                return lim-str>=add ? add:lim-str}
+                else{
+                    afterRemoval = str-add ;
+                    if (afterRemoval>=lim){return 0}
+                    else{
+                        if (str>lim){ return lim-afterRemoval}
+                        else{return add}
+                       
+                    }
+                }
+            }
+            function getDateYearMonthDayTime(){
+                const dayNames = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+                date = new Date();
+                let hours = date.getHours();
+                const minutes = date.getMinutes();
+                const ampm = hours >= 12 ? 'PM' : 'AM';
+                if(hours >= 13){hours %= 12}
+                days = date.getDate();
+                months = date.getMonth();
+                years = date.getFullYear();
+                
+                daysInWeek = dayNames[days];
+                return hours+":"+minutes+' '+ampm+'  '+(months+1)+"/"+days+"/"+years
+            }
+            function getDayFromExpression(exp){
+                console.log(exp)
+                ind = exp.indexOf('/') ;
+                end=ind+3;
+                if(exp[ind+2] == '/'){end=ind+2}
+                nb = exp.slice(ind+1,end)
+                return Number(nb)
+            }
+            function displayHourProgress(){
+                hdw.innerText = allStudyHoursAchievedInThisWeek;
+                percentage = ((allStudyHoursAchievedInThisWeek/totalHours).toFixed(4)*100) ;
+                if (percentage>100){percentage=100}
+                else if(percentage < 2.5){percentage=2.5};
+                dhp.style.width = percentage+'%';
+                console.log('display :',hdw,dhp)
+            }
+
+            function calculateSumOfStudiedHoursThisWeek(){
+                acc = 0 ; 
+                for (let key in studentStudyHoursAchievedInThisWeekDetails){
+                    if (studentStudyHoursAchievedInThisWeekDetails[key]<=studentWeeklyObjective[key]){
+                    acc+=studentStudyHoursAchievedInThisWeekDetails[key]}
+                    else{
+                        acc+= studentWeeklyObjective[key]
+                    }
+                }
+                return acc
+            }
+            ws.innerText = strike[0]
+            if (strike[0]>0){
+                wt.classList.add('hot-strike');
+            }
+            else{
+                wt.classList.remove('hot-strike');
+                }
+
+            if (window.innerHeight<=525){
+                ls.style.gap ="0.25vh";
+                setTimeout(() => window.scrollTo(0,0), 35);
+            }else{
+            window.scrollTo(0,0);}
+
+
+            acOp.innerText = studentName.first + ' ' + studentName.last;
+
+            function OpenCloseOptions (){
+                if(clickAccess){
+                    clickAccess = false ;
+                    console.log(clickAccess)
+                    if (btOp.innerText.includes('<')){
+                        jss.innerHTML=''
+                        document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="0";})
+                        document.querySelectorAll('.option').forEach((el)=>{el.style.color ="transparent";el.style.textShadow ="none"});
+                        document.getElementById("follow-options").style.opacity = "0";
+                        setTimeout(()=>{
+                            
+                            ls.style.animation = "closeOptions 1s ease forwards";
+                            btOp.style.left='0px';
+                            mt.style.left = 'calc(calc(calc(2.25vh + 2.25vw) + 0vw) + 10px)';
+                            mt.style.width = '90%';
+                        },150)
+                        
+                        
+                        setTimeout(()=>{btOp.innerHTML= ">&nbsp&nbsp";clickAccess = true;ls.classList.add('hide');},1200);
+                    }
+                    else {
+                        setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
+                        ls.classList.remove('hide')      
+                        mt.style.width = '71%'         
+                        ls.style.animation = "openOptions 1s ease forwards";
+                        btOp.style.left='20vw';
+                        mt.style.left = 'calc(calc(calc(2.25vh + 2.25vw) + 20vw) + 10px)'
+
+                        setTimeout(()=>{
+                            btOp.innerHTML= "<&nbsp&nbsp";
+                            clickAccess = true;   
+                            jss.innerHTML='#profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                        },1050);// change to 1050
+                    }
+                }
+            }
+
+            var  t1 = 2000 ;
+            var  t2 = 1050 ;
+            var  t4 = 2050 ;
+            var  t5 = 3900 ;
+            if(isLogedIn){
+                t1 = 0 ;
+                t2 = 0 ;
+                t4 = 0 ; 
+                t5 = 0 ;
+            }
+            txtAnInt = setInterval(()=>{txt.innerText = textAnimation[currentTxt];currentTxt++;currentTxt%=3;},2000/3);
+            setTimeout(()=>{clearInterval(txtAnInt);
+                an.style.animationPlayState = "paused";
+                an.style.animation = "PlanningFinished ease 4s";
+                an.style.border = "5px solid transparent";
+                txt.innerText = "" ;
+                an.style.backgroundColor = "rgb(2, 125, 104)" ;
+                txt.style.color = "rgb(15, 234, 227)";
+                txt.style.textShadow = "0 0 6px rgb(19, 177, 172)"
+                txt.innerText="✓ Fhinised";
+                txt.style.zIndex = "2";
+                txt.style.fontSize = "calc(2.2vh + 2.2vw)";
+                an.style.animation = "spreadOut 1.5s ease forwards";
+                txt.style.animation = "spreadOut 1.5s ease forwards";
+                setTimeout(()=>{
+                    an.classList.add('hide');
+                    txt.classList.add('hide');
+                },t1)//change to 2000
+
+                setTimeout(()=>{
+                    ls.classList.remove('hide');
+                    btOp.classList.remove('hide');
+                    setTimeout(()=>{
+                        setTimeout(()=>{document.getElementById("follow-options").style.opacity = "1";document.querySelectorAll('.profile-icon').forEach((el)=>{el.style.opacity ="1";});document.querySelectorAll('.option').forEach((el)=>{el.style.color ="rgb(15, 234, 227)";el.style.textShadow =" 0 0 6px rgb(19, 177, 172)"})},400);
+                        document.body.style.overflow = "visible";
+                        document.body.style.overflowX = "hidden";
+                        ls.style.animation = "openOptions 1s ease forwards";
+                        btOp.style.left='20vw';
+                        setTimeout(()=>{btOp.innerHTML= "<&nbsp&nbsp";
+                        clickAccess = true;
+                        jss.innerHTML='#profile-container:hover{ scale: 1.1;box-shadow: 0 0 8px #FF33CC, 0 0 16px #FF33CC;} '
+                        btOp.addEventListener("click",()=>{OpenCloseOptions()}); 
+                        mt.classList.remove('hide');
+                        setTimeout(()=>mt.style.opacity ='1',100)
+                        setTimeout (() => {displayHourProgress();isLogedIn = true;localStorage.setItem('lg',true)},500)
+                    },t2);
+                    },550)
+                },t4)//change to 2050
+                
+            },t5);//change to 3900
+
+            function getNumberOfHours(ch){
+                h = ch.indexOf("hour") ;
+                w = ch.indexOf("week") ;
+                if (h >-1 && w > -1){
+                    return Number(ch.slice(0,h)) 
+                }
+                else{
+                    return 0
+                }
+                
+            }
+            function getObjective(){
+                for (let key in studentObjective){
+                    if (key){return key}
+                }
+            }
+            function getAllRequiredHoursInOneWeak(obj) {
+                acc=0;
+                for (let key in numberOfRequiredHours){
+                    a = getNumberOfHours(numberOfRequiredHours[key][studentLvl[key]][obj]) ;
+                    acc += a
+                    studentWeeklyObjective[key] = a ;
+                }
+                console.log('weekly objectuve : ',studentWeeklyObjective)
+                console.log('weekly done hours: ',studentStudyHoursAchievedInThisWeekDetails)
+                console.log('all student data : ',allStudiedHoursData)
+                return acc
+            }
+
+
         </script>
     </body>
 </html>
