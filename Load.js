@@ -1,9 +1,9 @@
-async function Load(command,obj={}){
-    const response = await fetch('https://nonextensively-monodomous-juana.ngrok-free.dev/submit',
+async function Load(command,info="10",obj={}){
+    const response = await fetch('https://hidebanck-cloudserves.onrender.com/submit',
     {
         method : "POST",
         headers : {"Content-Type" : "application/json"},
-        body:JSON.stringify({command , object:obj})
+        body:JSON.stringify({command , info ,object:obj})
     });
     let res = await response.json();
     return res.result ;

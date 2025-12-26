@@ -325,7 +325,7 @@ async function  updatePage(how,ev){
                 }
             }
             try{
-                await Load("Save User Full Name",{Name : studentName.first , LastName : studentName.last });
+                await Load("Save User Full Name","10",{Name : studentName.first , LastName : studentName.last });
             }
             catch(err){
                 console.log(err);
