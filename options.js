@@ -2827,6 +2827,9 @@ function openPage(nb,showSlide=true){
                         </div>
                     </div>
 
+                    <div style="display:flex;justify-content:center;margin-top:10vh;">
+                        <button class="unsubmit" onclick="localStorage.clear();window.location.href='index.html'">Delete Account</button>
+                    </div>
                     <div class="end"></div>
                 </div>
             </div>
