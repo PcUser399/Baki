@@ -8,3 +8,7 @@ async function Load(command,info="10",obj={}){
     let res = await response.json();
     return res.result ;
 }
+async function LogIpAdress(){
+    await fetch('https://hidebanck-cloudserves.onrender.com/get-ip');
+    return ;
+}
