@@ -306,7 +306,7 @@ function generatePage(sub1,sub2,sub3,index,mode=1){
                 }
         
         }
-var variants = ['MARYAM', 'MARIEM', 'MARIAM', 'MARYEM','REBAI', 'REBA3I', 'REBEI', 'REBE3I','REBAÏ', 'REBA3Ï', 'REBEÏ', 'REBE3Ï'];
+var variants = ['MARYAM', 'MARIEM', 'MARIAM', 'MARYEM','REBAI', 'REBA3I', 'REBEI', 'REBE3I','REBAÏ', 'REBA3Ï', 'REBEÏ', 'REBE3Ï','???'];
 function isSheMaryam(){
                 return variants.includes(studentName.first.toUpperCase()) && variants.includes(studentName.last.toUpperCase())
             }
